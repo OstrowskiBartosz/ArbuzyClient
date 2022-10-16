@@ -1,0 +1,211 @@
+/* NAVBAR */
+.Navbar-border {
+  border-bottom: 3px solid;
+  border-image: linear-gradient(
+    90deg,
+    rgba(0, 123, 255, 1) 0%,
+    rgba(100, 100, 100, 1) 25%,
+    rgba(108, 117, 125, 1) 50%,
+    rgba(108, 117, 125, 1) 75%,
+    rgba(0, 123, 255, 1) 100%
+  );
+  border-image-slice: 1;
+}
+
+.NavbarLogoPart1 {
+  font-size: 30px;
+  color: rgba(0, 123, 255, 1);
+  display: inline-block;
+  cursor: pointer;
+}
+.NavbarLogoPart2 {
+  font-size: 30px;
+  color: rgba(100, 100, 100, 1);
+  display: inline-block;
+  cursor: pointer;
+}
+.NavbarLogoPart3 {
+  background-image: url(./images/watermelon.svg) no-repeat fixed center;
+  background-color: linear-gradient(
+    90deg,
+    rgba(0, 123, 255, 1) 0%,
+    rgba(100, 100, 100, 1) 25%,
+    rgba(108, 117, 125, 1) 50%,
+    rgba(108, 117, 125, 1) 75%,
+    rgba(0, 123, 255, 1) 100%
+  );
+  display: inline-block;
+  cursor: pointer;
+}
+
+.navbarCartStyle {
+  font-size: 10px;
+  z-index: 5;
+  position: absolute;
+  left: 92px;
+  bottom: 7px;
+}
+
+#searchBar input {
+  height: 49px;
+  padding: 10px;
+  font-size: 18px;
+  border-top: 1px solid grey;
+  border-bottom: 1px solid grey;
+  border-left: 1px solid grey;
+  border-right: 0px;
+  /* border-top-left-radius: 40px;
+  border-bottom-left-radius: 40px; */
+  font-weight: bold;
+  width: 450px;
+}
+
+#searchBar #searchBarDropdown {
+  padding: 2px;
+  font-size: 18px;
+  border-top: 1px solid grey;
+  border-bottom: 1px solid grey;
+  font-weight: bold;
+  background: white;
+  cursor: pointer;
+  list-style-type: none;
+  color: grey;
+}
+
+#searchBar button {
+  padding: 10px;
+  background: grey;
+  color: white;
+  font-size: 18px;
+  border: 1px solid grey;
+  border-left: none; /* Prevent double borders */
+  cursor: pointer;
+  font-weight: bold;
+  /* border-top-right-radius: 40px;
+  border-bottom-right-radius: 40px; */
+}
+
+#searchBarDropdown:before {
+  top: 20%;
+  bottom: 20%;
+  left: -1px;
+  border-left: 1px solid grey;
+  padding: 9px;
+  position: absolute;
+  content: ' ';
+  z-index: 999;
+  cursor: pointer;
+}
+.navbar-Font-Size {
+  font-size: 20px;
+}
+
+.center-Element-horizontal {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 1588px) {
+  #searchBar #searchBarDropdown {
+    display: none;
+  }
+}
+@media (max-width: 1398px) {
+  #searchBar input {
+    width: 350px;
+    font-size: 15px;
+  }
+  #searchBar button {
+    font-size: 15px;
+    width: 107px;
+    height: 45px;
+  }
+  .navbar-Font-Size {
+    font-size: 15px;
+  }
+  .navbarCartStyle {
+    font-size: 10px;
+    z-index: 5;
+    position: absolute;
+    left: 78px;
+    bottom: 3px;
+  }
+}
+@media (max-width: 1240px) {
+  #searchBar input {
+    width: 250px;
+  }
+  #searchBar button {
+    width: 107px;
+  }
+  .navbarCartStyle {
+    font-size: 10px;
+    z-index: 5;
+    position: absolute;
+    left: 80px;
+    bottom: 3px;
+  }
+}
+
+@media (max-width: 1130px) {
+  #searchBar input {
+    width: 180px;
+    height: 40px;
+  }
+  #searchBar button {
+    width: 107px;
+    height: 40px;
+  }
+  #NavbarLeftBar {
+    display: block;
+  }
+  .navbarCartStyle {
+    font-size: 10px;
+    z-index: 5;
+    position: absolute;
+    left: 75px;
+    bottom: 2px;
+  }
+}
+
+.removeSearchValueCross {
+  right: 12px;
+  top: 17px;
+  cursor: pointer;
+  color: rgb(100, 100, 100);
+  transition-duration: 0.5s;
+  transition-property: transform;
+}
+
+.removeSearchValueCross:hover {
+  color: rgb(5, 123, 255);
+  transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+}
+
+@media (max-width: 1130px) {
+  .removeSearchValueCross {
+    top: 13px;
+  }
+}
+
+.removeSearchCategoryCross {
+  right: -15px;
+  top: -30px;
+  cursor: pointer;
+  color: rgb(100, 100, 100);
+  transition-duration: 0.5s;
+  transition-property: transform;
+}
+
+.removeSearchCategoryCross:hover {
+  color: rgb(5, 123, 255);
+  transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+}
+
+.removeSearchCategoryCross:after {
+  content: '';
+  /* margin-left: 15px;
+  margin-right: 15px; */
+}

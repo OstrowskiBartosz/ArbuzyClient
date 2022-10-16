@@ -1,0 +1,49 @@
+.alert {
+  position: absolute;
+  top: calc(150% - 25px);
+  left: 50%;
+  transform: translate(-50%, 0);
+
+  z-index: 100;
+  visibility: visible;
+  opacity: 1;
+  transition: top 0.5s ease-out;
+  animation: fadeOut 5s ease-out;
+  animation-delay: 2s;
+}
+
+.alert:hover {
+  animation: 0;
+}
+
+@keyframes fadeOut {
+  0% {
+    visibility: visible;
+    opacity: 1;
+  }
+  100% {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+
+.hide-alert {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.fade-out-alert {
+  visibility: visible;
+  opacity: 0;
+  transition: visibility, opacity 5s linear;
+}
+
+@media (max-width: 900px) {
+  .alertWidth {
+    width: 365px;
+  }
+  .hideOnSmall {
+    display: none;
+  }
+}

@@ -1,0 +1,50 @@
+.align-text-center {
+  display: flex;
+  align-items: center;
+}
+
+.CartBorder {
+  border-bottom: 2px solid lightgrey;
+}
+
+.font-size-bigger {
+  font-size: 22px;
+}
+
+.image-container2 {
+  height: 120px;
+  width: 80px;
+}
+
+.feature_image2 {
+  display: block;
+
+  max-height: 100%;
+  height: auto;
+
+  max-width: 100%;
+  width: auto;
+}
+
+.center-Element-vertical {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+
+@media (max-width: 1200px) {
+  .hide-l {
+    display: none;
+  }
+  .align-text-center {
+    justify-content: center;
+  }
+}
+
+.vertical-center {
+  margin-top: auto;
+  margin-bottom: auto;
+}

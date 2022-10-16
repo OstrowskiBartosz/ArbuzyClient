@@ -1,0 +1,159 @@
+/* WYNIKI WYSZUKIWANIA */
+
+.placement-bottomAddToCart {
+  display: inline-block;
+  height: 50%;
+  vertical-align: bottom;
+  width: 0px;
+}
+.placement-bottomAtributes {
+  display: inline-block;
+  height: 30%;
+  vertical-align: bottom;
+  width: 0px;
+}
+
+.center-product-name {
+  text-align: left;
+}
+
+@media (max-width: 1079px) {
+  .center-price {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    display: inline-block !important;
+    padding-top: 20px;
+    padding-bottom: 10px;
+  }
+  .center-product-name {
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 10px;
+  }
+
+  .placement-bottomAddToCart {
+    display: inline-block;
+    height: 20%;
+    vertical-align: bottom;
+    width: 0px;
+  }
+  .placement-bottomAtributes {
+    display: inline-block;
+    height: 0%;
+    vertical-align: bottom;
+    width: 0px;
+  }
+}
+
+.image-container {
+  height: 200px;
+  width: 100px;
+}
+
+.feature_image {
+  display: block;
+
+  max-height: 100%;
+  height: auto;
+
+  max-width: 100%;
+  width: auto;
+}
+.FilterButton {
+  position: -webkit-sticky;
+  position: sticky;
+  bottom: 15px;
+}
+.HideFiltersButton {
+  display: none;
+}
+@media (max-width: 1079px) {
+  .HideFiltersButton {
+    position: -webkit-sticky;
+    position: sticky;
+    bottom: 15px;
+    display: block;
+  }
+  .FilterButton {
+    position: -webkit-sticky;
+    position: sticky;
+    bottom: 65px;
+  }
+}
+
+/* filters*/
+.filterContainer {
+  display: block;
+  position: relative;
+  padding-left: 25px;
+  cursor: pointer;
+  font-size: 17px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.filterContainer input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+}
+
+.filterContainer:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+.filterContainer input:checked ~ .checkmark {
+  background-color: #2196f3;
+}
+
+.checkmark:after {
+  content: '';
+  position: absolute;
+  display: none;
+}
+
+.filterContainer input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.filterContainer .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.disabled {
+  cursor: not-allowed !important;
+}
+
+.idProduktu {
+  text-align: left;
+  font-size: 13px;
+  color: grey;
+}
+
+.center-Element-vertical {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
