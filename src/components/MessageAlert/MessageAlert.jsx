@@ -1,64 +1,69 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useState, useEffect, useRef } from 'react';
 import './MessageAlert.css';
 
-const MessageAlert = (props) => {
-  const [alertArray, setAlertArray] = useState([]);
-  const alertArrayRef = useRef(alertArray);
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  addOngoingAlerts,
+  removeOngoingAlert,
+  mouseOverOngoingAlert,
+  mouseOutOngoingAlert
+} from '../../store/storeSlices/messageAlertsSlice';
 
-  const newAlert = () => {
-    if (props.alertCounter !== 0) {
-      const setTimeoutHandler = setTimeout(removeAlert, 7000, props.alertCounter);
-      const messageAlert = {
-        alertHeading: props.alertHeading,
-        alertText: props.alertText,
-        alertColor: props.alertColor,
-        alertNumber: props.alertCounter,
-        alertShow: true,
-        alertTimeOut: setTimeoutHandler
-      };
-      setAlertArray([...alertArray, messageAlert]);
-    }
-  };
+const MessageAlert = (props) => {
+  const ongoingAlerts = useSelector((state) => state.alertMessage.messageAlerts);
+  const newAlert = useSelector((state) => state.alertMessage.newAlert);
+  const dispatch = useDispatch();
+  const ongoingAlertsRef = useRef(ongoingAlerts);
+
+  const removeAlert = useCallback(
+    (alertNumber) => {
+      const alertIndex = ongoingAlertsRef.current.findIndex((e) => e.alertNumber === alertNumber);
+      dispatch(removeOngoingAlert(alertIndex));
+    },
+    [dispatch]
+  );
+
+  const addNewAlert = useCallback(
+    (newAlert) => {
+      const { alertText, alertNumber } = newAlert;
+      if (alertText !== '' && !ongoingAlerts.some((el) => el.alertNumber === alertNumber)) {
+        const newMessageAlert = {
+          alertHeading: newAlert.alertHeading,
+          alertText: newAlert.alertText,
+          alertColor: newAlert.alertColor,
+          alertNumber: newAlert.alertNumber,
+          alertTimeOut: setTimeout(removeAlert, 7000, newAlert.alertNumber)
+        };
+        dispatch(addOngoingAlerts(newMessageAlert));
+      }
+    },
+    [dispatch, removeAlert, ongoingAlerts]
+  );
 
   const mouseOverAlert = (alertNumber) => {
-    const alertIndex = alertArray.findIndex((element) => element.alertNumber === alertNumber);
-    clearTimeout(alertArray[alertIndex].alertTimeOut);
+    const alertIndex = ongoingAlerts.findIndex((element) => element.alertNumber === alertNumber);
+    clearTimeout(ongoingAlerts[alertIndex].alertTimeOut);
+    dispatch(mouseOverOngoingAlert(alertIndex));
   };
 
   const mouseOutAlert = (alertNumber) => {
-    const alertIndex = alertArrayRef.current.findIndex(
-      (element) => element.alertNumber === alertNumber
-    );
-    const newArray = alertArrayRef.current;
-    let messageAlert = newArray[alertIndex];
-    newArray.splice(alertIndex, 1);
-    const setTimeoutHandler = setTimeout(removeAlert, 6900, alertNumber);
-    messageAlert.alertTimeOut = setTimeoutHandler;
-    newArray.splice(alertIndex, 0, messageAlert);
-    setAlertArray(newArray);
-  };
-
-  const removeAlert = (alertNumber) => {
-    const alertIndex = alertArrayRef.current.findIndex(
-      (element) => element.alertNumber === alertNumber
-    );
-    let splicedAlertArray = alertArrayRef.current;
-    splicedAlertArray.splice(alertIndex, 1);
-    setAlertArray([...splicedAlertArray]);
+    const alertIndex = ongoingAlertsRef.current.findIndex((e) => e.alertNumber === alertNumber);
+    const newTimeoutHandler = setTimeout(removeAlert, 7000, alertNumber);
+    dispatch(mouseOutOngoingAlert({ alertIndex, newTimeoutHandler }));
   };
 
   useEffect(() => {
-    alertArrayRef.current = alertArray;
-  }, [alertArray]);
+    ongoingAlertsRef.current = ongoingAlerts;
+  }, [ongoingAlerts]);
 
   useEffect(() => {
-    newAlert();
-  }, [props.alertCounter]);
+    addNewAlert(newAlert);
+  }, [newAlert, newAlert.alertNumber, addNewAlert]);
 
   return (
     <div>
-      {alertArray.map((alert, index) => (
+      {ongoingAlerts.map((alert, index) => (
         <div
           key={`${alert.alertNumber}`}
           className={`alert alertWidth alert-${alert.alertColor} `}

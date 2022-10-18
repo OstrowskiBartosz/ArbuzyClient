@@ -1,61 +1,46 @@
 import React from 'react';
 import Cookies from 'js-cookie';
-
 import Navbar from './components/Navbar/Navbar.jsx';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { sessionChange } from './store/storeSlices/sessionSlice.js';
 
 import './App.css';
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLogged: null,
-      hasExpired: false,
-      showSearchHints: false
-    };
-  }
+const App = (props) => {
+  const dispatch = useDispatch();
 
-  componentDidMount() {
-    this.fetchLoggedUser();
-  }
-
-  fetchLoggedUser() {
-    if (undefined !== Cookies.get('user_sid')) {
-      let url = 'http://localhost:9000/session';
-      fetch(url, {
-        method: 'get',
-        credentials: 'include',
-        headers: new Headers({ 'content-type': 'application/json' })
-      })
-        .then((response) => response.text())
-        .then((response) => {
-          if (response === 'logged') {
-            this.setState({
-              isLogged: true
-            });
-          } else {
-            this.setState({
-              isLogged: false,
-              hasExpired: true
-            });
-          }
+  useEffect(() => {
+    const fetchLoggedUser = () => {
+      if (undefined !== Cookies.get('user_sid')) {
+        let url = `http://localhost:9000/sessionv1`;
+        fetch(url, {
+          method: 'get',
+          credentials: 'include',
+          headers: new Headers({ 'content-type': 'application/json' })
         })
-        .catch((err) => err);
-    } else {
-      this.setState({
-        isLogged: false,
-        hasExpired: false
-      });
-    }
-  }
+          .then((response) => response.text())
+          .then((response) => {
+            if (response === 'Logged.') {
+              dispatch(sessionChange(true));
+            } else {
+              dispatch(sessionChange(false));
+            }
+          })
+          .catch((err) => err);
+      } else {
+        dispatch(sessionChange(false));
+      }
+    };
 
-  render() {
-    return (
-      <div className="App">
-        <Navbar isLogged={this.state.isLogged} hasExpired={this.state.hasExpired} />
-      </div>
-    );
-  }
-}
+    fetchLoggedUser();
+  }, [dispatch]);
+
+  return (
+    <div className="App">
+      <Navbar />
+    </div>
+  );
+};
 
 export default App;

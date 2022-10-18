@@ -3,8 +3,8 @@ import { Router, Route, Switch, Link } from 'react-router-dom';
 
 import ShoppingCart from '../ShoppingCart/ShoppingCart.jsx';
 import SearchResults from '../SearchResults/SearchResults.jsx';
-import Logout from '../Login-Signup-Logout/Logout.jsx';
-import LoginSignupComp from '../Login-Signup-Logout/LoginSignupComp.jsx';
+import LogOut from '../AuthenticationPanel/LogOut/LogOut.jsx';
+import AuthenticationPanel from '../AuthenticationPanel/AuthenticationPanel.jsx';
 import PageFooter from '../PageFooter/PageFooter.jsx';
 import MainPage from '../MainPage/MainPage.jsx';
 import Profile from '../Profile/Profile.jsx';
@@ -395,7 +395,7 @@ class Navbar extends React.Component {
                 {<MainPage />}
               </Route>
               <Route path="/login">
-                <LoginSignupComp
+                <AuthenticationPanel
                   isLogged={this.state.isLogged}
                   redirect={window.location.pathname + window.location.search}
                   hasExpired={this.props.hasExpired}
@@ -404,7 +404,7 @@ class Navbar extends React.Component {
                 />
               </Route>
               <Route path="/logout">
-                <Logout
+                <LogOut
                   isLogged={this.state.isLogged}
                   sendLoggedUser={this.getLoggedUser}
                   sendAlertMessage={this.getAlertMessage}
