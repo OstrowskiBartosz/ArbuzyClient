@@ -3,23 +3,23 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   mostBoughtCategoryProducts: [],
   mostBoughtProducts: [],
-  youMayLikeThisProducts: [],
+  youMayLikeProducts: [],
   lastUpdate: new Date().getTime()
 };
 
-const productsSlice = createSlice({
+const productSlice = createSlice({
   name: 'productsSlice',
   initialState,
   reducers: {
     updateProducts(state, action) {
       state.mostBoughtCategoryProducts = action.payload.mostBoughtCategoryProducts;
       state.mostBoughtProducts = action.payload.mostBoughtProducts;
-      state.youMayLikeThisProducts = action.payload.youMayLikeThisProducts;
+      state.youMayLikeProducts = action.payload.youMayLikeProducts;
       state.lastUpdate = action.payload.lastUpdate;
     }
   }
 });
 
-export const { updateProducts } = productsSlice.actions;
+export const { updateProducts } = productSlice.actions;
 
-export default productsSlice.reducer;
+export default productSlice.reducer;

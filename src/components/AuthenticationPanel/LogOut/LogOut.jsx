@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { sessionChange } from '../../../store/storeSlices/sessionSlice.js';
@@ -14,7 +14,7 @@ const LogOut = (props) => {
 
   const handleLogout = async () => {
     setIsLoading(true);
-    const url = `http://localhost:9000/sessionv1`;
+    const url = `${process.env.REACT_APP_API}/session`;
     fetch(url, { method: 'delete', credentials: 'include' })
       .then((response) => response.text())
       .then((data) => {

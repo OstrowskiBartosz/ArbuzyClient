@@ -2,27 +2,57 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './PageFooter.css';
 
-class PageFooter extends React.Component {
-  render() {
-    return (
-      <footer>
-        <div className="text-center">
+const PageFooter = (props) => {
+  return (
+    <footer>
+      <div className="d-flex flex-wrap justify-content-center">
+        <div>
+          {' '}
           <Link to={'/'}>
             <span className="fw-bold fs-5">Strona główna</span>
           </Link>
           <span className="pl-2 pr-2 fs-5">|</span>
+        </div>
+        <div>
           <Link to={'/profile'}>
             <span className="fw-bold fs-5 mb-2">Profil</span>
           </Link>
           <span className="pl-2 pr-2 fs-5">|</span>
+        </div>
+        <div>
+          {' '}
+          <Link to={'/profile/orders'}>
+            <span className="fw-bold fs-5 mb-2">Zamowienia</span>
+          </Link>
+          <span className="pl-2 pr-2 fs-5">|</span>
+        </div>
+        <div>
+          {' '}
+          <Link to={'/profile/complaints'}>
+            <span className="fw-bold fs-5 mb-2">Reklamacje</span>
+          </Link>
+          <span className="pl-2 pr-2 fs-5">|</span>
+        </div>
+        <div>
+          {' '}
+          <Link to={'/profile/settings'}>
+            <span className="fw-bold fs-5 mb-2">Ustawienia</span>
+          </Link>
+          <span className="pl-2 pr-2 fs-5">|</span>
+        </div>
+        <div>
           <Link to={'/cart'}>
             <span className="fw-bold fs-5 mb-2">Koszyk</span>
           </Link>
         </div>
-        <div className="footer-element">
+      </div>
+      <div className="footer-element pt-4">
+        <div>
           <span className="footer-element-header fw-bold fs-4 pb-2">
             Sklep komputerowy Arbuzy.com
           </span>
+        </div>
+        <div>
           <span className="footer-element-text">
             Arbuzy.com to jeden z największych i najpopularniejszych sklepów komputerowych w Polsce.
             W szerokiej ofercie sklepu można znaleźć wysokiej klasy laptopy, komputery na każdą
@@ -36,21 +66,25 @@ class PageFooter extends React.Component {
             długo czekać.
           </span>
         </div>
-        <div className="footer-element">
-          <span className="footer-element-header fw-bold fs-4 pb-2">
-            Najlepszy sprzęt komputerowy
-          </span>
-          <span className="footer-element-text">
+      </div>
+      <div className="footer-element pt-3">
+        <div className="footer-element-header fs-4 pb-3">
+          <span className=" fw-bold fs-4">Tylko najwiekszy i najlepszy sprzęt komputerowy</span>
+        </div>
+        <div>
+          <span className="footer-element-text ">
             Sklep komputerowy Arbuzy.com oferuje największy w Polsce podzespołów komputerowych. Tak
             zróżnicowana oferta produktów z wielu kategorii stwarza możliwość wyszukania i
             dopasowania sprzętów do oczekiwań nabywców, a unikatowe promocje są szansą na jeszcze
             tańsze zakupy.
           </span>
         </div>
-        <div className="footer-element">
-          <span className="footer-element-header fw-bold fs-4 pb-2 pt-2">
-            Niskie ceny, wysoka jakość obsługi, szybka dostawa
-          </span>
+      </div>
+      <div className="footer-element  pt-3">
+        <div className="footer-element-header fs-4 pb-3">
+          <span className=" fw-bold fs-4">Niskie ceny, wysoka jakość obsługi, szybka dostawa</span>
+        </div>
+        <div>
           <span className="footer-element-text">
             Dopasowanie oferty do potrzeb i oczekiwań kupujących to tylko jeden z wielu atutów
             sklepu Arbuzy.net. Asortyment sklepu jest bardzo mocno zróżnicowany pod względem cen,
@@ -59,12 +93,12 @@ class PageFooter extends React.Component {
             metodami wysyłkowymi.
           </span>
         </div>
-        <div className="footer-element-copyright pb-4">
-          <span className="footer-element-copyright-text">Copyright © 2021-2022 Arbuzy.com</span>
-        </div>
-      </footer>
-    );
-  }
-}
+      </div>
+      <div className="footer-element-copyright pb-4 pt-4 text-center">
+        <span className="footer-element-copyright-text">Copyright © 2021-2022 Arbuzy.com</span>
+      </div>
+    </footer>
+  );
+};
 
 export default PageFooter;

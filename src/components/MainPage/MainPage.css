@@ -191,3 +191,15 @@ footer {
 .categoryText:hover::before {
   width: 100%;
 }
+
+.refreshButton {
+  color: #000;
+  transition: all 0.5s;
+}
+
+.refreshButton:hover {
+  color: rgb(0, 123, 255, 1);
+  transform: rotate(180deg);
+  transition: all 0.5s;
+  cursor: pointer;
+}

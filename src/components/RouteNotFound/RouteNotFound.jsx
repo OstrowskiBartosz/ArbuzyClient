@@ -19,7 +19,6 @@ const RouteNotFound = () => {
         <div className="col-lg-3"></div>
         <div className="col-lg-5 text-left">
           <Link className="btn btn-outline-secondary" to="/">
-            {' '}
             <i className="fas fa-chevron-left"></i> Cofnij do strony głównej
           </Link>
         </div>

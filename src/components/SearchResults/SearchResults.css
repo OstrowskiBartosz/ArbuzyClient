@@ -59,11 +59,17 @@
   max-width: 100%;
   width: auto;
 }
-.FilterButton {
+.filterButton {
+  position: -webkit-sticky;
+  position: sticky;
+  bottom: 65px;
+}
+.resetFilterButton {
   position: -webkit-sticky;
   position: sticky;
   bottom: 15px;
 }
+
 .HideFiltersButton {
   display: none;
 }
@@ -74,7 +80,7 @@
     bottom: 15px;
     display: block;
   }
-  .FilterButton {
+  .filterButton {
     position: -webkit-sticky;
     position: sticky;
     bottom: 65px;
@@ -156,4 +162,55 @@
   left: 50%;
   margin-right: -50%;
   transform: translate(-50%, -50%);
+}
+
+.blockedUIScreen {
+  opacity: 0.4;
+  z-index: 10;
+  pointer-events: none;
+  position: relative;
+}
+
+.blockedUIScreenP {
+  opacity: 0.4;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.blockUISpinner {
+  z-index: 15;
+  font-size: 25;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+}
+
+.opaciTySwitch {
+  transition: opacity 0.25s ease-in-out;
+}
+
+.filtersSwitch {
+  transition: all 0.5s ease-in-out;
+}
+
+.f1 {
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: visibility 5s, opacity 5s linear;
+  transition: position 5s;
+}
+
+.f2 {
+  visibility: visible;
+  height: auto;
+}
+
+.attributeHover:hover {
+  color: rgba(0, 123, 255, 1);
+  cursor: pointer;
 }

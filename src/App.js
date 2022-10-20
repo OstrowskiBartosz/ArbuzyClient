@@ -13,7 +13,7 @@ const App = (props) => {
   useEffect(() => {
     const fetchLoggedUser = () => {
       if (undefined !== Cookies.get('user_sid')) {
-        let url = `http://localhost:9000/sessionv1`;
+        let url = `${process.env.REACT_APP_API}/session`;
         fetch(url, {
           method: 'get',
           credentials: 'include',

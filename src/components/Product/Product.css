@@ -16,6 +16,11 @@
   height: 50px;
 }
 
+.smallSpinner {
+  width: 20px !important;
+  height: 20px !important;
+}
+
 .left {
   text-align: left;
 }

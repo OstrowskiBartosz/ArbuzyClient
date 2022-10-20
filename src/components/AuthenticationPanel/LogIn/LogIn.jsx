@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { sessionChange } from '../../../store/storeSlices/sessionSlice.js';
 import { updateCartItems } from '../../../store/storeSlices/cartItemsSlice';
 import newAlert from '../../../features/newAlert';
+import getFormData from '../utils/getFormData';
 
 const LogIn = (props) => {
   const [errorLogin, setErrorLogin] = useState(false);
@@ -16,21 +17,17 @@ const LogIn = (props) => {
     event.preventDefault();
     setIsLoading(true);
     setErrorLogin(false);
-    let myForm = document.getElementById('loginForm');
-    let formData = new FormData(myForm);
-    let object = {};
-    formData.forEach((value, key) => {
-      object[key] = value;
-    });
 
-    const url = 'http://localhost:9000/sessionv1';
+    const loginData = getFormData('loginForm');
+    const url = `${process.env.REACT_APP_API}/session`;
     const response = await fetch(url, {
       method: 'post',
       credentials: 'include',
-      body: JSON.stringify(object),
+      body: JSON.stringify(loginData),
       headers: new Headers({ 'content-type': 'application/json' })
     });
     const json = await response.json();
+
     if (json.message === 'Logged.') {
       dispatch(sessionChange(true));
       dispatch(updateCartItems(true));

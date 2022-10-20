@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import './SignUp.css';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { sessionChange } from '../../../store/storeSlices/sessionSlice.js';
 import { updateCartItems } from '../../../store/storeSlices/cartItemsSlice';
 import newAlert from '../../../features/newAlert';
+import getFormData from '../utils/getFormData';
 
 const SignUp = (props) => {
   const [errorSignup, setErrorSignup] = useState(false);
@@ -12,24 +13,18 @@ const SignUp = (props) => {
   const [companyAccount, setcompanyAccount] = useState(false);
 
   const dispatch = useDispatch();
-  const isLogged = useSelector((state) => state.session.isLogged);
 
   const handleSignupSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
     setErrorSignup(false);
-    let myForm = document.getElementById('SignupForm');
-    let formData = new FormData(myForm);
-    var object = {};
-    formData.forEach((value, key) => {
-      object[key] = value;
-    });
 
-    const url = 'http://localhost:9000/userv1';
+    const signupData = getFormData('SignupForm');
+    const url = `${process.env.REACT_APP_API}/user`;
     const response = await fetch(url, {
       method: 'post',
       credentials: 'include',
-      body: JSON.stringify(object),
+      body: JSON.stringify(signupData),
       headers: new Headers({ 'content-type': 'application/json' })
     });
     const json = await response.json();
