@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import './MessageAlert.css';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -62,12 +62,12 @@ const MessageAlert = (props) => {
   }, [newAlert, newAlert.alertNumber, addNewAlert]);
 
   return (
-    <div>
+    <div className="alertContainer">
       {ongoingAlerts.map((alert, index) => (
         <div
           key={`${alert.alertNumber}`}
           className={`alert alertWidth alert-${alert.alertColor} `}
-          style={{ top: 85 + 60 * index }}
+          style={{ top: 60 * index }}
           onMouseOver={() => mouseOverAlert(alert.alertNumber)}
           onMouseOut={() => mouseOutAlert(alert.alertNumber)}>
           <span className="font-weight-bold hideOnSmall">{alert.alertHeading}</span>

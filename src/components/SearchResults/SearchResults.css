@@ -83,7 +83,13 @@
   .filterButton {
     position: -webkit-sticky;
     position: sticky;
+    bottom: 15px;
+  }
+  .resetFilterButton {
+    position: -webkit-sticky;
+    position: sticky;
     bottom: 65px;
+    display: block;
   }
 }
 

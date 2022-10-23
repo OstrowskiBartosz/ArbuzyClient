@@ -6,50 +6,7 @@ import './SearchResults.css';
 import ResultPanel from './ResultPanel/ResultPanel';
 import SortPanel from './SortPanel/SortPanel';
 import FilterPanel from './FilterPanel/FilterPanel';
-
-const uncheckAll = () => {
-  const allFilters = document.querySelectorAll('input[type=checkbox]');
-  allFilters.forEach((ID) => {
-    if (document.getElementById(`${ID.id}`) !== null) {
-      document.getElementById(`${ID.id}`).checked = false;
-    }
-  });
-};
-
-const checkFilters = () => {
-  const searchParams = new URLSearchParams(window.location.search);
-  const filtersArray = ['filterCategory', 'filterManufacturer'];
-  filtersArray.forEach((filter) => {
-    if (searchParams.has(filter)) {
-      const filterString = searchParams.get(filter);
-      const filterArray = filterString.slice(1, filterString.length - 1).split(',');
-      filterArray.forEach((ID) => {
-        if (document.getElementById(`${filter}${Number(ID)}`) !== null) {
-          document.getElementById(`${filter}${Number(ID)}`).checked = true;
-        }
-      });
-    }
-  });
-};
-
-const checkAttributes = () => {
-  const searchParams = new URLSearchParams(window.location.search);
-  searchParams.forEach((value, key) => {
-    if (
-      key !== 'q' &&
-      key !== 'w' &&
-      key !== 's' &&
-      key !== 'l' &&
-      key !== 'p' &&
-      key !== 'filterCategory' &&
-      key !== 'filterManufacturer'
-    ) {
-      if (document.getElementById(key) !== null) {
-        document.getElementById(key).checked = true;
-      }
-    }
-  });
-};
+import { uncheckAll, checkFilters, checkAttributes } from './utils';
 
 const SearchResults = ({ searchValue }) => {
   let location = useLocation();
@@ -65,6 +22,7 @@ const SearchResults = ({ searchValue }) => {
     productSort: params.get('s') ?? 'domyślne',
     productPage: Number(params.get('p')) ?? 1
   });
+  const [priceSettings, setPriceSettings] = useState({ priceFrom: 0, priceTo: 0 });
 
   const fetchSearchData = useCallback(async () => {
     setIsLoadingProductsData(true);
@@ -87,6 +45,12 @@ const SearchResults = ({ searchValue }) => {
     setIsLoadingProductsData(false);
     setProductsData(json.data);
     setNumberOFProducts((json.data && json.data.numberOfProducts) ?? 0);
+
+    setPriceSettings({
+      priceFrom: searchParams.get('priceFrom') ?? json.data.minPrice,
+      priceTo: searchParams.get('priceTo') ?? json.data.maxPrice
+    });
+
     setSortSettings({
       productLimit: productLimit,
       productSort: productSort,
@@ -110,10 +74,6 @@ const SearchResults = ({ searchValue }) => {
         if (key !== 'filterManufacturer' && key !== 'filterCategory') setShowResetButton(true);
       }
     });
-  };
-
-  const getUpdatedSortSettings = (sortSettings) => {
-    setSortSettings(sortSettings);
   };
 
   useEffect(() => {
@@ -143,10 +103,12 @@ const SearchResults = ({ searchValue }) => {
         <div className={'col-sm-2 pb-5 '}>
           <div className="col-12 componentBackgroundColor mt-3 shadow-sm p-3 mb-1 bg-white rounded">
             <FilterPanel
-              filtersData={productsData}
               searchValue={searchValue}
               isLoading={isLoadingProductsData}
+              filtersData={productsData}
               ProductsData={productsData && productsData.products}
+              priceSettings={priceSettings}
+              priceRange={{ minPrice: productsData.minPrice, maxPrice: productsData.maxPrice }}
               showResetButton={showResetButton}
               fetchSearchData={fetchSearchData}
             />
@@ -156,11 +118,11 @@ const SearchResults = ({ searchValue }) => {
           <div className="row">
             <div className="col componentBackgroundColor mt-3 shadow-sm pt-3 bg-white rounded">
               <SortPanel
-                sortData={productsData}
+                isLoading={isLoadingProductsData}
+                NumberOfpages={productsData && productsData.NumberOfpages}
+                activePage={productsData && productsData.activePage}
                 ProductsData={productsData && productsData.products}
                 sortSettings={sortSettings}
-                isLoading={isLoadingProductsData}
-                sendUpdatedSortSettings={getUpdatedSortSettings}
                 fetchSearchData={fetchSearchData}
               />
             </div>
@@ -176,11 +138,11 @@ const SearchResults = ({ searchValue }) => {
           <div className="row">
             <div className="col componentBackgroundColor mt-3 shadow-sm pt-3 bg-white rounded">
               <SortPanel
-                sortData={productsData}
+                isLoading={isLoadingProductsData}
+                NumberOfpages={productsData && productsData.NumberOfpages}
+                activePage={productsData && productsData.activePage}
                 ProductsData={productsData && productsData.products}
                 sortSettings={sortSettings}
-                isLoading={isLoadingProductsData}
-                sendUpdatedSortSettings={getUpdatedSortSettings}
                 fetchSearchData={fetchSearchData}
               />
             </div>

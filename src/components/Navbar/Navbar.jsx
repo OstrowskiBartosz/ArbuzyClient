@@ -1,5 +1,8 @@
 import React from 'react';
-import { Router, Route, Switch, Link } from 'react-router-dom';
+import { useState, useEffect, useCallback } from 'react';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import newAlert from '../../features/newAlert';
 
 import ShoppingCart from '../ShoppingCart/ShoppingCart.jsx';
 import SearchResults from '../SearchResults/SearchResults.jsx';
@@ -16,148 +19,115 @@ import SearchHints from '../SearchHints/SearchHints.jsx';
 import RouteNotFound from '../RouteNotFound/RouteNotFound.jsx';
 import MessageAlert from '../MessageAlert/MessageAlert.jsx';
 
-import scrollToTop from '../scrollToTop/scrollToTop.jsx';
-
-import history from '..//history';
+import { cartItemsChange } from '../../store/storeSlices/cartItemsSlice';
 
 import './Navbar.css';
-import ScrollToTop from '../scrollToTop/scrollToTop.jsx';
+import ScrollToTop from '../../features/scrollToTop/scrollToTop.jsx';
 
-class Navbar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.getLoggedUser = this.getLoggedUser.bind(this);
-    this.getUpdatedCartItems = this.getUpdatedCartItems.bind(this);
-    this.getHintsSearchValue = this.getHintsSearchValue.bind(this);
+import { createBrowserHistory } from 'history';
+const history = createBrowserHistory();
 
-    this.getAlertMessage = this.getAlertMessage.bind(this);
+const Navbar = (props) => {
+  const isLogged = useSelector((state) => state.session.isLogged);
+  const numberOfProducts = useSelector((state) => state.cartItems.numberOfProducts);
+  const updateCartItems = useSelector((state) => state.cartItems.updateCartItems);
+  const dispatch = useDispatch();
 
-    const params = new URLSearchParams(window.location.search);
-    let q = '';
-    let w = 'Wszędzie';
-    if (params.has('q')) {
-      q = params.get('q');
-    }
-    if (params.has('w')) {
-      w = params.get('w');
-    }
+  const params = new URLSearchParams(window.location.search);
 
-    this.state = {
-      isLogged: null,
-      searchValue: q,
-      searchValueToSend: q,
-      searchCategory: w,
-      searchCategoryToSend: w,
-      CartItems: 0,
-      isLoading: true,
+  const [isLoadingCartData, setIsLoadingCartData] = useState(true);
 
-      alertCounter: 0,
-      alertColor: '',
-      alertHeading: '',
-      alertText: '',
-      showAlert: false
-    };
-  }
+  const [searchValue, setSearchValue] = useState(params.has('q') ? params.get('q') : '');
+  const [searchValueToSend, setSearchValueToSend] = useState(
+    params.has('q') ? params.get('q') : ''
+  );
 
-  componentDidUpdate(prevState) {
-    if (this.props.isLogged !== prevState.isLogged) {
-      this.setState({
-        isLogged: this.props.isLogged,
-        isLoading: false
-      });
-      if (this.props.isLogged === true) {
-        this.fetchCartData();
-      }
-    }
-  }
+  const [searchCategory, setSearchCategory] = useState(
+    params.has('w') ? params.get('w') : 'Wszędzie'
+  );
+  const [searchCategoryURL, setSearchCategoryURL] = useState('');
 
-  fetchCartData() {
-    let url = 'http://localhost:9000/users';
-    fetch(url, {
-      method: 'get',
-      credentials: 'include',
-      headers: new Headers({ 'content-type': 'application/json' })
-    })
-      .then((response) => response.text())
-      .then((response) => {
-        this.setState({
-          CartItems: response,
-          isLoading: false
-        });
+  const categoryList = [
+    { categoryName: 'Dyski HDD', categoryID: 1 },
+    { categoryName: 'Dyski SSD', categoryID: 2 },
+    { categoryName: 'Karty graficzne', categoryID: 3 },
+    { categoryName: 'Napędy optyczne', categoryID: 4 },
+    { categoryName: 'Obudowy', categoryID: 5 },
+    { categoryName: 'Pamieci RAM', categoryID: 6 },
+    { categoryName: 'Płyty główne', categoryID: 7 },
+    { categoryName: 'Procesory', categoryID: 8 },
+    { categoryName: 'Zasilacze', categoryID: 9 }
+  ];
+
+  const fetchCartData = useCallback(async () => {
+    const url = `${process.env.REACT_APP_API}/cartv1/getItemsNumber`;
+    const response = await fetch(url, { method: 'get', credentials: 'include' });
+    const json = await response.json();
+    setIsLoadingCartData(false);
+    dispatch(
+      cartItemsChange({
+        numberOfProducts: json.data.numberOfProducts ?? 0,
+        updateCartItems: false
       })
-      .catch((err) => err);
-  }
+    );
+  }, [dispatch]);
 
-  getHintsSearchValue(searchValue) {
-    this.setState({
-      searchValue: searchValue ?? ''
-    });
-  }
-
-  getUpdatedCartItems(updateCartData) {
-    if (updateCartData === true) {
-      this.fetchCartData();
+  const getHintsSearchValue = (searchValueFromHints, urlFromHints, isProduct) => {
+    if (isProduct) {
+      setSearchValueToSend(searchValueFromHints ?? '');
+      setSearchValue(searchValueFromHints ?? '');
     }
-  }
 
-  getLoggedUser(loggedData) {
-    if (loggedData === true) {
-      this.fetchCartData();
-    } else if (loggedData === false) {
-      this.setState({
-        CartItems: 0
-      });
-    }
-    this.setState({
-      isLogged: loggedData
-    });
-  }
+    let lastSearched = JSON.parse(localStorage.lastSearched);
+    if (lastSearched.find((e) => e.value === searchValueFromHints)) return;
+    lastSearched.push({ value: searchValueFromHints, url: urlFromHints, isProduct: isProduct });
+    if (lastSearched.length > 5) lastSearched.shift();
+    localStorage.lastSearched = JSON.stringify(lastSearched);
+  };
 
-  handleCategoryChange(event) {
-    this.setState({
-      searchCategory: event.currentTarget.id
-    });
-  }
-
-  handleSearchChange(event) {
-    this.setState({
-      searchValue: event.target.value
-    });
-  }
-
-  handleSearchInputFocusIn() {
-    this.setState({
-      showSearchHints: !this.state.showSearchHints
-    });
-  }
-
-  handleSearchSubmit(event) {
-    if (this.state.searchValue.length === 0) {
-      event.preventDefault();
-      this.getAlertMessage('danger', 'Wpisz coś!', 'Wpisz przynajmniej jeden znak.');
+  const handleCategoryChange = (categoryID, categoryName) => {
+    if (categoryID === 0) {
+      setSearchCategory(`Wszędzie`);
+      setSearchCategoryURL('');
     } else {
-      this.setState({
-        searchValueToSend: this.state.searchValue,
-        searchCategoryToSend: this.state.searchCategory
-      });
+      setSearchCategory(`${categoryName}`);
+      setSearchCategoryURL(`&filterCategory=[${categoryID}]`);
     }
-  }
+  };
 
-  getAlertMessage(alertColor, alertHeading, alertText) {
-    this.setState({
-      alertColor: alertColor,
-      alertHeading: alertHeading,
-      alertText: alertText,
-      showAlert: true,
-      alertCounter: this.state.alertCounter + 1
-    });
-  }
+  const handleSearchChange = (event) => {
+    setSearchValue(event.target.value);
+  };
 
-  render() {
-    return (
-      <Router history={history}>
-        <div id="all">
-          <nav className="navbar navbar-expand-lg navbar-light bg-light Navbar-border fixed-top">
+  const handleSearchSubmit = (event) => {
+    if (searchValue.length === 0) {
+      event.preventDefault();
+      newAlert('danger', 'Wpisz coś!', 'Wpisz przynajmniej jeden znak.');
+    } else {
+      setSearchValueToSend(searchValue);
+      getHintsSearchValue(searchValue);
+    }
+  };
+
+  useEffect(() => {
+    if (isLogged === true && updateCartItems) {
+      fetchCartData();
+    } else if (isLogged === false) {
+      setIsLoadingCartData(false);
+      dispatch(
+        cartItemsChange({
+          numberOfProducts: 0,
+          updateCartItems: false
+        })
+      );
+    }
+  }, [fetchCartData, isLogged, dispatch, updateCartItems]);
+
+  return (
+    <Router history={history}>
+      <div id="all">
+        <nav className="navbar navbar-expand-lg navbar-light bg-light Navbar-border fixed-top d-flex justify-content-between">
+          <div>
             <Link className="navbar-brand" to="/">
               <div className="NavbarLogoPart3 mr-4 ml-2">
                 <svg
@@ -187,291 +157,190 @@ class Navbar extends React.Component {
               <div className="NavbarLogoPart2">r b u z y . c o</div>
               <div className="NavbarLogoPart1 pl-1">m</div>
             </Link>
-            <button
-              className="navbar-toggler"
-              type="button"
-              data-toggle="collapse"
-              data-target="#navbarSupportedContent"
-              aria-controls="navbarSupportedContent"
-              aria-expanded="false"
-              aria-label="Toggle navigation">
-              <span className="navbar-toggler-icon"></span>
-            </button>
-            <div
-              className="collapse navbar-collapse justify-content-between ml-5"
-              id="navbarSupportedContent">
-              <div className="center-Element-horizontal">
-                <form className="form-inline" id="searchBar">
+          </div>
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarToggler"
+            aria-controls="navbarToggler"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="collapse navbar-collapse" id="navbarToggler">
+            <div className="center-Element-horizontal">
+              <form className="form-inline" id="searchBar">
+                <div className="position-relative">
+                  <input
+                    autoComplete="off"
+                    className="form-control"
+                    type="text"
+                    placeholder="Nazwa produktu..."
+                    aria-label="Search"
+                    id="searchInput"
+                    value={searchValue}
+                    onChange={(event) => handleSearchChange(event)}
+                    required></input>
+                  <i
+                    className={
+                      searchValue.length > 0
+                        ? 'fa fa-times position-absolute removeSearchValueCross'
+                        : ''
+                    }
+                    onClick={() => {
+                      setSearchValue('');
+                    }}></i>
+                </div>
+                <div className="searchResultsHintsDisabler"></div>
+                <SearchHints searchValue={searchValue} sendHintsSearchValue={getHintsSearchValue} />
+                <li
+                  className={'nav-item dropdown' + (searchCategory !== 'Wszędzie' ? ' pr-4' : '')}
+                  id="searchBarDropdown">
+                  <div
+                    className="nav-link"
+                    id="navbarCategory"
+                    role="button"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false">
+                    {searchCategory} <i className="fas fa-chevron-down"></i>
+                  </div>
                   <div className="position-relative">
-                    <input
-                      autoComplete="off"
-                      className="form-control"
-                      type="text"
-                      placeholder="Nazwa produktu..."
-                      aria-label="Search"
-                      id="NavbarLeftBar"
-                      value={this.state.searchValue}
-                      onChange={(event) => this.handleSearchChange(event)}
-                      onFocus={() => this.handleSearchInputFocusIn()}
-                      required></input>
+                    <div className="dropdown-menu" aria-labelledby="navbarCategory">
+                      <div
+                        className="dropdown-item"
+                        id="Wszędzie"
+                        onClick={(event) => handleCategoryChange(0, 'Wszędzie')}>
+                        Wszędzie
+                      </div>
+                      <div className="dropdown-divider"></div>
+                      {categoryList.map((category, index) => (
+                        <div
+                          key={index}
+                          className="dropdown-item"
+                          onClick={(event) =>
+                            handleCategoryChange(category.categoryID, category.categoryName)
+                          }>
+                          {category.categoryName}
+                        </div>
+                      ))}
+                    </div>
                     <i
                       className={
-                        this.state.searchValue.length > 0
-                          ? 'fa fa-times position-absolute removeSearchValueCross'
+                        searchCategory !== 'Wszędzie'
+                          ? 'fa fa-times position-absolute removeSearchCategoryCross'
                           : ''
                       }
                       onClick={() => {
-                        this.setState({
-                          searchValue: ''
-                        });
+                        setSearchCategory('Wszędzie');
                       }}></i>
                   </div>
-                  <div
-                    className="searchResultsHintsDisabler"
-                    onClick={(event) => this.handleSearchInputFocusOut(event)}></div>
-                  <SearchHints
-                    showSearchHints={this.state.showSearchHints}
-                    searchCategory={this.state.searchCategory}
-                    searchValue={this.state.searchValue}
-                    sendHintsSearchValue={this.getHintsSearchValue}
-                  />
-                  <li
-                    className={
-                      'nav-item dropdown' +
-                      (this.state.searchCategory !== 'Wszędzie' ? ' pr-4' : '')
-                    }
-                    id="searchBarDropdown">
-                    <div
-                      className="nav-link"
-                      id="navbarCategory"
-                      role="button"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false">
-                      {this.state.searchCategory} <i className="fas fa-chevron-down"></i>
-                    </div>
-                    <div className="position-relative">
-                      <div className="dropdown-menu" aria-labelledby="navbarCategory">
-                        <div
-                          className="dropdown-item"
-                          id="Wszędzie"
-                          onClick={(event) => this.handleCategoryChange(event)}>
-                          Wszędzie
-                        </div>
-                        <div className="dropdown-divider"></div>
-                        <div
-                          className="dropdown-item"
-                          id="Dyski HDD"
-                          onClick={(event) => this.handleCategoryChange(event)}>
-                          Dyski HDD
-                        </div>
-                        <div
-                          className="dropdown-item"
-                          id="Dyski SSD"
-                          onClick={(event) => this.handleCategoryChange(event)}>
-                          Dyski SSD
-                        </div>
-                        <div
-                          className="dropdown-item"
-                          id="Karty graficzne"
-                          onClick={(event) => this.handleCategoryChange(event)}>
-                          Karty graficzne
-                        </div>
-                        <div
-                          className="dropdown-item"
-                          id="Napędy optyczne"
-                          onClick={(event) => this.handleCategoryChange(event)}>
-                          Napędy optyczne
-                        </div>
-                        <div
-                          className="dropdown-item"
-                          id="Obudowy"
-                          onClick={(event) => this.handleCategoryChange(event)}>
-                          Obudowy
-                        </div>
-                        <div
-                          className="dropdown-item"
-                          id="Pamięci RAM"
-                          onClick={(event) => this.handleCategoryChange(event)}>
-                          Pamięci RAM
-                        </div>
-                        <div
-                          className="dropdown-item"
-                          id="Płyty główne"
-                          onClick={(event) => this.handleCategoryChange(event)}>
-                          Płyty główne
-                        </div>
-                        <div
-                          className="dropdown-item"
-                          id="Procesory"
-                          onClick={(event) => this.handleCategoryChange(event)}>
-                          Procesory
-                        </div>
-                        <div
-                          className="dropdown-item"
-                          id="Zasilacze"
-                          onClick={(event) => this.handleCategoryChange(event)}>
-                          Zasilacze
-                        </div>
-                      </div>
-                      <i
-                        className={
-                          this.state.searchCategory !== 'Wszędzie'
-                            ? 'fa fa-times position-absolute removeSearchCategoryCross'
-                            : ''
-                        }
-                        onClick={() => {
-                          this.setState({
-                            searchCategory: 'Wszędzie'
-                          });
-                        }}></i>
-                    </div>
-                  </li>
+                </li>
+                <Link
+                  to={`/search?q=${searchValue}&s=domyślne&l=10&p=1${searchCategoryURL}`}
+                  onClick={(event) => handleSearchSubmit(event)}>
+                  <button type="submit">
+                    Wyszukaj <i className="fa fa-search"></i>
+                  </button>
+                </Link>
+              </form>
+            </div>
+            <div>
+              <ul className="navbar-nav mr-auto">
+                <li className={'nav-item pr-3'}>
                   <Link
-                    to={`/search?q=${this.state.searchValue}&w=${this.state.searchCategory}`}
-                    onClick={(event) => this.handleSearchSubmit(event)}>
-                    <button type="submit">
-                      Wyszukaj <i className="fa fa-search"></i>
-                    </button>
+                    className="font-weight-bold navbar-Font-Size nav-link cursor-pointer"
+                    to="/profile/orders">
+                    <span className="pr-2">Profil</span>
+                    <i className="bigicon fas fa-user"></i>
                   </Link>
-                </form>
-              </div>
-              <div className="float-right">
-                <ul className="navbar-nav mr-auto">
-                  <li className={'nav-item pr-3'}>
-                    <Link
-                      className="font-weight-bold navbar-Font-Size nav-link cursor-pointer"
-                      to="/profile">
-                      <span className="pr-2">Profil</span>
-                      <i className="bigicon fas fa-user"></i>
-                    </Link>
-                  </li>
-                  <li className={'nav-item pr-3'}>
-                    <Link
-                      className="font-weight-bold navbar-Font-Size nav-link cursor-pointer position-relative"
-                      to="/cart">
-                      <span className="pr-2">Koszyk</span>
-                      <i className="bigicon fas fa-shopping-cart"></i>
-                      <span className="badge badge-primary navbarCartStyle position-absolute">
-                        {this.state.isLoading ? (
-                          <div className="spinner-border spinner-border-sm" role="status">
-                            <span className="sr-only">Loading...</span>
-                          </div>
-                        ) : (
-                          this.state.CartItems
-                        )}
-                      </span>
-                    </Link>
-                  </li>
-                  <li className={'nav-item ' + (this.state.isLogged ? 'hidden' : '')}>
-                    <Link
-                      className="font-weight-bold navbar-Font-Size nav-link cursor-pointer"
-                      to="/login">
-                      <span className="pr-2">Zaloguj</span>
-                      <i className="bigicon fas fa-sign-in-alt"></i>
-                    </Link>
-                  </li>
-                  <li className={'nav-item small-left ' + (this.state.isLogged ? '' : 'hidden')}>
+                </li>
+                <li className={'nav-item pr-3'}>
+                  <Link
+                    className="font-weight-bold navbar-Font-Size nav-link cursor-pointer position-relative"
+                    to="/cart">
+                    <span className="pr-2">Koszyk</span>
+                    <i className="bigicon fas fa-shopping-cart"></i>
+                    <span className="badge badge-primary navbarCartStyle position-absolute">
+                      {isLoadingCartData ? (
+                        <div className="spinner-border smallSpinnerNavbar" role="status">
+                          <span className="sr-only">Loading...</span>
+                        </div>
+                      ) : (
+                        numberOfProducts
+                      )}
+                    </span>
+                  </Link>
+                </li>
+                {isLogged ? (
+                  <li className={'nav-item'}>
                     <Link
                       className="font-weight-bold navbar-Font-Size nav-link cursor-pointer"
                       to="/logout">
                       <span className="pr-2">Wyloguj</span>
+                      <i className="bigicon fas fa-sign-in-alt"></i>
+                    </Link>
+                  </li>
+                ) : (
+                  <li className={'nav-item small-left'}>
+                    <Link
+                      className="font-weight-bold navbar-Font-Size nav-link cursor-pointer"
+                      to="/login">
+                      <span className="pr-2">Zaloguj</span>
                       <i className="bigicon fas fa-sign-out-alt"></i>
                     </Link>
                   </li>
-                </ul>
-              </div>
+                )}
+              </ul>
             </div>
-            <MessageAlert
-              alertHeading={this.state.alertHeading}
-              alertText={this.state.alertText}
-              alertColor={this.state.alertColor}
-              alertCounter={this.state.alertCounter}
-            />
-          </nav>
-          <ScrollToTop>
-            <Switch>
-              <Route exact path="/">
-                {<MainPage />}
-              </Route>
-              <Route path="/login">
-                <AuthenticationPanel
-                  isLogged={this.state.isLogged}
-                  redirect={window.location.pathname + window.location.search}
-                  hasExpired={this.props.hasExpired}
-                  sendLoggedUser={this.getLoggedUser}
-                  sendAlertMessage={this.getAlertMessage}
-                />
-              </Route>
-              <Route path="/logout">
-                <LogOut
-                  isLogged={this.state.isLogged}
-                  sendLoggedUser={this.getLoggedUser}
-                  sendAlertMessage={this.getAlertMessage}
-                />
-              </Route>
-              <Route path="/profile">
-                <Profile
-                  isLogged={this.state.isLogged}
-                  sendLoggedUser={this.getLoggedUser}
-                  sendAlertMessage={this.getAlertMessage}
-                />
-              </Route>
-              <Route path="/invoice:id?">
-                <Invoice
-                  isLogged={this.state.isLogged}
-                  sendLoggedUser={this.getLoggedUser}
-                  sendAlertMessage={this.getAlertMessage}
-                />
-              </Route>
-              <Route path="/product/:productID?">
-                <Product
-                  isLogged={this.state.isLogged}
-                  sendLoggedUser={this.getLoggedUser}
-                  sendUpdatedCartItems={this.getUpdatedCartItems}
-                  sendAlertMessage={this.getAlertMessage}
-                />
-              </Route>
-              <Route path="/search:q?:w?:s?:p?:l?">
-                <SearchResults
-                  isLogged={this.state.isLogged}
-                  searchValue={this.state.searchValueToSend}
-                  searchCategory={this.state.searchCategoryToSend}
-                  history={history}
-                  sendUpdatedCartItems={this.getUpdatedCartItems}
-                  sendHintsSearchValue={this.getHintsSearchValue}
-                  sendAlertMessage={this.getAlertMessage}
-                />
-              </Route>
-              <Route path="/cart">
-                <ShoppingCart
-                  isLogged={this.state.isLogged}
-                  history={history}
-                  sendUpdatedCartItems={this.getUpdatedCartItems}
-                  sendAlertMessage={this.getAlertMessage}
-                />
-              </Route>
-              <Route exact path="/cartsummary">
-                <CartSummary
-                  isLogged={this.state.isLogged}
-                  history={history}
-                  sendUpdatedCartItems={this.getUpdatedCartItems}
-                  sendAlertMessage={this.getAlertMessage}
-                />
-              </Route>
-              <Route exact path="/purchaseconfirmation">
-                <PurchaseConfirmation isLogged={this.state.isLogged} history={history} />
-              </Route>
-              <Route>
-                <RouteNotFound />
-              </Route>
-            </Switch>
-          </ScrollToTop>
-          <PageFooter />
-        </div>
-      </Router>
-    );
-  }
-}
+          </div>
+        </nav>
+        <MessageAlert />
+        <ScrollToTop>
+          <Switch>
+            <Route exact path="/">
+              {<MainPage />}
+            </Route>
+            <Route path="/login">
+              <AuthenticationPanel
+                redirect={window.location.pathname + window.location.search}
+                hasExpired={props.hasExpired}
+              />
+            </Route>
+            <Route path="/logout">
+              <LogOut />
+            </Route>
+            <Route path="/profile/:tabName?">
+              <Profile />
+            </Route>
+            <Route path="/invoice/:invoiceID?">
+              <Invoice />
+            </Route>
+            <Route path="/product/:productID?">
+              <Product />
+            </Route>
+            <Route path="/search">
+              <SearchResults searchValue={searchValueToSend} history={history} />
+            </Route>
+            <Route path="/cart">
+              <ShoppingCart history={history} />
+            </Route>
+            <Route exact path="/cartsummary">
+              <CartSummary history={history} />
+            </Route>
+            <Route exact path="/purchaseconfirmation/:invoiceID?">
+              <PurchaseConfirmation history={history} />
+            </Route>
+            <Route>
+              <RouteNotFound />
+            </Route>
+          </Switch>
+        </ScrollToTop>
+        <PageFooter />
+      </div>
+    </Router>
+  );
+};
 
 export default Navbar;

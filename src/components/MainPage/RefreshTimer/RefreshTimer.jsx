@@ -1,19 +1,19 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 
-const getMinutes = (lastRefreshDateRef) => {
-  const time = new Date(lastRefreshDateRef.current + 300000).getTime() - Date.now();
+const getMinutes = (lastRefreshRef) => {
+  const time = new Date(lastRefreshRef.current + 300000).getTime() - Date.now();
   const minutes = Math.floor((time / 1000 / 60) % 60);
   return minutes;
 };
 
-const getSeconds = (lastRefresh) => {
-  const time = new Date(lastRefresh.current + 300000).getTime() - Date.now();
+const getSeconds = (lastRefreshRef) => {
+  const time = new Date(lastRefreshRef.current + 300000).getTime() - Date.now();
   const seconds = Math.floor((time / 1000) % 60);
   return seconds;
 };
 
-const RefreshTimer = ({ handleRefresh }) => {
+const RefreshTimer = ({ handleFetchData }) => {
   const lastUpdate = useSelector((state) => state.products.lastUpdate);
   const [refreshTime, setRefreshTime] = useState(lastUpdate ?? new Date().getTime());
   const lastRefreshDateRef = useRef(refreshTime);
@@ -26,10 +26,10 @@ const RefreshTimer = ({ handleRefresh }) => {
     setMinutes(minutes);
     setSeconds(seconds);
     if (minutes <= 0 && seconds <= 0) {
-      handleRefresh();
+      handleFetchData();
       setRefreshTime(new Date().getTime());
     }
-  }, [handleRefresh]);
+  }, [handleFetchData]);
 
   useEffect(() => {
     const interval = setInterval(() => refreshTimer(), 1000);
@@ -64,7 +64,7 @@ const RefreshTimer = ({ handleRefresh }) => {
             })}
           </span>
           <span className="float-right mt-1 pr-2">
-            <i className="fa fa-refresh refreshButton fs-5" onClick={() => handleRefresh()}></i>
+            <i className="fa fa-refresh refreshButton fs-5" onClick={() => handleFetchData()}></i>
           </span>
         </div>
       </div>
