@@ -7,6 +7,24 @@ import newAlert from '../../features/newAlert';
 import RefreshTimer from './RefreshTimer/RefreshTimer';
 import './MainPage.css';
 
+const categoryList = [
+  [
+    { categoryName: 'Dyski HDD', categoryID: 1 },
+    { categoryName: 'Dyski SSD', categoryID: 2 },
+    { categoryName: 'Karty graficzne', categoryID: 3 }
+  ],
+  [
+    { categoryName: 'Napędy optyczne', categoryID: 4 },
+    { categoryName: 'Obudowy', categoryID: 5 },
+    { categoryName: 'Pamieci RAM', categoryID: 6 }
+  ],
+  [
+    { categoryName: 'Płyty główne', categoryID: 7 },
+    { categoryName: 'Procesory', categoryID: 8 },
+    { categoryName: 'Zasilacze', categoryID: 9 }
+  ]
+];
+
 const MainPage = (props) => {
   const dispatch = useDispatch();
   const products = useSelector((state) => ({
@@ -15,50 +33,24 @@ const MainPage = (props) => {
     youMayLikeProducts: state.products.youMayLikeProducts
   }));
 
-  const [isLoadingTopCategory, setIsLoadingTopCategory] = useState(
-    products.mostBoughtCategoryProducts.length === 0 ? true : false
-  );
-  const [isLoadingTopProducts, setIsLoadingTopProducts] = useState(
-    products.mostBoughtProducts.length === 0 ? true : false
-  );
-  const [isLoadingYouMayLike, setIsLoadingMayLike] = useState(
-    products.youMayLikeProducts.length === 0 ? true : false
-  );
+  const firstFetch = products.mostBoughtCategoryProducts.length === 0 ? true : false;
+  const [isLoadingData, setIsLoadingData] = useState(firstFetch);
 
-  const categoryList = [
-    [
-      { categoryName: 'Dyski HDD', categoryID: 1 },
-      { categoryName: 'Dyski SSD', categoryID: 2 },
-      { categoryName: 'Karty graficzne', categoryID: 3 }
-    ],
-    [
-      { categoryName: 'Napędy optyczne', categoryID: 4 },
-      { categoryName: 'Obudowy', categoryID: 5 },
-      { categoryName: 'Pamieci RAM', categoryID: 6 }
-    ],
-    [
-      { categoryName: 'Płyty główne', categoryID: 7 },
-      { categoryName: 'Procesory', categoryID: 8 },
-      { categoryName: 'Zasilacze', categoryID: 9 }
-    ]
-  ];
+  const handleFetchData = useCallback(async () => {
+    const fetchData = async (resource) => {
+      const url = `${process.env.REACT_APP_API}/product/${resource}`;
+      const response = await fetch(url, { method: 'get', credentials: 'include' });
+      const json = await response.json();
+      return json.data;
+    };
 
-  const fetchData = useCallback(async (resource) => {
-    const url = `${process.env.REACT_APP_API}/product/${resource}`;
-    const response = await fetch(url, { method: 'get', credentials: 'include' });
-    const json = await response.json();
-    return json.data;
-  }, []);
-
-  const handleRefresh = useCallback(async () => {
-    setIsLoadingTopCategory(true);
-    setIsLoadingTopProducts(true);
-    setIsLoadingMayLike(true);
+    setIsLoadingData(true);
     const [mostBoughtCategoryProducts, mostBoughtProducts, youMayLikeProducts] = await Promise.all([
       fetchData('mostBoughtCategoryProducts'),
       fetchData('mostBoughtProducts'),
       fetchData('youMayLikeThisProducts')
     ]);
+
     const refreshTimer = new Date().getTime();
     dispatch(
       updateProducts({
@@ -68,15 +60,16 @@ const MainPage = (props) => {
         lastUpdate: refreshTimer
       })
     );
-    newAlert('primary', 'Odświeżono!', 'Produkty zostały odświeżone.');
-    setIsLoadingTopCategory(false);
-    setIsLoadingTopProducts(false);
-    setIsLoadingMayLike(false);
-  }, [fetchData, dispatch]);
+
+    if (mostBoughtCategoryProducts && mostBoughtProducts && youMayLikeProducts) {
+      setIsLoadingData(false);
+      newAlert('primary', 'Odświeżono!', 'Produkty zostały odświeżone.');
+    }
+  }, [dispatch]);
 
   useEffect(() => {
-    if (products.mostBoughtCategoryProducts.length === 0) handleRefresh();
-  }, [handleRefresh, products]);
+    if (firstFetch) handleFetchData();
+  }, [handleFetchData, firstFetch]);
 
   return (
     <div className="container mainpage mb-5 text-center">
@@ -103,14 +96,14 @@ const MainPage = (props) => {
 
       <RefreshTimer
         dataTopCategory={products.mostBoughtCategoryProducts}
-        handleRefresh={handleRefresh}
+        handleFetchData={handleFetchData}
       />
       <div className="container shadow-sm bg-white rounded mb-4">
         <div className="categoryHeader mb-3 pt-3 display-inlineblock">
           Najczęściej Kupowane Produkty
         </div>
         <hr />
-        {isLoadingTopProducts ? (
+        {isLoadingData ? (
           <div className="d-flex justify-content-center pt-5 pb-5">
             <div className="spinner-border" role="status">
               <span className="sr-only">Loading...</span>
@@ -150,7 +143,7 @@ const MainPage = (props) => {
       <div className="container shadow-sm bg-white rounded mb-4">
         <div className="categoryHeader mb-3 pt-3">Najczęściej Kupowana Kategoria</div>
         <hr />
-        {isLoadingTopCategory ? (
+        {isLoadingData ? (
           <div className="d-flex justify-content-center pt-5 pb-5">
             <div className="spinner-border" role="status">
               <span className="sr-only">Loading...</span>
@@ -190,7 +183,7 @@ const MainPage = (props) => {
       <div className="container shadow-sm bg-white rounded mb-4">
         <div className="categoryHeader mb-3 pt-3">Może Ci się spodobać</div>
         <hr />
-        {isLoadingYouMayLike ? (
+        {isLoadingData ? (
           <div className="d-flex justify-content-center pt-5 pb-5">
             <div className="spinner-border" role="status">
               <span className="sr-only">Loading...</span>

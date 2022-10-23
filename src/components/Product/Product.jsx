@@ -19,7 +19,7 @@ const splitProductDesc = async (description) => {
   return description;
 };
 
-const getURLParam = () => {
+const getURLFromParam = () => {
   const params = new URLSearchParams(window.location.search);
   const URLParam = params.get('searchURL') ?? null;
   return URLParam;
@@ -27,11 +27,13 @@ const getURLParam = () => {
 
 const Product = (props) => {
   const { productID } = useParams();
-  const searchURL = getURLParam();
+  const searchURL = getURLFromParam();
 
-  const [blockUI, setBlockUI] = useState(false);
   const [productData, setProductData] = useState(false);
-  const [isLoadingProductData, setIsLoadingProductData] = useState(true);
+  const [isLoadingProduct, setIsLoadingProduct] = useState(true);
+  const [error, setError] = useState(null);
+  const [blockUI, setBlockUI] = useState(false);
+
   const [currentImage, setCurrentImage] = useState('');
   const [productDescription, setProductDescription] = useState('');
   const [productLimit, setProductLimit] = useState(false);
@@ -79,28 +81,41 @@ const Product = (props) => {
 
   useEffect(() => {
     const fetchProductData = async () => {
-      const url = `${process.env.REACT_APP_API}/product/${productID}`;
-      const response = await fetch(url, { method: 'get', credentials: 'include' });
-      const json = await response.json();
+      try {
+        const url = `${process.env.REACT_APP_API}/product/${productID}`;
+        const response = await fetch(url, { method: 'get', credentials: 'include' });
+        const json = await response.json();
 
-      const productDescription = await splitProductDesc(json.data.description.split('|'));
-      const mainImageIndex = json.data.Attributes.findIndex((ele) => Number(ele.type) === 2);
-      setProductData(json.data);
-      setIsLoadingProductData(false);
-      setProductDescription(productDescription);
-      setCurrentImage(json.data.Attributes[mainImageIndex].value);
+        const productDescription = await splitProductDesc(json.data.description.split('|'));
+        const mainImageIndex = json.data.Attributes.findIndex((ele) => Number(ele.type) === 2);
+        setProductData(json.data);
+        setError(null);
+        setIsLoadingProduct(false);
+        setProductDescription(productDescription);
+        setCurrentImage(json.data.Attributes[mainImageIndex].value);
+      } catch (err) {
+        setError(err.message);
+        setProductData(null);
+      } finally {
+        setIsLoadingProduct(false);
+      }
     };
 
     fetchProductData();
   }, [productID]);
 
-  if (isLoadingProductData) {
+  if (isLoadingProduct || error) {
     return (
       <div className="container options shadow-sm bg-white rounded mb-5">
         <div className="d-flex justify-content-center pt-5 pb-5">
           <div className="spinner-border" role="status">
             <span className="sr-only">Loading...</span>
           </div>
+          {error ? (
+            <div className="pt-5" id="error">
+              Error: {error}
+            </div>
+          ) : null}
         </div>
       </div>
     );

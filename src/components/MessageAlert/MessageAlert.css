@@ -1,3 +1,10 @@
+.alertContainer {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 85px;
+  z-index: 10;
+}
+
 .alert {
   position: absolute;
   top: calc(150% - 25px);

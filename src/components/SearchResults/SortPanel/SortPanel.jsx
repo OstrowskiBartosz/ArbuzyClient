@@ -2,31 +2,26 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import history from '../../history';
 import '../SearchResults.css';
+import pagination from './utils';
 
-const pagination = (NumberOfpages) => {
-  const pages = [];
-  for (let i = 1; i <= NumberOfpages; i++) {
-    pages.push(i);
-    if (i === 5) break;
-  }
-  return pages;
-};
-
-const SortPanel = ({ isLoading, sortData, ProductsData, sortSettings, fetchSearchData }) => {
-  const pageData = sortData;
-
+const SortPanel = ({
+  isLoading,
+  NumberOfpages,
+  activePage,
+  ProductsData,
+  sortSettings,
+  fetchSearchData
+}) => {
   const [productLimit, setProductLimit] = useState(sortSettings.productLimit);
   const [productSort, setProductSort] = useState(sortSettings.productSort);
   const [productPage, setProductPage] = useState(sortSettings.productPage);
 
-  const pages = pagination(pageData && pageData.NumberOfpages);
+  const pages = pagination(NumberOfpages);
 
   const [nextPageAvailable, setNextPageAvailable] = useState(
-    pageData && pageData.NumberOfpages !== pageData && pageData.activePage ? true : false
+    NumberOfpages !== activePage ? true : false
   );
-  const [prevPageAvailable, setPrevPageAvailable] = useState(
-    pageData && pageData.activePage > 1 ? true : false
-  );
+  const [prevPageAvailable, setPrevPageAvailable] = useState(activePage > 1 ? true : false);
 
   const sortingMethods = [
     { api: 'default', display: 'domyślne' },
@@ -52,9 +47,9 @@ const SortPanel = ({ isLoading, sortData, ProductsData, sortSettings, fetchSearc
     if (prevPageAvailable === false && sign === '-') return;
     if (nextPageAvailable === false && sign === '+') return;
 
-    setProductPage(sign === '+' ? productPage + 1 : productPage - 1);
+    setProductPage(sign === '+' ? Number(productPage) + 1 : Number(productPage) - 1);
     const params = new URLSearchParams(window.location.search);
-    params.set('p', sign === '+' ? productPage + 1 : productPage - 1);
+    params.set('p', sign === '+' ? Number(productPage) + 1 : Number(productPage) - 1);
     history.push(window.location.pathname + '?' + params);
     fetchSearchData({
       ...sortSettings,
@@ -95,9 +90,9 @@ const SortPanel = ({ isLoading, sortData, ProductsData, sortSettings, fetchSearc
   }, [sortSettings]);
 
   useEffect(() => {
-    setPrevPageAvailable(sortData && sortData.activePage > 1 ? true : false);
-    setNextPageAvailable(sortData && sortData.NumberOfpages !== sortData.activePage ? true : false);
-  }, [sortData, sortData.activePage]);
+    setPrevPageAvailable(activePage > 1 ? true : false);
+    setNextPageAvailable(NumberOfpages !== activePage ? true : false);
+  }, [NumberOfpages, activePage]);
 
   if (isLoading && ProductsData === undefined) {
     return (
@@ -169,17 +164,17 @@ const SortPanel = ({ isLoading, sortData, ProductsData, sortSettings, fetchSearc
           <div>
             <ul className="pagination">
               <div className="btn btn-secondary">wyników na stronie</div>
-              <li className={'page-item ' + (productLimit === 10 ? 'active' : '')}>
+              <li className={'page-item ' + (Number(productLimit) === 10 ? 'active' : '')}>
                 <div className="page-link" onClick={() => handleLimitChange(10)}>
                   10
                 </div>
               </li>
-              <li className={'page-item ' + (productLimit === 20 ? 'active' : '')}>
+              <li className={'page-item ' + (Number(productLimit) === 20 ? 'active' : '')}>
                 <div className="page-link" onClick={() => handleLimitChange(20)}>
                   20
                 </div>
               </li>
-              <li className={'page-item ' + (productLimit === 30 ? 'active' : '')}>
+              <li className={'page-item ' + (Number(productLimit) === 30 ? 'active' : '')}>
                 <div className="page-link" onClick={() => handleLimitChange(30)}>
                   30
                 </div>
@@ -225,7 +220,7 @@ const SortPanel = ({ isLoading, sortData, ProductsData, sortSettings, fetchSearc
                 </div>
                 {pages.map((page, index) => (
                   <li
-                    className={index + 1 === pageData.activePage ? 'page-item active' : 'page-item'}
+                    className={index + 1 === activePage ? 'page-item active' : 'page-item'}
                     key={`page${index + 1}`}>
                     <div
                       className="page-link"
