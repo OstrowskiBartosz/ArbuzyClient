@@ -60,7 +60,7 @@ const Navbar = (props) => {
   ];
 
   const fetchCartData = useCallback(async () => {
-    const url = `${process.env.REACT_APP_API}/cartv1/getItemsNumber`;
+    const url = `${process.env.REACT_APP_API}/cart/getItemsNumber`;
     const response = await fetch(url, { method: 'get', credentials: 'include' });
     const json = await response.json();
     setIsLoadingCartData(false);

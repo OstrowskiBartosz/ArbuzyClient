@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const ListLastSearched = ({ data, hideHints, removeLastSearched }) => {
-  console.log({ data });
   return data.slice(0, 5).map((searchTerm, index) => (
     <tr key={index}>
       <td>

@@ -4,6 +4,7 @@ import Navbar from './components/Navbar/Navbar.jsx';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { sessionChange } from './store/storeSlices/sessionSlice.js';
+import { updateCartItems } from './store/storeSlices/cartItemsSlice.js';
 
 import './App.css';
 
@@ -19,13 +20,12 @@ const App = (props) => {
           credentials: 'include',
           headers: new Headers({ 'content-type': 'application/json' })
         })
-          .then((response) => response.text())
+          .then((response) => response.json())
           .then((response) => {
-            if (response === 'Logged.') {
+            if (response.message === 'Logged.') {
               dispatch(sessionChange(true));
-            } else {
-              dispatch(sessionChange(false));
-            }
+              dispatch(updateCartItems(true));
+            } else dispatch(sessionChange(false));
           })
           .catch((err) => err);
       } else {

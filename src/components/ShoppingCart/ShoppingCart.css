@@ -35,16 +35,45 @@
   transform: translate(-50%, -50%);
 }
 
+.hideLabels {
+  display: block;
+}
+
+.smallScreenPadding {
+  padding-bottom: 0px;
+}
+
 @media (max-width: 1200px) {
-  .hide-l {
-    display: none;
+  .hideLabels {
+    display: none !important;
   }
-  .align-text-center {
-    justify-content: center;
+  .smallScreenPadding {
+    padding-bottom: 15px;
   }
 }
 
 .vertical-center {
   margin-top: auto;
   margin-bottom: auto;
+}
+
+.blockedUIScreen {
+  opacity: 0.4;
+  z-index: 10;
+  pointer-events: none;
+  position: relative;
+}
+
+.blockUISpinner {
+  z-index: 15;
+  font-size: 25;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+}
+
+.opaciTySwitch {
+  transition: opacity 0.25s ease-in-out;
 }
