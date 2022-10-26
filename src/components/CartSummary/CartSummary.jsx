@@ -6,8 +6,7 @@ import { updateCartItems } from '../../store/storeSlices/cartItemsSlice';
 import DeliveryTable from './DeliveryTable/DeliveryTable';
 import ProductTable from './ProductTable/ProductTable';
 import newAlert from '../../features/newAlert';
-
-import '../../App.css';
+import MoveBack from '../../features/additionalComponents/MoveBack/MoveBack';
 
 const CartSummary = (props) => {
   const [userData, setUserData] = useState(null);
@@ -91,7 +90,7 @@ const CartSummary = (props) => {
               </div>
             </div>
             {isLoadingData && (
-              <div className="col-12 componentBackgroundColor shadow-sm p-3 bg-white rounded">
+              <div>
                 <div className="d-flex justify-content-center pt-5 pb-5">
                   <div className="spinner-border" role="status">
                     <span className="sr-only">Loading...</span>
@@ -100,7 +99,7 @@ const CartSummary = (props) => {
               </div>
             )}
             {error && (
-              <div className="col-12 componentBackgroundColor shadow-sm p-3 bg-white rounded">
+              <div>
                 <div className="d-flex justify-content-center pt-5 pb-5">
                   <span>{error}</span>
                 </div>
@@ -123,47 +122,33 @@ const CartSummary = (props) => {
   } else {
     if (cartData && cartData.cartItemsData && cartData.cartItemsData.length > 0) {
       return (
-        <div className="container-fluid">
-          <div className="row navbar-padding">
-            <div className="col-xl-3"></div>
-            <div className="col-xl-6 mt-5 componentBackgroundColor mt-3 mb-3 shadow-sm p-3 bg-white rounded">
-              <div className="row">
-                <div className="col-xl-12">
-                  <span className="p-2 m-2 fw-bold text-center">
-                    <h2>PODSUMOWANIE</h2>
-                  </span>
-                  <ProductTable cartData={cartData} />
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-xl-12">
-                  <DeliveryTable userData={userData} />
-                </div>
-              </div>
-              <div className="row pt-5">
-                <div className="col-3"></div>
-                <div className="col-6">
-                  <button
-                    className="btn btn-lg btn-block mt-1 pt-1 btn-primary"
-                    onClick={() => handleBuyClick()}>
-                    Przejdz do płatności <i className="fas fa-sign-out-alt"></i>
-                  </button>
-                </div>
-                <div className="col-3"></div>
+        <>
+          <div className="container options shadow-sm bg-white rounded">
+            <div className="row">
+              <div className="col-xl-12">
+                <span className="p-2 m-2 fs-1 fw-bold text-center">Podsumowanie</span>
+                <ProductTable cartData={cartData} />
               </div>
             </div>
-            <div className="col-xl-3"></div>
-          </div>
-          <div className="row pt-4 pb-5 mb-5">
-            <div className="col-lg-4"></div>
-            <div className="col-lg-4 text-left">
-              <Link className="btn btn-outline-secondary" to="/cart">
-                <i className="fas fa-chevron-left"></i> Wróć do koszyka
-              </Link>
+            <div className="row">
+              <div className="col-xl-12">
+                <DeliveryTable userData={userData} />
+              </div>
             </div>
-            <div className="col-lg-4"></div>
+            <div className="row pt-5">
+              <div className="col-xl-3"></div>
+              <div className="col-xl-6">
+                <button
+                  className="btn btn-lg btn-block mt-1 pt-1 btn-primary"
+                  onClick={() => handleBuyClick()}>
+                  Przejdz do płatności <i className="fas fa-sign-out-alt"></i>
+                </button>
+              </div>
+              <div className="col-xl-3"></div>
+            </div>
           </div>
-        </div>
+          <MoveBack moveBackText="Wróć do koszyka" moveBackURL="/cart" />
+        </>
       );
     } else {
       return (

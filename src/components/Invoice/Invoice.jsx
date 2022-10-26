@@ -1,193 +1,105 @@
 import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { useState, useEffect, useCallback } from 'react';
+import { Redirect, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import newAlert from '../../features/newAlert';
+import InvoiceItemsList from './InvoiceItemsList/InvoiceItemsList';
+import InvoiceDetailsList from './InvoiceDetailsList/InvoiceDetailsList';
 import './Invoice.css';
+import MoveBack from '../../features/additionalComponents/MoveBack/MoveBack';
 
-class Invoice extends React.Component {
-  constructor(props) {
-    super(props);
-    const params = new URLSearchParams(window.location.search);
-    this.state = {
-      errorLogin: false,
-      errorMessageLogin: '',
-      errorSignup: false,
-      errorMessageSignup: '',
-      activeTab: 1,
-      isLoading: true,
-      invoiceID: params.get('id'),
+const Invoice = (props) => {
+  const isLogged = useSelector((state) => state.session.isLogged);
 
-      isLogged: null,
-      logInInfoReceived: false
-    };
-  }
+  const [invoiceData, setInvoiceData] = useState({});
+  const [isLoadingInvoiceData, setIsLoadingInvoiceData] = useState(true);
+  const [error, setError] = useState(null);
+  const [blockUI, setBlockUI] = useState(false);
+  let { invoiceID } = useParams();
 
-  componentWillUnmount() {
-    if (this.state.isLogged === false) {
-      this.props.sendAlertMessage(
-        'danger',
-        'Zaloguj się!',
-        'Zaloguj się, żeby zobaczyć swoje faktury.'
-      );
-    }
-  }
-  componentDidUpdate(prevState, prevProps) {
-    if (prevProps.isLogged !== this.props.isLogged) {
-      this.setState({
-        isLogged: this.props.isLogged,
-        logInInfoReceived: true
-      });
-    }
-  }
-
-  componentDidMount() {
-    if (this.props.isLogged !== this.state.isLogged) {
-      this.setState({
-        isLogged: this.props.isLogged,
-        logInInfoReceived: true
-      });
-    }
-    this.fetchInvoice();
-  }
-
-  fetchInvoice() {
-    let url = 'http://localhost:9000/invoice';
-    fetch(url, {
-      method: 'post',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: 'invoiceID=' + this.state.invoiceID
-    })
-      .then((response) => response.text())
-      .then((response) => {
-        var responseObject = JSON.parse(response);
-        this.setState({ response: responseObject, isLoading: false });
-      })
-      .catch((err) => err);
-  }
-
-  render() {
-    if (this.state.logout === true) {
-      return <Redirect to="/" />;
-    }
-    if (this.state.isLogged === false && this.state.logInInfoReceived === true) {
-      return <Redirect to="/login" />;
-    } else if (this.state.isLoading) {
-      return <div>Loading...</div>;
-    } else {
-      if (this.state.response.error) {
-        return <Redirect to="/profil" />;
+  const handleCancelClick = async (invoiceID) => {
+    try {
+      setBlockUI(true);
+      const url = `${process.env.REACT_APP_API}/invoice/${invoiceID}`;
+      const response = await fetch(url, { method: 'put', credentials: 'include' });
+      const json = await response.json();
+      if (response.ok) {
+        newAlert('primary', 'Anulowane!', 'Zamówienie zostało anulowane.');
+        fetchInvoiceData();
       } else {
-        return (
-          <div className="container options shadow-sm bg-white rounded">
-            <h1>Szczegóły zamówienia</h1>
-            <div className="row align-left bordered">
-              <div className="col">
-                <div>
-                  <strong>Szczegóły:</strong>
-                  <hr></hr>
-                </div>
-                <div>
-                  Status: <strong>Zrealizowane</strong>
-                </div>
-                <div>
-                  Data wystawienia:{' '}
-                  <strong>
-                    {new Intl.DateTimeFormat('pl-PL', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: '2-digit',
-                      hour: '2-digit',
-                      minute: '2-digit'
-                    }).format(new Date(this.state.response.invoiceDate))}
-                  </strong>
-                </div>
-                <div>
-                  Typ rachunku: <strong>Faktura</strong>
-                </div>
-              </div>
-            </div>
-            <div className="row align-left bordered">
-              <div className="col">
-                <div>
-                  <strong>Nabywca:</strong>
-                  <hr></hr>
-                </div>
-                <div className={this.state.response.invoiceFirma == null ? '' : 'd-none'}>
-                  {this.state.response.invoiceNazwa}
-                </div>
-                <div className={this.state.response.invoiceFirma == null ? 'd-none' : ''}>
-                  {this.state.response.invoiceFirma}
-                </div>
-                <div>
-                  {this.state.response.invoiceKod} {this.state.response.invoiceMiasto}
-                </div>
-                <div>{this.state.response.invoiceUlica}</div>
-                <div className={this.state.response.invoiceNIP == null ? 'd-none' : ''}>
-                  NIP: {this.state.response.invoiceNIP}
-                </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col margin-5">
-                <table className="table table-hover">
-                  <thead className="thead-light">
-                    <tr>
-                      <th scope="col">Nazwa produktu</th>
-                      <th scope="col">Ilość</th>
-                      <th scope="col">Cena</th>
-                      <th scope="col">Wartość</th>
-                      <th scope="col">VAT</th>
-                    </tr>
-                  </thead>
-                  <tbody className="table-striped">
-                    {this.state.response.produkty.map((produkt, index) => (
-                      <tr key={index}>
-                        <td>
-                          <Link to={'/product?id=' + produkt.id_produktu}>
-                            {produkt.nazwa_kategorii} {produkt.nazwa_producenta}{' '}
-                            {produkt.nazwa_produktu}
-                          </Link>
-                        </td>
-                        <td>{produkt.ilosc}</td>
-                        <td>
-                          {produkt.cena_brutto.toLocaleString('pl-PL', {
-                            minimumFractionDigits: 2
-                          })}{' '}
-                          zł
-                        </td>
-                        <td>
-                          {(produkt.cena_brutto * produkt.ilosc).toLocaleString('pl-PL', {
-                            minimumFractionDigits: 2
-                          })}{' '}
-                          zł
-                        </td>
-                        <td>{produkt.procent_vat}%</td>
-                      </tr>
-                    ))}
-                    <tr>
-                      <td>
-                        <strong>Całkowita wartość faktury:</strong>
-                      </td>
-                      <td></td>
-                      <td></td>
-                      <td>
-                        {this.state.response.invoiceBrutto.toLocaleString('pl-PL', {
-                          minimumFractionDigits: 2
-                        })}{' '}
-                        zł
-                      </td>
-                      <td></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+        setError(json.message);
+      }
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const fetchInvoiceData = useCallback(async () => {
+    try {
+      setBlockUI(true);
+      const url = `${process.env.REACT_APP_API}/invoice/${invoiceID}`;
+      const response = await fetch(url, { method: 'get', credentials: 'include' });
+      const json = await response.json();
+
+      setInvoiceData(json.data[0]);
+      setIsLoadingInvoiceData(false);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setBlockUI(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isLogged) fetchInvoiceData();
+
+    return () => {
+      if (isLogged === false) {
+        newAlert('danger', 'Zaloguj się!', 'Zaloguj się, żeby zobaczyć faktury.');
+      }
+    };
+  }, [invoiceID, isLogged, fetchInvoiceData]);
+
+  if (isLogged === false) {
+    return <Redirect to="/login" />;
+  } else if (isLoadingInvoiceData || error) {
+    return (
+      <div className="container options shadow-sm bg-white rounded">
+        <div className="text-center pb-3">
+          <span className="fs-1 fw-bold">Szczegóły zamowienia</span>
+        </div>
+        {isLoadingInvoiceData && (
+          <div className="d-flex justify-content-center pt-5 pb-5">
+            <div className="spinner-border" role="status">
+              <span className="sr-only">Loading...</span>
             </div>
           </div>
-        );
-      }
-    }
+        )}
+        {error && (
+          <div className="d-flex justify-content-center pt-5 pb-5">
+            <span>{error}</span>
+          </div>
+        )}
+      </div>
+    );
+  } else {
+    return (
+      <>
+        <div className="container options shadow-sm bg-white rounded">
+          <div className={blockUI ? 'blockedUIScreen text-center row position-relative' : ''}>
+            <div
+              className={blockUI ? 'spinner-border position-absolute blockUISpinner' : ''}
+              role="status"></div>
+            <div className="text-center pb-3">
+              <span className="fs-1 fw-bold">Szczegóły zamowienia</span>
+            </div>
+            <InvoiceDetailsList invoiceData={invoiceData} handleCancelClick={handleCancelClick} />
+            <InvoiceItemsList invoiceData={invoiceData} />
+          </div>
+        </div>
+        <MoveBack moveBackText="Wróć do profilu" moveBackURL="/profile/orders" />
+      </>
+    );
   }
-}
-
+};
 export default Invoice;

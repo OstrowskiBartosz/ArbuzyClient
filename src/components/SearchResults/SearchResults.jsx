@@ -7,6 +7,7 @@ import ResultPanel from './ResultPanel/ResultPanel';
 import SortPanel from './SortPanel/SortPanel';
 import FilterPanel from './FilterPanel/FilterPanel';
 import { uncheckAll, checkFilters, checkAttributes } from './utils';
+import MoveBack from '../../features/additionalComponents/MoveBack/MoveBack';
 
 const SearchResults = ({ searchValue }) => {
   let location = useLocation();
@@ -14,13 +15,14 @@ const SearchResults = ({ searchValue }) => {
 
   const [isLoadingProductsData, setIsLoadingProductsData] = useState(true);
   const [productsData, setProductsData] = useState({});
+  const [error, setError] = useState(null);
   const [numberOFProducts, setNumberOFProducts] = useState(0);
   const [showResetButton, setShowResetButton] = useState(false);
 
   const [sortSettings, setSortSettings] = useState({
-    productLimit: Number(params.get('l')) ?? 10,
+    productLimit: params.get('l') ?? 10,
     productSort: params.get('s') ?? 'domyślne',
-    productPage: Number(params.get('p')) ?? 1
+    productPage: params.get('p') ?? 1
   });
   const [priceSettings, setPriceSettings] = useState({ priceFrom: 0, priceTo: 0 });
 
@@ -86,81 +88,74 @@ const SearchResults = ({ searchValue }) => {
   });
 
   return (
-    <div className="container-fluid pb-5 mb-5">
-      <div className="row navbar-padding p-relative">
-        <div className="col-1"></div>
-        <div className="col-11 pt-5 text-left">
-          <div>
-            <h4>
-              Znaleziono <span className="font-weight-bold">{numberOFProducts + ' '}</span>
-              produktów
-            </h4>
+    <>
+      <div className="container-fluid pb-5 mb-5">
+        <div className="row navbar-padding p-relative">
+          <div className="col-1"></div>
+          <div className="col-11 pt-5 text-left">
+            <div>
+              <h4>
+                Znaleziono <span className="font-weight-bold">{numberOFProducts + ' '}</span>
+                produktów
+              </h4>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="row" id="results">
-        <div className="col-1"></div>
-        <div className={'col-sm-2 pb-5 '}>
-          <div className="col-12 componentBackgroundColor mt-3 shadow-sm p-3 mb-1 bg-white rounded">
-            <FilterPanel
-              searchValue={searchValue}
-              isLoading={isLoadingProductsData}
-              filtersData={productsData}
-              ProductsData={productsData && productsData.products}
-              priceSettings={priceSettings}
-              priceRange={{ minPrice: productsData.minPrice, maxPrice: productsData.maxPrice }}
-              showResetButton={showResetButton}
-              fetchSearchData={fetchSearchData}
-            />
-          </div>
-        </div>
-        <div className="col-sm-7">
-          <div className="row">
-            <div className="col componentBackgroundColor mt-3 shadow-sm pt-3 bg-white rounded">
-              <SortPanel
+        <div className="row" id="results">
+          <div className="col-1"></div>
+          <div className={'col-sm-2 pb-5 '}>
+            <div className="col-12 componentBackgroundColor mt-3 shadow-sm p-3 mb-1 bg-white rounded">
+              <FilterPanel
+                searchValue={searchValue}
                 isLoading={isLoadingProductsData}
-                NumberOfpages={productsData && productsData.NumberOfpages}
-                activePage={productsData && productsData.activePage}
+                filtersData={productsData}
                 ProductsData={productsData && productsData.products}
-                sortSettings={sortSettings}
+                priceSettings={priceSettings}
+                priceRange={{ minPrice: productsData.minPrice, maxPrice: productsData.maxPrice }}
+                showResetButton={showResetButton}
                 fetchSearchData={fetchSearchData}
               />
             </div>
           </div>
-          <div>
-            <ResultPanel
-              ProductsData={productsData && productsData.products}
-              searchValue={searchValue}
-              isLoading={isLoadingProductsData}
-              fetchSearchData={fetchSearchData}
-            />
-          </div>
-          <div className="row">
-            <div className="col componentBackgroundColor mt-3 shadow-sm pt-3 bg-white rounded">
-              <SortPanel
-                isLoading={isLoadingProductsData}
-                NumberOfpages={productsData && productsData.NumberOfpages}
-                activePage={productsData && productsData.activePage}
+          <div className="col-sm-7">
+            <div className="row">
+              <div className="col componentBackgroundColor mt-3 shadow-sm pt-3 bg-white rounded">
+                <SortPanel
+                  isLoading={isLoadingProductsData}
+                  NumberOfpages={productsData && productsData.NumberOfpages}
+                  activePage={productsData && productsData.activePage}
+                  ProductsData={productsData && productsData.products}
+                  sortSettings={sortSettings}
+                  fetchSearchData={fetchSearchData}
+                />
+              </div>
+            </div>
+            <div>
+              <ResultPanel
                 ProductsData={productsData && productsData.products}
-                sortSettings={sortSettings}
+                searchValue={searchValue}
+                isLoading={isLoadingProductsData}
                 fetchSearchData={fetchSearchData}
               />
             </div>
+            <div className="row">
+              <div className="col componentBackgroundColor mt-3 shadow-sm pt-3 bg-white rounded">
+                <SortPanel
+                  isLoading={isLoadingProductsData}
+                  NumberOfpages={productsData && productsData.NumberOfpages}
+                  activePage={productsData && productsData.activePage}
+                  ProductsData={productsData && productsData.products}
+                  sortSettings={sortSettings}
+                  fetchSearchData={fetchSearchData}
+                />
+              </div>
+            </div>
           </div>
+          <div className="col-sm-2"></div>
         </div>
-        <div className="col-sm-2"></div>
       </div>
-      <div className="row pt-4 mb-5 pt-5">
-        <div className="col-lg-3"></div>{' '}
-        <div className="col-lg-6">
-          <Link className="btn btn-outline-secondary m-bot-10" to="/">
-            <i className="fas fa-chevron-left"></i>
-            <i className="fas fa-chevron-left"></i> Wróć do strony głównej
-          </Link>
-        </div>
-        <div className="col-lg-3"></div>
-      </div>
-    </div>
+      <MoveBack moveBackText="Wróć do strony głównej" moveBackURL="/" />
+    </>
   );
 };
 

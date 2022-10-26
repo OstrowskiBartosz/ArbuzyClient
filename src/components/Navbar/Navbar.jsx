@@ -22,7 +22,7 @@ import MessageAlert from '../MessageAlert/MessageAlert.jsx';
 import { cartItemsChange } from '../../store/storeSlices/cartItemsSlice';
 
 import './Navbar.css';
-import ScrollToTop from '../../features/scrollToTop/scrollToTop.jsx';
+import ScrollToTop from '../../features/additionalComponents/scrollToTop/scrollToTop.jsx';
 
 import { createBrowserHistory } from 'history';
 const history = createBrowserHistory();
@@ -105,7 +105,7 @@ const Navbar = (props) => {
       newAlert('danger', 'Wpisz coś!', 'Wpisz przynajmniej jeden znak.');
     } else {
       setSearchValueToSend(searchValue);
-      getHintsSearchValue(searchValue);
+      getHintsSearchValue(searchValue, `/search?q=${searchValue}&s=domyślne&l=10&p=1`, false);
     }
   };
 

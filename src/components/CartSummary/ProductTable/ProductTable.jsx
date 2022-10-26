@@ -1,14 +1,7 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const ProductTable = ({ cartData }) => {
-  let history = useHistory();
-
-  const handleProductClick = (event, id) => {
-    event.preventDefault();
-    history.push(`/product/${id}`);
-  };
-
   return (
     <>
       <span className="mb-2 fw-bold text-left">
@@ -25,14 +18,11 @@ const ProductTable = ({ cartData }) => {
         </thead>
         <tbody className="table-striped">
           {cartData.cartItemsData.map((cartItem) => (
-            <tr
-              className="cursor-pointer"
-              key={cartItem.Product.productID}
-              onClick={(e) => handleProductClick(e, cartItem.Product.productID)}>
+            <tr className="cursor-pointer" key={cartItem.Product.productID}>
               <td className="fw-bold">
-                {cartItem.Product.Manufacturer.manufacturerName +
-                  ' ' +
-                  cartItem.Product.productName}
+                <Link to={`/product/${cartItem.Product.productID}`}>
+                  {`${cartItem.Product.Manufacturer.manufacturerName} ${cartItem.Product.productName}`}
+                </Link>
               </td>
               <td className="fw-bold text-center">
                 {String(cartItem.Product.Prices[0].grossPrice.toFixed(2)).replace('.', ',')} zł

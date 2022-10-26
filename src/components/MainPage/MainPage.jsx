@@ -35,13 +35,18 @@ const MainPage = (props) => {
 
   const firstFetch = products.mostBoughtCategoryProducts.length === 0 ? true : false;
   const [isLoadingData, setIsLoadingData] = useState(firstFetch);
+  const [error, setError] = useState(null);
 
   const handleFetchData = useCallback(async () => {
     const fetchData = async (resource) => {
-      const url = `${process.env.REACT_APP_API}/product/${resource}`;
-      const response = await fetch(url, { method: 'get', credentials: 'include' });
-      const json = await response.json();
-      return json.data;
+      try {
+        const url = `${process.env.REACT_APP_API}/product/${resource}`;
+        const response = await fetch(url, { method: 'get', credentials: 'include' });
+        const json = await response.json();
+        return json.data;
+      } catch (err) {
+        setError(err.message);
+      }
     };
 
     setIsLoadingData(true);
@@ -72,10 +77,18 @@ const MainPage = (props) => {
   }, [handleFetchData, firstFetch]);
 
   return (
-    <div className="container mainpage mb-5 text-center">
-      <div className="container shadow-sm bg-white rounded mb-4">
-        <div className="categoryHeader mb-3 pt-3">Wszystkie Kategorie</div>
+    <div className="container mainpage mb-5 text-center ">
+      <div className="shadow-sm bg-white rounded mb-4">
+        <div className="categoryHeader mb-3 pt-3">Dostępne Kategorie</div>
+        <div className="border-bottom border border-primary"></div>
         <div className="pb-3">
+          <div className="d-flex flex-row justify-content-around flex-wrap mt-3 pb-3">
+            <div className="categoryLink mt-3 pb-2 categoryText">
+              <Link className="clear-link" to={`/search?filterCategory=[1,2,3,4,5,6,7,8,9]`}>
+                Wszystkie produkty
+              </Link>
+            </div>
+          </div>
           {categoryList.map((categoryGroup, index) => (
             <div
               key={`group${index}`}
@@ -98,11 +111,11 @@ const MainPage = (props) => {
         dataTopCategory={products.mostBoughtCategoryProducts}
         handleFetchData={handleFetchData}
       />
-      <div className="container shadow-sm bg-white rounded mb-4">
+      <div className="shadow-sm bg-white rounded mb-4">
         <div className="categoryHeader mb-3 pt-3 display-inlineblock">
           Najczęściej Kupowane Produkty
         </div>
-        <hr />
+        <div className="border-bottom border border-primary"></div>
         {isLoadingData ? (
           <div className="d-flex justify-content-center pt-5 pb-5">
             <div className="spinner-border" role="status">
@@ -139,10 +152,15 @@ const MainPage = (props) => {
             ))}
           </div>
         )}
+        {error && (
+          <div className="d-flex justify-content-center pt-5 pb-5">
+            <span>{error}</span>
+          </div>
+        )}
       </div>
-      <div className="container shadow-sm bg-white rounded mb-4">
+      <div className="shadow-sm bg-white rounded mb-4">
         <div className="categoryHeader mb-3 pt-3">Najczęściej Kupowana Kategoria</div>
-        <hr />
+        <div className="border-bottom border border-primary"></div>
         {isLoadingData ? (
           <div className="d-flex justify-content-center pt-5 pb-5">
             <div className="spinner-border" role="status">
@@ -179,10 +197,15 @@ const MainPage = (props) => {
             ))}
           </div>
         )}
+        {error && (
+          <div className="d-flex justify-content-center pt-5 pb-5">
+            <span>{error}</span>
+          </div>
+        )}
       </div>
-      <div className="container shadow-sm bg-white rounded mb-4">
+      <div className="shadow-sm bg-white rounded mb-4">
         <div className="categoryHeader mb-3 pt-3">Może Ci się spodobać</div>
-        <hr />
+        <div className="border-bottom border border-primary"></div>
         {isLoadingData ? (
           <div className="d-flex justify-content-center pt-5 pb-5">
             <div className="spinner-border" role="status">
@@ -218,6 +241,11 @@ const MainPage = (props) => {
                 </Link>
               </div>
             ))}
+          </div>
+        )}
+        {error && (
+          <div className="d-flex justify-content-center pt-5 pb-5">
+            <span>{error}</span>
           </div>
         )}
       </div>

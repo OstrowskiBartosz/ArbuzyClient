@@ -1,0 +1,15 @@
+.blockedUIScreen {
+  opacity: 0.4;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.blockUISpinner {
+  z-index: 15;
+  font-size: 25;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+}

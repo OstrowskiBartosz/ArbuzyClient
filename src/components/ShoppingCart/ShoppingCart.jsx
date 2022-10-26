@@ -1,11 +1,10 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { useState, useEffect, useCallback } from 'react';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { updateCartItems } from '../../store/storeSlices/cartItemsSlice';
+import MoveBack from '../../features/additionalComponents/MoveBack/MoveBack';
 import newAlert from '../../features/newAlert';
-
 import CartItem from './CartItem/CartItem';
 import TotalPrice from './TotalPrice/TotalPrice';
 
@@ -108,117 +107,116 @@ const ShoppingCart = (props) => {
   } else {
     if (isEmpty === false) {
       return (
-        <div className="container-fluid position-relative">
-          <div className="row navbar-padding">
-            <div className="col-sm-1"></div>
-            <div className="col-sm-10">
-              <div className="row">
-                <div className="col-12 mt-5 componentBackgroundColor mt-3 mb-3 shadow-sm p-3 bg-white rounded">
-                  <div className={blockUI ? 'blockedUIScreen text-center row' : 'row'}>
-                    <div className="col-9 text-left">
-                      <div className="font-weight-bold vertical-center text-left">
-                        <span className="fs-3 fw-bold vertical-center text-left">Twój Koszyk</span>
+        <>
+          <div className="container-fluid position-relative">
+            <div className="row navbar-padding">
+              <div className="col-sm-1"></div>
+              <div className="col-sm-10">
+                <div className="row">
+                  <div className="col-12 mt-5 componentBackgroundColor mt-3 mb-3 shadow-sm p-3 bg-white rounded">
+                    <div className={blockUI ? 'blockedUIScreen text-center row' : 'row'}>
+                      <div className="col-9 text-left">
+                        <div className="font-weight-bold vertical-center text-left">
+                          <span className="fs-3 fw-bold vertical-center text-left">
+                            Twój Koszyk
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                    <div className="col-2 ">
-                      <span className="fs-6 fw-bold vertical-center text-center">Usuń</span>
-                    </div>
-                    <div className="col-1 align-text-center vertical-center align-right">
-                      <span className="fs-6 fw-bold align-text-center vertical-center">
-                        <i
-                          className="fas fa-trash-alt cursor-pointer"
-                          onClick={() => handleWholeCartTrashClick(cartData.cartData.cartID)}
-                          disabled={blockUI ? false : 'disabled'}></i>
-                      </span>
+                      <div className="col-2 ">
+                        <span className="fs-6 fw-bold vertical-center text-center">Usuń</span>
+                      </div>
+                      <div className="col-1 align-text-center vertical-center align-right">
+                        <span className="fs-6 fw-bold align-text-center vertical-center">
+                          <i
+                            className="fas fa-trash-alt cursor-pointer"
+                            onClick={() => handleWholeCartTrashClick(cartData.cartData.cartID)}
+                            disabled={blockUI ? false : 'disabled'}></i>
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className={blockUI ? 'blockedUIScreen text-center' : ''}>
-                <div className="row hideLabels">
-                  <div className="col-12 componentBackgroundColor shadow-sm p-3 bg-white rounded">
-                    <div className="row CartBorder pb-2">
-                      <div className="col-2 p-0"></div>
-                      <div className="col-4 align-text-center">
-                        <div className="text-left fw-bold">Nazwa</div>
+                <div className={blockUI ? 'blockedUIScreen text-center' : ''}>
+                  <div className="row hideLabels">
+                    <div className="col-12 componentBackgroundColor shadow-sm p-3 bg-white rounded">
+                      <div className="row CartBorder pb-2">
+                        <div className="col-2 p-0"></div>
+                        <div className="col-4 align-text-center">
+                          <div className="text-left fw-bold">Nazwa</div>
+                        </div>
+                        <div className="col-2 align-text-center">
+                          <div className="text-left fw-bold">Cena</div>
+                        </div>
+                        <div className="col-1 align-text-center">
+                          <div className=" align-left fw-bold">Ilość</div>
+                        </div>
+                        <div className="col-2 align-text-center">
+                          <div className=" align-left fw-bold">Łączna cena</div>
+                        </div>
+                        <div className="col-1 align-text-center"></div>
                       </div>
-                      <div className="col-2 align-text-center">
-                        <div className="text-left fw-bold">Cena</div>
-                      </div>
-                      <div className="col-1 align-text-center">
-                        <div className=" align-left fw-bold">Ilość</div>
-                      </div>
-                      <div className="col-2 align-text-center">
-                        <div className=" align-left fw-bold">Łączna cena</div>
-                      </div>
-                      <div className="col-1 align-text-center"></div>
                     </div>
                   </div>
-                </div>
 
-                <div className="text-center">
-                  <div
-                    className={blockUI ? 'spinner-border position-absolute blockUISpinner' : ''}
-                    role="status"></div>
-                  {cartData.cartItemsData.map((cartItem) => (
-                    <CartItem
-                      key={cartItem.cartItemID}
-                      cartItem={cartItem}
-                      blockUI={blockUI}
-                      setError={setError}
-                      fetchCartData={fetchCartData}
-                      setBlockUI={(bool) => setBlockUI(bool)}
-                    />
-                  ))}
+                  <div className="text-center">
+                    <div
+                      className={blockUI ? 'spinner-border position-absolute blockUISpinner' : ''}
+                      role="status"></div>
+                    {cartData.cartItemsData.map((cartItem) => (
+                      <CartItem
+                        key={cartItem.cartItemID}
+                        cartItem={cartItem}
+                        blockUI={blockUI}
+                        setError={setError}
+                        fetchCartData={fetchCartData}
+                        setBlockUI={(bool) => setBlockUI(bool)}
+                      />
+                    ))}
+                  </div>
                 </div>
+                <TotalPrice blockUI={blockUI} TotalPrice={cartData.cartData.totalPriceOfProducts} />
               </div>
-              <TotalPrice blockUI={blockUI} TotalPrice={cartData.cartData.totalPriceOfProducts} />
+              <div className="col-sm-1"></div>
             </div>
-            <div className="col-sm-1"></div>
           </div>
-          <div className="row pt-4 pb-5 mb-5">
-            <div className="col-lg-3"></div>
-            <div className="col-lg-5 text-left">
-              <Link className="btn btn-outline-secondary" to="/">
-                <i className="fas fa-chevron-left"></i> Wróć do strony głównej
-              </Link>
-            </div>
-            <div className="col-lg-4"></div>
-          </div>
-        </div>
+          <MoveBack moveBackText="Wróć do strony głównej" moveBackURL="/" />
+        </>
       );
     } else {
       return (
-        <div className="container-fluid">
-          <div className="row navbar-padding">
-            <div className="col-sm-1"></div>
-            <div className="col-sm-10">
-              <div className="row">
-                <div className="col-12 mt-5 componentBackgroundColor mt-3 mb-3 shadow-sm p-3 bg-white rounded">
-                  <div className="row">
-                    <div className="col-11">
-                      <div className="font-weight-bold text-left">
-                        <h3>Twój Koszyk</h3>
+        <>
+          <div className="container-fluid">
+            <div className="row navbar-padding">
+              <div className="col-sm-1"></div>
+              <div className="col-sm-10">
+                <div className="row">
+                  <div className="col-12 mt-5 componentBackgroundColor mt-3 mb-3 shadow-sm p-3 bg-white rounded">
+                    <div className="row">
+                      <div className="col-11">
+                        <div className="font-weight-bold text-left">
+                          <h3>Twój Koszyk</h3>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+              <div className="col-sm-1"></div>
             </div>
-            <div className="col-sm-1"></div>
-          </div>
-          <div className="row">
-            <div className="col-sm-1"></div>
-            <div className="col-sm-10 componentBackgroundColor mb-3 shadow-sm p-3 bg-white rounded">
-              <div className="row pt-5 pb-5">
-                <div className="col-12 text-center">
-                  <h1>Koszyk jest pusty, dodaj coś do niego :-) </h1>
+            <div className="row">
+              <div className="col-sm-1"></div>
+              <div className="col-sm-10 componentBackgroundColor mb-3 shadow-sm p-3 bg-white rounded">
+                <div className="row pt-5 pb-5">
+                  <div className="col-12 text-center">
+                    <h1>Koszyk jest pusty, dodaj coś do niego :-) </h1>
+                  </div>
                 </div>
               </div>
+              <div className="col-sm-1"></div>
             </div>
-            <div className="col-sm-1"></div>
           </div>
-        </div>
+          <MoveBack moveBackText="Wróć do strony głównej" moveBackURL="/" />
+        </>
       );
     }
   }

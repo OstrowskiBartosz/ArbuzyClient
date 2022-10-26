@@ -7,4 +7,12 @@ const pagination = (NumberOfpages) => {
   return pages;
 };
 
-export default pagination;
+const sortingMethods = [
+  { api: 'default', display: 'domyślne' },
+  { api: 'price descending', display: 'cena malejąco' },
+  { api: 'price ascending', display: 'cena rosnąco' },
+  { api: 'product A-Z', display: 'nazwa produktu A-Z' },
+  { api: 'product Z-A', display: 'nazwa produktu Z-A' }
+];
+
+export { pagination, sortingMethods };

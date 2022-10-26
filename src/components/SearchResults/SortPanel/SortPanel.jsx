@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import history from '../../history';
 import '../SearchResults.css';
-import pagination from './utils';
+import { pagination, sortingMethods } from './utils';
 
 const SortPanel = ({
   isLoading,
@@ -18,18 +18,8 @@ const SortPanel = ({
 
   const pages = pagination(NumberOfpages);
 
-  const [nextPageAvailable, setNextPageAvailable] = useState(
-    NumberOfpages !== activePage ? true : false
-  );
-  const [prevPageAvailable, setPrevPageAvailable] = useState(activePage > 1 ? true : false);
-
-  const sortingMethods = [
-    { api: 'default', display: 'domyślne' },
-    { api: 'price descending', display: 'cena malejąco' },
-    { api: 'price ascending', display: 'cena rosnąco' },
-    { api: 'product A-Z', display: 'nazwa produktu A-Z' },
-    { api: 'product Z-A', display: 'nazwa produktu Z-A' }
-  ];
+  const [nextPage, setNextPage] = useState(NumberOfpages !== activePage ? true : false);
+  const [prevPage, setPrevPage] = useState(activePage > 1 ? true : false);
 
   const handlePageChange = (event) => {
     setProductPage(parseInt(event.target.id));
@@ -44,8 +34,8 @@ const SortPanel = ({
   };
 
   const handlePageChangeArrow = (sign) => {
-    if (prevPageAvailable === false && sign === '-') return;
-    if (nextPageAvailable === false && sign === '+') return;
+    if (prevPage === false && sign === '-') return;
+    if (nextPage === false && sign === '+') return;
 
     setProductPage(sign === '+' ? Number(productPage) + 1 : Number(productPage) - 1);
     const params = new URLSearchParams(window.location.search);
@@ -90,8 +80,8 @@ const SortPanel = ({
   }, [sortSettings]);
 
   useEffect(() => {
-    setPrevPageAvailable(activePage > 1 ? true : false);
-    setNextPageAvailable(NumberOfpages !== activePage ? true : false);
+    setPrevPage(activePage > 1 ? true : false);
+    setNextPage(NumberOfpages !== activePage ? true : false);
   }, [NumberOfpages, activePage]);
 
   if (isLoading && ProductsData === undefined) {
@@ -211,9 +201,9 @@ const SortPanel = ({
               <ul className="pagination">
                 <div className="btn btn-secondary d-inline">strona</div>
                 <div
-                  className={'page-item ' + (prevPageAvailable ? '' : 'disabled')}
+                  className={'page-item ' + (prevPage ? '' : 'disabled')}
                   onClick={() => handlePageChangeArrow('-')}
-                  disabled={prevPageAvailable ? false : 'disabled'}>
+                  disabled={prevPage ? false : 'disabled'}>
                   <div className="page-link">
                     <i className="fas fa-chevron-left"></i>
                   </div>
@@ -231,9 +221,9 @@ const SortPanel = ({
                   </li>
                 ))}
                 <div
-                  className={'page-item ' + (nextPageAvailable ? '' : 'disabled')}
+                  className={'page-item ' + (nextPage ? '' : 'disabled')}
                   onClick={() => handlePageChangeArrow('+')}
-                  disabled={nextPageAvailable ? false : 'disabled'}>
+                  disabled={nextPage ? false : 'disabled'}>
                   <div className="page-link">
                     <i className="fas fa-chevron-right"></i>
                   </div>

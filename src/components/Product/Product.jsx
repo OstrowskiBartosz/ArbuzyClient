@@ -122,222 +122,74 @@ const Product = (props) => {
   } else {
     return (
       <>
-        <div className="container-fluid" id="top">
-          <div className="row navbar-padding">
-            <div className="col-sm-1"></div>
-            <div className="col-sm-10">
-              <div className="options shadow-sm bg-white rounded mb-5 mt-5">
-                <div className="row">
-                  <div className="col product-tree ml-2 mt-2">
-                    <Link
-                      className="clear-link fw-bold"
-                      to={`/search?filterCategory=[${productData.Category.categoryID}]&s=domyślne&p=1&l=10`}>
-                      {productData.Category.categoryName}{' '}
-                    </Link>
-                    <i className="fas fa-long-arrow-alt-right"></i>{' '}
-                    <Link
-                      className="clear-link fw-bold"
-                      to={`/search?filterManufacturer=[${productData.Manufacturer.manufacturerID}]&s=domyślne&p=1&l=10`}>
-                      {productData.Manufacturer.manufacturerName}{' '}
-                    </Link>
-                    <i className="fas fa-long-arrow-alt-right"></i>{' '}
-                    <Link
-                      className="clear-link fw-bold"
-                      to={`/search?q=${productData.productName}&s=domyślne&p=1&l=10`}>
-                      {productData.productName}{' '}
-                    </Link>
-                  </div>
-                </div>
-                <div className="dropdown-divider mt-4 mb-4"></div>
-                <div className="row m-bot-10">
-                  <div className="col col-thumbnail">
-                    {productData.Attributes.map((attribute, index) => {
-                      return attribute.property === 'image' ? (
-                        <div className="image-thumbnail" key={index}>
-                          <img
-                            className="img-thumbnail"
-                            src={`${process.env.REACT_APP_API}${attribute.value}`}
-                            alt="Zdjęcie produktu"
-                            onClick={() => imageClick(attribute.value)}
-                          />
-                        </div>
-                      ) : null;
-                    })}
-                  </div>
-                  <div className="col-md-auto">
-                    <div className="main-image">
+        <div className="container options shadow-sm bg-white rounded mb-5 p-1" id="top">
+          <div className="">
+            <div className="row">
+              <div className="col product-tree ml-2 mt-2">
+                <Link
+                  className="clear-link fw-bold"
+                  to={`/search?filterCategory=[${productData.Category.categoryID}]&s=domyślne&p=1&l=10`}>
+                  {productData.Category.categoryName}{' '}
+                </Link>
+                <i className="fas fa-long-arrow-alt-right"></i>{' '}
+                <Link
+                  className="clear-link fw-bold"
+                  to={`/search?filterManufacturer=[${productData.Manufacturer.manufacturerID}]&s=domyślne&p=1&l=10`}>
+                  {productData.Manufacturer.manufacturerName}{' '}
+                </Link>
+                <i className="fas fa-long-arrow-alt-right"></i>{' '}
+                <Link
+                  className="clear-link fw-bold"
+                  to={`/search?q=${productData.productName}&s=domyślne&p=1&l=10`}>
+                  {productData.productName}{' '}
+                </Link>
+              </div>
+            </div>
+            <div className="dropdown-divider mt-4 mb-4"></div>
+            <div className="row m-bot-10">
+              <div className="col col-thumbnail">
+                {productData.Attributes.map((attribute, index) => {
+                  return attribute.property === 'image' ? (
+                    <div className="image-thumbnail" key={index}>
                       <img
                         className="img-thumbnail"
-                        src={`${process.env.REACT_APP_API}/${currentImage}`}
+                        src={`${process.env.REACT_APP_API}${attribute.value}`}
                         alt="Zdjęcie produktu"
+                        onClick={() => imageClick(attribute.value)}
                       />
                     </div>
-                  </div>
-                  <div className="col">
-                    <div className="product-name pl-2">
-                      <h2>
-                        {' '}
-                        {productData.Manufacturer.manufacturerName} {productData.productName}
-                      </h2>
-                    </div>
-                    <div className="product-id text-muted pl-2">
-                      <span>Id produktu: {productData.productID}</span>
-                    </div>
-                    <div className="row pb-5">
-                      <div className="col-xl-6">
-                        <div className="text-left mb-3 pl-2 fs-5 fw-bold">
-                          <span>Główne parametry produktu:</span>
-                        </div>
-                        <div>
-                          {productData.Attributes.map((attribute, index) => {
-                            return Number(attribute.type) === 1 ? (
-                              <div className="left pl-2" key={index}>
-                                {attribute.property}:{' '}
-                                <span className="fw-bold">
-                                  {attribute.value}{' '}
-                                  {productData.Attributes[index].property.match(/\[(.*)\]/g)}
-                                </span>
-                              </div>
-                            ) : null;
-                          })}
-                        </div>
-                        <div className="text-left mb-3 mt-3 fw-bold pl-2 mt-2">
-                          <HashLink smooth to={`/product/${productID}#productSpecification`}>
-                            <i className="fas fa-angle-double-down"></i> Przejdz do pełnej
-                            specyfikacji <i className="fas fa-angle-double-down"></i>
-                          </HashLink>
-                        </div>
-                      </div>
-                      <div className="col-xl-6">
-                        <div className="row pb-2 text-center">
-                          <div>
-                            <div>
-                              <span className="fs-1 fw-bold pt-2">
-                                {productData.Prices[0].grossPrice.toLocaleString('pl-PL', {
-                                  minimumFractionDigits: 2
-                                })}{' '}
-                                zł
-                              </span>
-                            </div>
-                            <div className="">
-                              <span className="fs-6 fw-normal">
-                                {productData.Prices[0].netPrice} zł +{' '}
-                                {(
-                                  Number(productData.Prices[0].grossPrice) -
-                                  Number(productData.Prices[0].netPrice)
-                                ).toLocaleString('pl-PL', { minimumFractionDigits: 2 })}{' '}
-                                zł{' '}
-                                <span className="fw-bold">
-                                  ({productData.Prices[0].taxPercentage}% VAT)
-                                </span>
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="row m-3">
-                          <div>
-                            {isLogged ? (
-                              productData.quantity > 0 ? (
-                                productLimit ? (
-                                  <button className={'btn btn-danger btn-lg btn-block'}>
-                                    Limit w koszyku :-(
-                                  </button>
-                                ) : blockUI ? (
-                                  <button className={'btn btn-warning btn-lg btn-block'}>
-                                    Dodawanie... <div className="spinner-border smallSpinner"></div>
-                                  </button>
-                                ) : (
-                                  <button
-                                    className={`btn btn-primary btn-lg btn-block`}
-                                    id={productData.productID}
-                                    onClick={(event) => handleToCartClick(event)}>
-                                    Dodaj do koszyka <i className="fas fa-cart-plus"></i>
-                                  </button>
-                                )
-                              ) : (
-                                <button
-                                  className={'btn btn-danger btn-lg btn-block'}
-                                  id={productData.productID}>
-                                  chwilowy brak produktu
-                                </button>
-                              )
-                            ) : (
-                              <Link to="/login">
-                                <button className={'btn btn-danger btn-lg btn-block'}>
-                                  Zaloguj sie <i className="bigicon fas fa-sign-in-alt"></i>
-                                </button>
-                              </Link>
-                            )}
-                          </div>
-                          <div className="left pl-2 mt-2 fs-4 text-center">
-                            <span>Dostępne sztuki: </span>
-                            <span className="fw-bold">{productData.quantity}</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  ) : null;
+                })}
+              </div>
+              <div className="col-md-auto">
+                <div className="main-image">
+                  <img
+                    className="img-thumbnail"
+                    src={`${process.env.REACT_APP_API}/${currentImage}`}
+                    alt="Zdjęcie produktu"
+                  />
                 </div>
-                <div className="dropdown-divider mt-4 mb-4"></div>
-                <div id="productDescription" className="mt-5 mb-5 text-center">
-                  <h1>Opis produktu</h1>
-                  <div className="row m-bot-10 m-5">
-                    <div className="col mb-5">
-                      {productDescription.map((part, index) => (
-                        <div className="m-bot-10" key={index}>
-                          {part}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+              </div>
+              <div className="col">
+                <div className="product-name pl-2">
+                  <h2>
+                    {' '}
+                    {productData.Manufacturer.manufacturerName} {productData.productName}
+                  </h2>
                 </div>
-                <div className="dropdown-divider mt-4 mb-4"></div>
-                <div id="productSpecification" className="mt-5 mb-5 text-center">
-                  <h1>Pełna specyfikacja</h1>
-                  <div className="row m-bot-10 mt-5">
-                    <span className="text-center fw-bold fs-5 mb-2">Dane produktu</span>
-                    <div className="col col-left">
-                      <span>Nazwa produktu:</span>
-                      <span>Producent:</span>
-                      <span>Kod produktu producenta:</span>
-                      <span className="pb-4">Kategoria produktu:</span>
+                <div className="product-id text-muted pl-2">
+                  <span>Id produktu: {productData.productID}</span>
+                </div>
+                <div className="row pb-5">
+                  <div className="col-xl-6">
+                    <div className="text-left mb-3 pl-2 fs-5 fw-bold">
+                      <span>Główne parametry produktu:</span>
                     </div>
-                    <div className="col col-right">
-                      <span className="fw-bold">{productData.productName}</span>
-                      <span className="fw-bold">{productData.Manufacturer.manufacturerName}</span>
-                      <span className="fw-bold">
-                        {productData.productName.match(/\(([^)]+)\)/g)}
-                      </span>
-                      <span className="fw-bold  pb-4">{productData.Category.categoryName}</span>
-                    </div>
-
-                    <span className="text-center fw-bold fs-5 mb-2 ">Specyfikacja produktu</span>
-                    <div className="col col-left">
+                    <div>
                       {productData.Attributes.map((attribute, index) => {
                         return Number(attribute.type) === 1 ? (
-                          <div key={index}>{attribute.property}</div>
-                        ) : null;
-                      })}
-                      {productData.Attributes.map((attribute, index) => {
-                        return Number(attribute.type) === 0 ? (
-                          <div key={index}>{attribute.property + ':'}</div>
-                        ) : null;
-                      })}
-                    </div>
-                    <div className="col col-right">
-                      {productData.Attributes.map((attribute, index) => {
-                        return Number(attribute.type) === 1 ? (
-                          <div key={index}>
-                            <span className="fw-bold">
-                              {attribute.value}{' '}
-                              {productData.Attributes[index].property.match(/\[(.*)\]/g)}
-                            </span>
-                          </div>
-                        ) : null;
-                      })}
-                      {productData.Attributes.map((attribute, index) => {
-                        return Number(attribute.type) === 0 ? (
-                          <div key={index}>
+                          <div className="left pl-2" key={index}>
+                            {attribute.property}:{' '}
                             <span className="fw-bold">
                               {attribute.value}{' '}
                               {productData.Attributes[index].property.match(/\[(.*)\]/g)}
@@ -346,43 +198,184 @@ const Product = (props) => {
                         ) : null;
                       })}
                     </div>
-                  </div>
-                </div>
-                <div className="container-fluid">
-                  <div className="row">
-                    <div className="col-xl-10"></div>
-                    <div className="col-xl-2">
-                      <HashLink smooth to={`/product/${productID}#top`}>
-                        <div className="text-right backToTop">
-                          <div className=" text-center mt-2 mb-2">
-                            wróć do góry <i className="fas fa-arrow-up"></i>
-                          </div>
-                        </div>
+                    <div className="text-left mb-3 mt-3 fw-bold pl-2 mt-2">
+                      <HashLink smooth to={`/product/${productID}#productSpecification`}>
+                        <i className="fas fa-angle-double-down"></i> Przejdz do pełnej specyfikacji{' '}
+                        <i className="fas fa-angle-double-down"></i>
                       </HashLink>
+                    </div>
+                  </div>
+                  <div className="col-xl-6">
+                    <div className="row pb-2 text-center">
+                      <div>
+                        <div>
+                          <span className="fs-1 fw-bold pt-2">
+                            {productData.Prices[0].grossPrice.toLocaleString('pl-PL', {
+                              minimumFractionDigits: 2
+                            })}{' '}
+                            zł
+                          </span>
+                        </div>
+                        <div className="">
+                          <span className="fs-6 fw-normal">
+                            {productData.Prices[0].netPrice} zł +{' '}
+                            {(
+                              Number(productData.Prices[0].grossPrice) -
+                              Number(productData.Prices[0].netPrice)
+                            ).toLocaleString('pl-PL', { minimumFractionDigits: 2 })}{' '}
+                            zł{' '}
+                            <span className="fw-bold">
+                              ({productData.Prices[0].taxPercentage}% VAT)
+                            </span>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="row m-3">
+                      <div>
+                        {isLogged ? (
+                          productData.quantity > 0 ? (
+                            productLimit ? (
+                              <button className={'btn btn-danger btn-lg btn-block'}>
+                                Limit w koszyku :-(
+                              </button>
+                            ) : blockUI ? (
+                              <button className={'btn btn-warning btn-lg btn-block'}>
+                                Dodawanie... <div className="spinner-border smallSpinner"></div>
+                              </button>
+                            ) : (
+                              <button
+                                className={`btn btn-primary btn-lg btn-block`}
+                                id={productData.productID}
+                                onClick={(event) => handleToCartClick(event)}>
+                                Dodaj do koszyka <i className="fas fa-cart-plus"></i>
+                              </button>
+                            )
+                          ) : (
+                            <button
+                              className={'btn btn-danger btn-lg btn-block'}
+                              id={productData.productID}>
+                              chwilowy brak produktu
+                            </button>
+                          )
+                        ) : (
+                          <Link to="/login">
+                            <button className={'btn btn-danger btn-lg btn-block'}>
+                              Zaloguj sie <i className="bigicon fas fa-sign-in-alt"></i>
+                            </button>
+                          </Link>
+                        )}
+                      </div>
+                      <div className="left pl-2 mt-2 fs-4 text-center">
+                        <span>Dostępne sztuki: </span>
+                        <span className="fw-bold">{productData.quantity}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="col-sm-1"></div>
+            <div className="dropdown-divider mt-4 mb-4"></div>
+            <div id="productDescription" className="mt-5 mb-5 text-center">
+              <h1>Opis produktu</h1>
+              <div className="row m-bot-10 m-5">
+                <div className="col mb-5">
+                  {productDescription.map((part, index) => (
+                    <div className="m-bot-10" key={index}>
+                      {part}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div className="dropdown-divider mt-4 mb-4"></div>
+            <div id="productSpecification" className="mt-5 mb-5 text-center">
+              <h1>Pełna specyfikacja</h1>
+              <div className="row m-bot-10 mt-5">
+                <span className="text-center fw-bold fs-5 mb-2">Dane produktu</span>
+                <div className="col col-left">
+                  <span>Nazwa produktu:</span>
+                  <span>Producent:</span>
+                  <span>Kod produktu producenta:</span>
+                  <span className="pb-4">Kategoria produktu:</span>
+                </div>
+                <div className="col col-right">
+                  <span className="fw-bold">{productData.productName}</span>
+                  <span className="fw-bold">{productData.Manufacturer.manufacturerName}</span>
+                  <span className="fw-bold">{productData.productName.match(/\(([^)]+)\)/g)}</span>
+                  <span className="fw-bold  pb-4">{productData.Category.categoryName}</span>
+                </div>
+
+                <span className="text-center fw-bold fs-5 mb-2 ">Specyfikacja produktu</span>
+                <div className="col col-left">
+                  {productData.Attributes.map((attribute, index) => {
+                    return Number(attribute.type) === 1 ? (
+                      <div key={index}>{attribute.property}</div>
+                    ) : null;
+                  })}
+                  {productData.Attributes.map((attribute, index) => {
+                    return Number(attribute.type) === 0 ? (
+                      <div key={index}>{attribute.property + ':'}</div>
+                    ) : null;
+                  })}
+                </div>
+                <div className="col col-right">
+                  {productData.Attributes.map((attribute, index) => {
+                    return Number(attribute.type) === 1 ? (
+                      <div key={index}>
+                        <span className="fw-bold">
+                          {attribute.value}{' '}
+                          {productData.Attributes[index].property.match(/\[(.*)\]/g)}
+                        </span>
+                      </div>
+                    ) : null;
+                  })}
+                  {productData.Attributes.map((attribute, index) => {
+                    return Number(attribute.type) === 0 ? (
+                      <div key={index}>
+                        <span className="fw-bold">
+                          {attribute.value}{' '}
+                          {productData.Attributes[index].property.match(/\[(.*)\]/g)}
+                        </span>
+                      </div>
+                    ) : null;
+                  })}
+                </div>
+              </div>
+            </div>
+            <div className="container-fluid">
+              <div className="row">
+                <div className="col-xl-10"></div>
+                <div className="col-xl-2">
+                  <HashLink smooth to={`/product/${productID}#top`}>
+                    <div className="text-right backToTop">
+                      <div className=" text-center mt-2 mb-2">
+                        wróć do góry <i className="fas fa-arrow-up"></i>
+                      </div>
+                    </div>
+                  </HashLink>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div className="row pt-4 mb-5">
-          <div className="col-lg-2"></div>{' '}
-          <div className="col-lg-4">
-            <Link className="btn btn-outline-secondary m-bot-10" to="/">
-              <i className="fas fa-chevron-left"></i>
-              <i className="fas fa-chevron-left"></i> Wróć do strony głównej
-            </Link>
-          </div>
-          {searchURL !== null ? (
-            <div className="col-lg-4">
-              <Link className="btn btn-outline-primary m-bot-10" to={`/search${searchURL}`}>
-                <i className="fas fa-chevron-left"></i> Wróć do wyników wyszukiwania
+        <div className="container">
+          <div className="row pt-4 mb-5">
+            <div className="col-lg-6 pb-5">
+              <Link className="btn btn-outline-secondary m-bot-10" to="/">
+                <i className="fas fa-chevron-left"></i>
+                <i className="fas fa-chevron-left"></i> Wróć do strony głównej
               </Link>
             </div>
-          ) : null}
-          <div className="col-lg-2"></div>
+            {searchURL !== null ? (
+              <div className="col-lg-6">
+                <Link className="btn btn-outline-primary" to={`/search${searchURL}`}>
+                  <i className="fas fa-chevron-left"></i> Wróć do wyników wyszukiwania
+                </Link>
+              </div>
+            ) : null}
+            <div className="col-lg-2"></div>
+          </div>
         </div>
       </>
     );

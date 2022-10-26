@@ -2,8 +2,8 @@ import React from 'react';
 import { useState, useRef, useEffect, useCallback } from 'react';
 import './SearchHints.css';
 import useDebounce from '../../features/useDebounce';
-import ListHints from './ListHints';
-import ListLastSearched from './ListLastSearched';
+import ListHints from './ListHints/ListHints';
+import ListLastSearched from './LastLastSearched/ListLastSearched';
 
 const SearchHints = ({ searchValue, sendHintsSearchValue }) => {
   const searchHintsRef = useRef(null);
