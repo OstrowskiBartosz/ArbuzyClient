@@ -10,15 +10,15 @@ export const setURLPrice = (priceValue, fetchSearchData) => {
 
 export const checkValues = (priceValue, priceRange) => {
   if (priceValue[0] > priceValue[1]) return false;
-  if (priceValue[0] > priceRange.maxPrice) return false;
-  if (priceValue[0] < priceRange.minPrice) return false;
-  if (priceValue[1] > priceRange.maxPrice) return false;
-  if (priceValue[1] < priceRange.minPrice) return false;
+  if (priceValue[0] > Math.ceil(priceRange.maxPrice)) return false;
+  if (priceValue[0] < Math.floor(priceRange.minPrice)) return false;
+  if (priceValue[1] > Math.ceil(priceRange.maxPrice)) return false;
+  if (priceValue[1] < Math.floor(priceRange.minPrice)) return false;
   return true;
 };
 
 export const readyToRequest = async (priceValue, priceRange, setPriceValue, fetchSearchData) => {
-  const value = await checkValues(priceValue, priceRange);
-  if (value) setURLPrice(priceValue, fetchSearchData);
+  const bool = await checkValues(priceValue, priceRange);
+  if (bool) setURLPrice(priceValue, fetchSearchData);
   else setPriceValue([Math.ceil(priceRange.minPrice), Math.floor(priceRange.maxPrice)]);
 };

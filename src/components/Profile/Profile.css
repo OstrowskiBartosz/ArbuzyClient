@@ -91,11 +91,6 @@
   color: rgba(0, 123, 255, 1) 0%;
 }
 
-.col-thumbnail {
-  max-width: 110px;
-  margin: auto;
-}
-
 .col-left {
   text-align: right;
 }

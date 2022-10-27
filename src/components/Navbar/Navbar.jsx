@@ -93,6 +93,7 @@ const Navbar = (props) => {
       setSearchCategory(`${categoryName}`);
       setSearchCategoryURL(`&filterCategory=[${categoryID}]`);
     }
+    document.getElementById('navbarCategoryDropDown').classList.remove('show');
   };
 
   const handleSearchChange = (event) => {
@@ -122,6 +123,23 @@ const Navbar = (props) => {
       );
     }
   }, [fetchCartData, isLogged, dispatch, updateCartItems]);
+
+  useEffect(() => {
+    const navLinks = document.querySelectorAll('.nav-item');
+    navLinks.forEach((l) => {
+      l.addEventListener('click', () => {
+        document.getElementById('navbarToggler').classList.remove('show');
+      });
+    });
+    const searchButton = document.getElementById('searchButton');
+    searchButton.addEventListener('click', () => {
+      document.getElementById('navbarToggler').classList.remove('show');
+    });
+    const searchHints = document.getElementById('searchHints');
+    searchHints.addEventListener('click', () => {
+      document.getElementById('navbarToggler').classList.remove('show');
+    });
+  }, []);
 
   return (
     <Router history={history}>
@@ -207,11 +225,16 @@ const Navbar = (props) => {
                     {searchCategory} <i className="fas fa-chevron-down"></i>
                   </div>
                   <div className="position-relative">
-                    <div className="dropdown-menu" aria-labelledby="navbarCategory">
+                    <div
+                      className="dropdown-menu"
+                      aria-labelledby="navbarCategory"
+                      id="navbarCategoryDropDown">
                       <div
                         className="dropdown-item"
                         id="Wszędzie"
-                        onClick={(event) => handleCategoryChange(0, 'Wszędzie')}>
+                        onClick={(event) =>
+                          handleCategoryChange([1, 2, 3, 4, 5, 6, 7, 8, 9], 'Wszędzie')
+                        }>
                         Wszędzie
                       </div>
                       <div className="dropdown-divider"></div>
@@ -238,6 +261,7 @@ const Navbar = (props) => {
                   </div>
                 </li>
                 <Link
+                  id="searchButton"
                   to={`/search?q=${searchValue}&s=domyślne&l=10&p=1${searchCategoryURL}`}
                   onClick={(event) => handleSearchSubmit(event)}>
                   <button type="submit">

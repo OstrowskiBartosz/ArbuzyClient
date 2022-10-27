@@ -49,6 +49,8 @@ const FilterPanel = ({
           } else {
             searchParams.set(filter, `[${clickedFilter.slice(filter.length)}]`);
           }
+          searchParams.delete('priceFrom');
+          searchParams.delete('priceTo');
         } else {
           const clickedFilterID = clickedFilter.slice(filter.length);
           const URLFilterString = searchParams.get(filter);
@@ -126,9 +128,20 @@ const FilterPanel = ({
     );
   } else if ((ProductsData && ProductsData.length === 0) || ProductsData === null) {
     return (
-      <div className="row">
-        <span className="fs-1 fw-bold text-center mt-5 mb-5 pt-5 pb-5">Nie ma filtrów :-(</span>
-      </div>
+      <>
+        <div className="row">
+          <span className="fs-1 fw-bold text-center mt-5 mb-5 pt-5 pb-5">Nie ma filtrów :-(</span>
+        </div>
+        <div>
+          {showResetButton ? (
+            <button
+              className="btn btn-danger btn-lg btn-block mt-1 pt-1 resetFilterButton"
+              onClick={() => handleResetFiltersClick()}>
+              Reset Filtrów
+            </button>
+          ) : null}
+        </div>
+      </>
     );
   } else {
     return (

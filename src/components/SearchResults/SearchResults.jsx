@@ -6,7 +6,7 @@ import './SearchResults.css';
 import ResultPanel from './ResultPanel/ResultPanel';
 import SortPanel from './SortPanel/SortPanel';
 import FilterPanel from './FilterPanel/FilterPanel';
-import { uncheckAll, checkFilters, checkAttributes } from './utils';
+import { uncheckAll, checkFilters, checkAttributes, resetButtonCheck } from './utils';
 import MoveBack from '../../features/additionalComponents/MoveBack/MoveBack';
 
 const SearchResults = ({ searchValue }) => {
@@ -25,6 +25,7 @@ const SearchResults = ({ searchValue }) => {
     productPage: params.get('p') ?? 1
   });
   const [priceSettings, setPriceSettings] = useState({ priceFrom: 0, priceTo: 0 });
+  const [priceRange, setPriceRange] = useState({ minPrice: 0, maxPrice: 0 });
 
   const fetchSearchData = useCallback(async () => {
     setIsLoadingProductsData(true);
@@ -53,6 +54,11 @@ const SearchResults = ({ searchValue }) => {
       priceTo: searchParams.get('priceTo') ?? json.data.maxPrice
     });
 
+    setPriceRange({
+      minPrice: json.data.minPrice,
+      maxPrice: json.data.maxPrice
+    });
+
     setSortSettings({
       productLimit: productLimit,
       productSort: productSort,
@@ -60,23 +66,34 @@ const SearchResults = ({ searchValue }) => {
     });
   }, [searchValue]);
 
-  const setActiveFilters = useCallback(() => {
-    uncheckAll();
-    checkFilters();
-    checkAttributes();
-  }, []);
-
   const resetButtonCheck = () => {
     setShowResetButton(false);
+
     const searchParams = new URLSearchParams(window.location.search);
     searchParams.forEach((value, key) => {
       if (key !== 'q' && key !== 'w' && key !== 's' && key !== 'l' && key !== 'p') {
         if (key === 'filterCategory' && JSON.parse(value).length > 0) setShowResetButton(true);
         if (key === 'filterManufacturer' && JSON.parse(value).length > 0) setShowResetButton(true);
-        if (key !== 'filterManufacturer' && key !== 'filterCategory') setShowResetButton(true);
+        if (key === 'priceFrom' && Number(value) !== Math.floor(priceRange.minPrice))
+          setShowResetButton(true);
+        if (key === 'priceTo' && Number(value) !== Math.ceil(priceRange.maxPrice))
+          setShowResetButton(true);
+        if (
+          key !== 'filterManufacturer' &&
+          key !== 'filterCategory' &&
+          key !== 'priceFrom' &&
+          key !== 'priceTo'
+        )
+          setShowResetButton(true);
       }
     });
   };
+
+  const setActiveFilters = useCallback(() => {
+    uncheckAll();
+    checkFilters();
+    checkAttributes();
+  }, []);
 
   useEffect(() => {
     fetchSearchData();
