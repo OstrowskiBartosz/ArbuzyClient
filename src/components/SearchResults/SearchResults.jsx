@@ -1,12 +1,12 @@
 import React from 'react';
-import { Link, withRouter, useLocation } from 'react-router-dom';
+import { withRouter, useLocation } from 'react-router-dom';
 import { useState, useEffect, useCallback } from 'react';
 import './SearchResults.css';
 
 import ResultPanel from './ResultPanel/ResultPanel';
 import SortPanel from './SortPanel/SortPanel';
 import FilterPanel from './FilterPanel/FilterPanel';
-import { uncheckAll, checkFilters, checkAttributes, resetButtonCheck } from './utils';
+import { uncheckAll, checkFilters, checkAttributes } from './utils';
 import MoveBack from '../../features/additionalComponents/MoveBack/MoveBack';
 
 const SearchResults = ({ searchValue }) => {
@@ -28,43 +28,47 @@ const SearchResults = ({ searchValue }) => {
   const [priceRange, setPriceRange] = useState({ minPrice: 0, maxPrice: 0 });
 
   const fetchSearchData = useCallback(async () => {
-    setIsLoadingProductsData(true);
-    const searchParams = new URLSearchParams(window.location.search);
+    try {
+      setIsLoadingProductsData(true);
+      const searchParams = new URLSearchParams(window.location.search);
 
-    const productLimit = searchParams.get('l') ?? sortSettings.productLimit;
-    const productSort = searchParams.get('s') ?? sortSettings.productSort;
-    const productPage = searchParams.get('p') ?? sortSettings.productPage;
+      const productLimit = searchParams.get('l') ?? sortSettings.productLimit;
+      const productSort = searchParams.get('s') ?? sortSettings.productSort;
+      const productPage = searchParams.get('p') ?? sortSettings.productPage;
 
-    searchParams.delete('s');
-    searchParams.delete('p');
-    searchParams.delete('l');
-    searchParams.delete('q');
-    searchParams.delete('w');
+      searchParams.delete('s');
+      searchParams.delete('p');
+      searchParams.delete('l');
+      searchParams.delete('q');
+      searchParams.delete('w');
 
-    const url = `${process.env.REACT_APP_API}/product/productName/${searchValue}?s=${productSort}&p=${productPage}&l=${productLimit}&${searchParams}`;
-    const response = await fetch(url, { method: 'get', credentials: 'include' });
-    const json = await response.json();
+      const url = `${process.env.REACT_APP_API}/product/productName/${searchValue}?s=${productSort}&p=${productPage}&l=${productLimit}&${searchParams}`;
+      const response = await fetch(url, { method: 'get', credentials: 'include' });
+      const json = await response.json();
 
-    setIsLoadingProductsData(false);
-    setProductsData(json.data);
-    setNumberOFProducts((json.data && json.data.numberOfProducts) ?? 0);
+      setIsLoadingProductsData(false);
+      setProductsData(json.data);
+      setNumberOFProducts((json.data && json.data.numberOfProducts) ?? 0);
 
-    setPriceSettings({
-      priceFrom: searchParams.get('priceFrom') ?? json.data.minPrice,
-      priceTo: searchParams.get('priceTo') ?? json.data.maxPrice
-    });
+      setPriceSettings({
+        priceFrom: searchParams.get('priceFrom') ?? json.data.minPrice,
+        priceTo: searchParams.get('priceTo') ?? json.data.maxPrice
+      });
 
-    setPriceRange({
-      minPrice: json.data.minPrice,
-      maxPrice: json.data.maxPrice
-    });
+      setPriceRange({
+        minPrice: json.data.minPrice,
+        maxPrice: json.data.maxPrice
+      });
 
-    setSortSettings({
-      productLimit: productLimit,
-      productSort: productSort,
-      productPage: productPage
-    });
-  }, [searchValue]);
+      setSortSettings({
+        productLimit: productLimit,
+        productSort: productSort,
+        productPage: productPage
+      });
+    } catch (e) {
+      setError(e.message);
+    }
+  }, [searchValue, sortSettings.productLimit, sortSettings.productSort, sortSettings.productPage]);
 
   const resetButtonCheck = () => {
     setShowResetButton(false);
@@ -116,6 +120,11 @@ const SearchResults = ({ searchValue }) => {
                 produktów
               </h4>
             </div>
+            {error && (
+              <div>
+                <span>{error}</span>
+              </div>
+            )}
           </div>
         </div>
         <div className="row" id="results">

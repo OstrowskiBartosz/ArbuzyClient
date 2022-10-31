@@ -31,9 +31,9 @@ const tableCellStyle = {
 };
 
 const statusColors = {
-  'W trakcie': { color: '#f0ad4e' },
-  Zrealizowane: { color: '#5cb85c' },
-  Anulowane: { color: '#d9534f' }
+  Pending: { color: '#f0ad4e' },
+  Completed: { color: '#5cb85c' },
+  Cancelled: { color: '#d9534f' }
 };
 
 export { StyledTableCell, StyledTableRow, tableCellStyle, statusColors };

@@ -50,9 +50,9 @@ const SearchHints = ({ searchValue, sendHintsSearchValue }) => {
     lastSearchedValues();
   };
 
-  const debouncedGetHints = useDebounce(
-    () => (searchValue.length > 0 ? getHints(searchValue) : null),
-    500
+  const debouncedGetHints = useCallback(
+    useDebounce(() => getHints(searchValue), 750),
+    []
   );
 
   const fetchData = async (resource, searchValue) => {
@@ -67,6 +67,7 @@ const SearchHints = ({ searchValue, sendHintsSearchValue }) => {
   };
 
   const getHints = async (searchValue) => {
+    if (searchValue === '') return;
     setIsLoadingHints(true);
     let [productResponse, categoryResponse, manufacturerResponse] = await Promise.all([
       fetchData('product', searchValue),
@@ -100,8 +101,8 @@ const SearchHints = ({ searchValue, sendHintsSearchValue }) => {
 
   useEffect(() => {
     lastSearchedValues();
-    if (searchValue.length > 0) debouncedGetHints();
-  }, [searchValue]);
+    debouncedGetHints();
+  }, [searchValue, debouncedGetHints]);
 
   return (
     <div className="hintsContainer">

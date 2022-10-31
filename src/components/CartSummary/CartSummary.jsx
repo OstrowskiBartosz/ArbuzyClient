@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateCartItems } from '../../store/storeSlices/cartItemsSlice';
 import DeliveryTable from './DeliveryTable/DeliveryTable';
 import ProductTable from './ProductTable/ProductTable';
+import PaymentPanel from './PaymentPanel/PaymentPanel';
 import newAlert from '../../features/newAlert';
 import MoveBack from '../../features/additionalComponents/MoveBack/MoveBack';
 
@@ -13,6 +14,8 @@ const CartSummary = (props) => {
   const [cartData, setCartData] = useState(null);
   const [isLoadingData, setIsLoadingData] = useState(true);
   const [error, setError] = useState(null);
+  const [paymentMethod, setPaymenthMethod] = useState(null);
+  const [showWarning, setShowWarning] = useState(false);
 
   const isLogged = useSelector((state) => state.session.isLogged);
   const dispatch = useDispatch();
@@ -20,9 +23,15 @@ const CartSummary = (props) => {
 
   const handleBuyClick = async () => {
     try {
+      if (!paymentMethod) {
+        setShowWarning(true);
+        newAlert('danger', 'Płatność!', 'Wybierz sposób płatności');
+        return;
+      }
       const url = `${process.env.REACT_APP_API}/invoice`;
       const response = await fetch(url, {
         method: 'post',
+        body: JSON.stringify({ paymentMethod: paymentMethod }),
         credentials: 'include',
         headers: new Headers({ 'content-type': 'application/json' })
       });
@@ -133,6 +142,16 @@ const CartSummary = (props) => {
             <div className="row">
               <div className="col-xl-12">
                 <DeliveryTable userData={userData} />
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-xl-12">
+                <PaymentPanel
+                  paymentMethod={paymentMethod}
+                  setPaymenthMethod={setPaymenthMethod}
+                  showWarning={showWarning}
+                  setShowWarning={setShowWarning}
+                />
               </div>
             </div>
             <div className="row pt-5">

@@ -66,7 +66,7 @@ const Navbar = (props) => {
     setIsLoadingCartData(false);
     dispatch(
       cartItemsChange({
-        numberOfProducts: json.data.numberOfProducts ?? 0,
+        numberOfProducts: json?.data?.numberOfProducts ?? 0,
         updateCartItems: false
       })
     );

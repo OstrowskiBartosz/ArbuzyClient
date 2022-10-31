@@ -5,6 +5,7 @@ import TableBody from '@mui/material/TableBody';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import Paper from '@mui/material/Paper';
+import { paymentMethod, status } from '../../../features/DBTranslation';
 import {
   StyledTableCell,
   StyledTableRow,
@@ -26,8 +27,9 @@ const InvoiceDetails = ({ invoiceData, handleCancelClick }) => {
                   <StyledTableCell>Miasto i kod pocztowy</StyledTableCell>
                   <StyledTableCell>Typ rachunku</StyledTableCell>
                   <StyledTableCell>Data wystawienia</StyledTableCell>
+                  <StyledTableCell>Sposób płatności</StyledTableCell>
                   <StyledTableCell>Status</StyledTableCell>
-                  {invoiceData.status === 'W trakcie' && <StyledTableCell></StyledTableCell>}
+                  {invoiceData.status === 'Pending' && <StyledTableCell></StyledTableCell>}
                 </StyledTableRow>
               </TableHead>
               <TableBody>
@@ -47,10 +49,11 @@ const InvoiceDetails = ({ invoiceData, handleCancelClick }) => {
                       minute: '2-digit'
                     }).format(new Date(invoiceData.invoiceDate))}
                   </StyledTableCell>
+                  <StyledTableCell> {paymentMethod[invoiceData.paymentMethod]}</StyledTableCell>
                   <StyledTableCell sx={statusColors[invoiceData.status]} component="th" scope="row">
-                    {invoiceData.status}
+                    {status[invoiceData.status]}
                   </StyledTableCell>
-                  {invoiceData.status === 'W trakcie' && (
+                  {invoiceData.status === 'Pending' && (
                     <StyledTableCell>
                       <button
                         className="btn btn-danger"

@@ -182,19 +182,16 @@ const Profile = (props) => {
           </div>
           <div>
             {activeTab === 'orders' && (
-              <Orders
-                invoiceData={invoiceData}
-                isLoadingInvoice={isLoadingInvoice}
-                setError={setError}
-                fetchInvoiceData={fetchInvoiceData}></Orders>
+              <Orders invoiceData={invoiceData} isLoadingInvoice={isLoadingInvoice} />
             )}
-            {activeTab === 'complaints' && <Complaints></Complaints>}
+            {activeTab === 'complaints' && <Complaints />}
             {activeTab === 'settings' && (
               <Settings
                 userData={userData}
                 isLoadingUser={isLoadingUser}
                 fetchUserData={fetchUserData}
-                setError={setError}></Settings>
+                setError={setError}
+              />
             )}
           </div>
         </div>

@@ -1,0 +1,47 @@
+.payment-block {
+  cursor: pointer;
+  border: 3px solid black;
+  color: black;
+  padding: 15px;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.payment-block-active {
+  cursor: pointer;
+  border: 3px solid rgb(0, 123, 255);
+  color: rgb(0, 123, 255);
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.payment-block:hover {
+  border: 3px solid rgb(108, 117, 125);
+  color: rgb(108, 117, 125);
+}
+
+.warning {
+  animation: warning 3s;
+}
+@keyframes warning {
+  0% {
+    border: 3px solid black;
+    color: black;
+  }
+  25% {
+    border: 3px solid red;
+    color: red;
+  }
+  50% {
+    border: 3px solid black;
+    color: black;
+  }
+  75% {
+    border: 3px solid red;
+    color: red;
+  }
+  100% {
+    border: 3px solid black;
+    color: black;
+  }
+}

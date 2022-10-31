@@ -33,7 +33,7 @@ const MainPage = (props) => {
     youMayLikeProducts: state.products.youMayLikeProducts
   }));
 
-  const firstFetch = products.mostBoughtCategoryProducts.length === 0 ? true : false;
+  const firstFetch = products?.mostBoughtCategoryProducts?.length === 0 ? true : false;
   const [isLoadingData, setIsLoadingData] = useState(firstFetch);
   const [error, setError] = useState(null);
 
