@@ -13,7 +13,9 @@ import { updateCartItems } from '../../store/storeSlices/cartItemsSlice';
 const splitProductDesc = async (description) => {
   description.forEach((part, index) => {
     if (part.startsWith('http')) {
-      description[index] = <img className="img-fluid" src={part} alt="product description" />;
+      description[index] = (
+        <img className="img-fluid mt-5 mb-3" src={part} alt="product description" />
+      );
     }
   });
   return description;
@@ -25,7 +27,7 @@ const getURLFromParam = () => {
   return URLParam;
 };
 
-const Product = (props) => {
+const Product = ({ setSearchValueToSend }) => {
   const { productID } = useParams();
   const searchURL = getURLFromParam();
 
@@ -132,20 +134,23 @@ const Product = (props) => {
                     <div className="col product-tree ml-2 mt-3">
                       <Link
                         className=" fw-bold"
-                        to={`/search?filterCategory=[${productData.Category.categoryID}]&s=domyślne&p=1&l=10`}>
+                        to={`/search?filterCategory=[${productData.Category.categoryID}]&s=domyślne&p=1&l=10`}
+                        onClick={() => setSearchValueToSend('')}>
                         {productData.Category.categoryName}{' '}
                       </Link>
                       <i className="fas fa-long-arrow-alt-right"></i>{' '}
                       <Link
                         className="fw-bold"
-                        to={`/search?filterManufacturer=[${productData.Manufacturer.manufacturerID}]&s=domyślne&p=1&l=10`}>
+                        to={`/search?filterManufacturer=[${productData.Manufacturer.manufacturerID}]&s=domyślne&p=1&l=10`}
+                        onClick={() => setSearchValueToSend('')}>
                         {productData.Manufacturer.manufacturerName}{' '}
                       </Link>
                       <i className="fas fa-long-arrow-alt-right"></i>{' '}
                       <Link
                         className=" fw-bold"
-                        to={`/search?q=${productData.productName}&s=domyślne&p=1&l=10`}>
-                        {productData.productName}{' '}
+                        to={`/search?q=${productData.productName}&s=domyślne&p=1&l=10`}
+                        onClick={() => setSearchValueToSend(productData.productName)}>
+                        {productData.productName}
                       </Link>
                     </div>
                   </div>

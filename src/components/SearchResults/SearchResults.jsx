@@ -129,7 +129,7 @@ const SearchResults = ({ searchValue }) => {
         </div>
         <div className="row" id="results">
           <div className="col-1"></div>
-          <div className={'col-sm-2 pb-5 '}>
+          <div className={'col-xl-2 pb-5 '}>
             <div className="col-12 componentBackgroundColor mt-3 shadow-sm p-3 mb-1 bg-white rounded">
               <FilterPanel
                 searchValue={searchValue}
@@ -143,7 +143,7 @@ const SearchResults = ({ searchValue }) => {
               />
             </div>
           </div>
-          <div className="col-sm-7">
+          <div className="col-xl-7">
             <div className="row">
               <div className="col componentBackgroundColor mt-3 shadow-sm pt-3 bg-white rounded">
                 <SortPanel

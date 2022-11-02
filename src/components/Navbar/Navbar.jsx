@@ -342,7 +342,7 @@ const Navbar = (props) => {
               <Invoice />
             </Route>
             <Route path="/product/:productID?">
-              <Product />
+              <Product setSearchValueToSend={setSearchValueToSend} />
             </Route>
             <Route path="/search">
               <SearchResults searchValue={searchValueToSend} history={history} />

@@ -16,8 +16,9 @@ const SortPanel = ({
   const [productSort, setProductSort] = useState(sortSettings.productSort);
   const [productPage, setProductPage] = useState(sortSettings.productPage);
 
-  const pages = pagination(NumberOfpages);
+  // const pages = pagination(NumberOfpages, activePage);
 
+  const [pages, setPages] = useState(pagination(NumberOfpages, activePage));
   const [nextPage, setNextPage] = useState(NumberOfpages !== activePage ? true : false);
   const [prevPage, setPrevPage] = useState(activePage > 1 ? true : false);
 
@@ -82,7 +83,10 @@ const SortPanel = ({
   useEffect(() => {
     setPrevPage(activePage > 1 ? true : false);
     setNextPage(NumberOfpages !== activePage ? true : false);
-  }, [NumberOfpages, activePage]);
+    setPages(pagination(NumberOfpages, activePage));
+  }, [NumberOfpages, activePage, ProductsData]);
+
+  // useEffect(() => {}, [ProductsData]);
 
   if (isLoading && ProductsData === undefined) {
     return (
@@ -155,17 +159,17 @@ const SortPanel = ({
             <ul className="pagination">
               <div className="btn btn-secondary">wyników na stronie</div>
               <li className={'page-item ' + (Number(productLimit) === 10 ? 'active' : '')}>
-                <div className="page-link" onClick={() => handleLimitChange(10)}>
+                <div className="page-link page-size" onClick={() => handleLimitChange(10)}>
                   10
                 </div>
               </li>
               <li className={'page-item ' + (Number(productLimit) === 20 ? 'active' : '')}>
-                <div className="page-link" onClick={() => handleLimitChange(20)}>
+                <div className="page-link page-size" onClick={() => handleLimitChange(20)}>
                   20
                 </div>
               </li>
               <li className={'page-item ' + (Number(productLimit) === 30 ? 'active' : '')}>
-                <div className="page-link" onClick={() => handleLimitChange(30)}>
+                <div className="page-link page-size" onClick={() => handleLimitChange(30)}>
                   30
                 </div>
               </li>
@@ -198,33 +202,43 @@ const SortPanel = ({
           </div>
           <div>
             <nav>
-              <ul className="pagination">
+              <ul className="pagination pagination-size">
                 <div className="btn btn-secondary d-inline">strona</div>
                 <div
                   className={'page-item ' + (prevPage ? '' : 'disabled')}
                   onClick={() => handlePageChangeArrow('-')}
                   disabled={prevPage ? false : 'disabled'}>
-                  <div className="page-link">
+                  <div className="page-link page-size">
                     <i className="fas fa-chevron-left"></i>
                   </div>
                 </div>
-                {pages.map((page, index) => (
-                  <li
-                    className={index + 1 === activePage ? 'page-item active' : 'page-item'}
-                    key={`page${index + 1}`}>
-                    <div
-                      className="page-link"
-                      id={index + 1}
-                      onClick={(event) => handlePageChange(event)}>
-                      {index + 1}
-                    </div>
-                  </li>
-                ))}
+                {pages.map((page, index) =>
+                  page !== '...' ? (
+                    <li
+                      className={page === activePage ? 'page-item active' : 'page-item'}
+                      key={`page${index}`}>
+                      <div
+                        className="page-link page-size"
+                        id={page}
+                        onClick={(event) => handlePageChange(event)}>
+                        {page}
+                      </div>
+                    </li>
+                  ) : (
+                    <li
+                      className={page === activePage ? 'page-item active' : 'page-item'}
+                      key={`page${index}`}>
+                      <div className="page-link disabled pagination-disabled page-size" id={page}>
+                        {page}
+                      </div>
+                    </li>
+                  )
+                )}
                 <div
                   className={'page-item ' + (nextPage ? '' : 'disabled')}
                   onClick={() => handlePageChangeArrow('+')}
                   disabled={nextPage ? false : 'disabled'}>
-                  <div className="page-link">
+                  <div className="page-link page-size">
                     <i className="fas fa-chevron-right"></i>
                   </div>
                 </div>

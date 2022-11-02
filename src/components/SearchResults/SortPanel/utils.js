@@ -1,9 +1,26 @@
-const pagination = (NumberOfpages) => {
+const pagination = (NumberOfpages, activePage) => {
+  const left = activePage - 3 >= 1 ? activePage - 3 : null;
+  const right = activePage + 3 <= NumberOfpages ? activePage + 3 : null;
+  console.log({ left });
+  console.log({ right });
   const pages = [];
   for (let i = 1; i <= NumberOfpages; i++) {
-    pages.push(i);
-    if (i === 5) break;
+    if (left && i > left && right && i < right) {
+      pages.push(i);
+      continue;
+    }
+
+    if (!right && left && i > left) {
+      pages.push(i);
+      continue;
+    }
+    if (!left && right && i < right) {
+      pages.push(i);
+      continue;
+    }
   }
+  if (left) pages.unshift('...');
+  if (right) pages.push('...');
   return pages;
 };
 
