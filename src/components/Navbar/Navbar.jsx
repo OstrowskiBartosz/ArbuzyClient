@@ -324,7 +324,7 @@ const Navbar = (props) => {
         <ScrollToTop>
           <Switch>
             <Route exact path="/">
-              {<MainPage />}
+              {<MainPage setSearchValueToSend={setSearchValueToSend} />}
             </Route>
             <Route path="/login">
               <AuthenticationPanel

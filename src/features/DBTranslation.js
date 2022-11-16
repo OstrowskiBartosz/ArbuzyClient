@@ -8,7 +8,7 @@ const paymentMethod = {
 const status = {
   Pending: 'W trakcie',
   Cancelled: 'Anulowany',
-  Compledted: 'Zrealizowany'
+  Completed: 'Zrealizowany'
 };
 
 export { paymentMethod, status };

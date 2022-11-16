@@ -43,7 +43,7 @@ const Orders = ({ invoiceData, isLoadingInvoice }) => {
         </div>
         <div className="row">
           <div className="col-sm-1"></div>
-          <div className="col-sm-10 componentBackgroundColor mb-3 shadow-sm p-3 bg-white rounded">
+          <div className="col-sm-10 componentBackgroundColor mb-3">
             <div className="row pt-5 pb-5">
               <div className="col-12 text-center">
                 <h1>Brak faktur do wyświetlenia! Kup coś :-) </h1>
@@ -116,7 +116,7 @@ const Orders = ({ invoiceData, isLoadingInvoice }) => {
             ) : (
               <div className="row">
                 <div className="col-12">
-                  <h1>Brak zamówionych towarów, kup coś :-)</h1>
+                  <h1>Brak zamówień, kup coś :-)</h1>
                 </div>
               </div>
             )}

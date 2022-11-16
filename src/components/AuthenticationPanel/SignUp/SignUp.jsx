@@ -7,8 +7,7 @@ import newAlert from '../../../features/newAlert';
 import getFormData from '../utils/getFormData';
 
 const SignUp = (props) => {
-  const [errorSignup, setErrorSignup] = useState(false);
-  const [errorMessageSignup, setErrorMessageSignup] = useState(false);
+  const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [companyAccount, setcompanyAccount] = useState(false);
 
@@ -17,24 +16,30 @@ const SignUp = (props) => {
   const handleSignupSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-    setErrorSignup(false);
+    setError(null);
 
-    const signupData = getFormData('SignupForm');
-    const url = `${process.env.REACT_APP_API}/user`;
-    const response = await fetch(url, {
-      method: 'post',
-      credentials: 'include',
-      body: JSON.stringify(signupData),
-      headers: new Headers({ 'content-type': 'application/json' })
-    });
-    const json = await response.json();
-    if (json.message !== 'signedup') {
-      setErrorMessageSignup(json.message);
-      setErrorSignup(true);
-    } else {
-      dispatch(sessionChange(true));
-      dispatch(updateCartItems(true));
-      newAlert('primary', 'Zarejestrowano!', 'Rejestracja i logowanie pomyślne.');
+    try {
+      const signupData = getFormData('SignupForm');
+      const url = `${process.env.REACT_APP_API}/user`;
+      const response = await fetch(url, {
+        method: 'post',
+        credentials: 'include',
+        body: JSON.stringify(signupData),
+        headers: new Headers({ 'content-type': 'application/json' })
+      });
+      if (response.status === 400 || response.status === 500)
+        throw new Error('Ooops, spróbuj ponownie później!');
+
+      const json = await response.json();
+      if (json.message !== 'signedup') {
+        setError(json.message);
+      } else {
+        dispatch(sessionChange(true));
+        dispatch(updateCartItems(true));
+        newAlert('primary', 'Zarejestrowano!', 'Rejestracja i logowanie pomyślne.');
+      }
+    } catch (err) {
+      setError(err.message);
     }
     setIsLoading(false);
   };
@@ -119,31 +124,39 @@ const SignUp = (props) => {
           </div>
 
           <div className="SignupCompanyCheckbox pb-2">
-            Czy zakładane jest konto firmowe?{' '}
-            <input type="checkbox" onChange={(event) => handleCompanyAccount(event)}></input>
+            <label className="fw-bold text-decoration-none" htmlFor="companyAccount">
+              Czy zakładane jest konto firmowe?
+            </label>{' '}
+            <input
+              id="companyAccount"
+              type="checkbox"
+              onChange={(event) => handleCompanyAccount(event)}></input>
           </div>
-
-          <div className={'fw-bold ' + (companyAccount ? '' : 'd-none')}>Dane firmowe</div>
-          <div className={'row ' + (companyAccount ? '' : 'd-none')}>
-            <div className="col-lg-6 signupinput">
-              <input
-                type="text"
-                name="companyName"
-                className="form-control"
-                placeholder="nazwa firmy"
-                maxLength="100"
-                required={companyAccount ? ' required' : ''}></input>
-            </div>
-            <div className="col-lg-6 signupinput">
-              <input
-                type="text"
-                name="VATNumber"
-                maxLength="10"
-                className="form-control"
-                placeholder="numer NIP"
-                required={companyAccount ? ' required' : ''}></input>
-            </div>
-          </div>
+          {companyAccount ? (
+            <>
+              <div className="fw-bold ">Dane firmowe</div>
+              <div className="row">
+                <div className="col-lg-6 signupinput">
+                  <input
+                    type="text"
+                    name="companyName"
+                    className="form-control"
+                    placeholder="nazwa firmy"
+                    maxLength="100"
+                    required={companyAccount ? ' required' : ''}></input>
+                </div>
+                <div className="col-lg-6 signupinput">
+                  <input
+                    type="text"
+                    name="VATNumber"
+                    maxLength="10"
+                    className="form-control"
+                    placeholder="numer NIP"
+                    required={companyAccount ? ' required' : ''}></input>
+                </div>
+              </div>
+            </>
+          ) : null}
 
           <div className={'fw-bold ' + (companyAccount ? 'd-none' : '')}>Dane zamieszkania</div>
           <div className="row">
@@ -152,7 +165,7 @@ const SignUp = (props) => {
                 type="text"
                 name="streetName"
                 className="form-control"
-                placeholder="ulica, numer domu i mieszkania"
+                placeholder="ulica, numer budynku i/lub mieszkania"
                 maxLength="50"
                 required></input>
             </div>
@@ -186,10 +199,10 @@ const SignUp = (props) => {
             Nigdy nie podzielimy się z nikim twoimi danymi.
           </small>
 
-          <div className={'error ' + (errorSignup ? '' : 'd-none')}>
+          <div className={error ? 'error ' : 'd-none'}>
             <div className="errorWarning">
               <i className="fas fa-exclamation-triangle errorWarning"></i>
-              <div className="errorMessage">{errorMessageSignup}</div>
+              <div className="errorMessage">{error}</div>
             </div>
           </div>
           <div className="loginSignupSubmitButton">

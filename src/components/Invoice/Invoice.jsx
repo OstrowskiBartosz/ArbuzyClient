@@ -40,8 +40,9 @@ const Invoice = (props) => {
       const url = `${process.env.REACT_APP_API}/invoice/${invoiceID}`;
       const response = await fetch(url, { method: 'get', credentials: 'include' });
       const json = await response.json();
-
-      setInvoiceData(json.data[0]);
+      if (response.status === 400 || response.status === 500)
+        throw new Error('Ooops, nie udało się pobrać elementów!');
+      setInvoiceData(json.data);
       setIsLoadingInvoiceData(false);
     } catch (err) {
       setError(err.message);

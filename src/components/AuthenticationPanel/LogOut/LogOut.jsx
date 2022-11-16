@@ -1,11 +1,12 @@
 import React from 'react';
 import { useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { sessionChange } from '../../../store/storeSlices/sessionSlice.js';
 import { updateCartItems } from '../../../store/storeSlices/cartItemsSlice';
 import newAlert from '../../../features/newAlert';
 import MoveBack from '../../../features/additionalComponents/MoveBack/MoveBack';
+import './LogOut.css';
 
 const LogOut = (props) => {
   const [isLoading, setIsLoading] = useState(false);

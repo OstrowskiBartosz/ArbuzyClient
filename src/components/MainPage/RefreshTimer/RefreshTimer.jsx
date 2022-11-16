@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useSelector } from 'react-redux';
+import './RefreshTimer.css';
 
 const getMinutes = (lastRefreshRef) => {
   const time = new Date(lastRefreshRef.current + 300000).getTime() - Date.now();
@@ -63,9 +64,14 @@ const RefreshTimer = ({ handleFetchData }) => {
               useGrouping: false
             })}
           </span>
-          <span className="float-right mt-1 pr-2">
-            <i className="fa fa-refresh refreshButton fs-5" onClick={() => handleFetchData()}></i>
-          </span>
+          <button
+            className="float-right mt-1 pr-2 refresh-button"
+            aria-label="refresh products button">
+            <i
+              className="fa fa-refresh refreshButton fs-5"
+              alt="refresh icon"
+              onClick={() => handleFetchData()}></i>
+          </button>
         </div>
       </div>
     </div>

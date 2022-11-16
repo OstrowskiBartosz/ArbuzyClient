@@ -94,6 +94,9 @@ const PageFooter = (props) => {
           </span>
         </div>
       </div>
+      <span className="float-left footer-element-text">
+        Zdjecia i opisy produktów w całości pochodzą z morele.net.
+      </span>
       <div className="footer-element-copyright pb-4 pt-4 text-center">
         <span className="footer-element-copyright-text">Copyright © 2021-2022 Arbuzy.com</span>
       </div>

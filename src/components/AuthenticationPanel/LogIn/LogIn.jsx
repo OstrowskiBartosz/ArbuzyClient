@@ -7,8 +7,7 @@ import newAlert from '../../../features/newAlert';
 import getFormData from '../utils/getFormData';
 
 const LogIn = (props) => {
-  const [errorLogin, setErrorLogin] = useState(false);
-  const [errorMessageLogin, setErrorMessageLogin] = useState(false);
+  const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
@@ -16,25 +15,31 @@ const LogIn = (props) => {
   const handleLoginSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-    setErrorLogin(false);
+    setError(null);
 
-    const loginData = getFormData('loginForm');
-    const url = `${process.env.REACT_APP_API}/session`;
-    const response = await fetch(url, {
-      method: 'post',
-      credentials: 'include',
-      body: JSON.stringify(loginData),
-      headers: new Headers({ 'content-type': 'application/json' })
-    });
-    const json = await response.json();
+    try {
+      const loginData = getFormData('loginForm');
+      const url = `${process.env.REACT_APP_API}/session`;
+      const response = await fetch(url, {
+        method: 'post',
+        credentials: 'include',
+        body: JSON.stringify(loginData),
+        headers: new Headers({ 'content-type': 'application/json' })
+      });
+      if (response.status === 400 || response.status === 500)
+        throw new Error('Ooops, spróbuj ponownie później!');
 
-    if (json.message === 'Logged.') {
-      dispatch(sessionChange(true));
-      dispatch(updateCartItems(true));
-      newAlert('primary', 'Zalogowano!', 'Uzytkownik został zalogowany.');
-    } else {
-      setErrorLogin(true);
-      setErrorMessageLogin(json.message);
+      const json = await response.json();
+
+      if (json.message === 'Logged.') {
+        dispatch(sessionChange(true));
+        dispatch(updateCartItems(true));
+        newAlert('primary', 'Zalogowano!', 'Uzytkownik został zalogowany.');
+      } else {
+        setError(json.message);
+      }
+    } catch (err) {
+      setError(err.message);
     }
     setIsLoading(false);
   };
@@ -65,10 +70,10 @@ const LogIn = (props) => {
               autoComplete="current-password"
               required></input>
           </div>
-          <div className={'error ' + (errorLogin ? '' : 'd-none')}>
+          <div className={error ? 'error' : 'd-none'}>
             <div className="errorWarning">
               <i className="fas fa-exclamation-triangle errorWarning"></i>
-              <div className="errorMessage">{errorMessageLogin}</div>
+              <div className="errorMessage">{error}</div>
             </div>
           </div>
           <div className="loginSignupSubmitButton ">

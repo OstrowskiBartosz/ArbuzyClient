@@ -28,6 +28,8 @@ const Profile = (props) => {
       setIsLoadingInvoice(true);
       const url = `${process.env.REACT_APP_API}/invoice`;
       const response = await fetch(url, { method: 'get', credentials: 'include' });
+      if (response.status === 400 || response.status === 500)
+        throw new Error('Ooops, nie udało się pobrać elementów! Spróbuj ponownie za chwilę!');
       const json = await response.json();
       setInvoiceData(json.data);
     } catch (err) {

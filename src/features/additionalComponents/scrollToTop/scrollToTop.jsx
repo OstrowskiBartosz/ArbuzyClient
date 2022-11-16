@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 function ScrollToTop({ history, children }) {
   useEffect(() => {
     const unlisten = history.listen(() => {
-      if (history.location.pathname !== '/search') window.scrollTo(0, 0);
+      window.scrollTo(0, 0);
     });
     return () => {
       unlisten();

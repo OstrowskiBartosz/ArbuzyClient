@@ -4,9 +4,9 @@ import { Link, withRouter, useParams } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 import { useSelector } from 'react-redux';
 import newAlert from '../../features/newAlert';
-
+import ScrollToTop from '../../features/additionalComponents/scrollToTop/scrollToTop.jsx';
 import './Product.css';
-
+import history from '../history';
 import { useDispatch } from 'react-redux';
 import { updateCartItems } from '../../store/storeSlices/cartItemsSlice';
 
@@ -23,13 +23,14 @@ const splitProductDesc = async (description) => {
 
 const getURLFromParam = () => {
   const params = new URLSearchParams(window.location.search);
-  const URLParam = params.get('searchURL') ?? null;
+  const URLParam = decodeURIComponent(params.toString().slice(13)) ?? null;
+  history.replace(`${window.location.pathname}`);
   return URLParam;
 };
 
 const Product = ({ setSearchValueToSend }) => {
   const { productID } = useParams();
-  const searchURL = getURLFromParam();
+  const [searchURL, setSearchURL] = useState(getURLFromParam());
 
   const [productData, setProductData] = useState(false);
   const [isLoadingProduct, setIsLoadingProduct] = useState(true);
@@ -401,9 +402,11 @@ const Product = ({ setSearchValueToSend }) => {
             </div>
             {searchURL !== null ? (
               <div className="col-lg-6">
-                <Link className="btn btn-outline-primary" to={`/search${searchURL}`}>
-                  <i className="fas fa-chevron-left"></i> Wróć do wyników wyszukiwania
-                </Link>
+                <ScrollToTop>
+                  <Link className="btn btn-outline-primary" to={`/search?${searchURL}`}>
+                    <i className="fas fa-chevron-left"></i> Wróć do wyników wyszukiwania
+                  </Link>
+                </ScrollToTop>
               </div>
             ) : null}
             <div className="col-lg-2"></div>

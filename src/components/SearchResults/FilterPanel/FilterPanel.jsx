@@ -111,6 +111,18 @@ const FilterPanel = ({
     2000
   );
 
+  const handleCollapse = (collapseID) => {
+    const collapseItem = document.getElementById(`collapse-${collapseID}`);
+    collapseItem.classList.contains('collapsed')
+      ? collapseItem.classList.remove('collapsed')
+      : collapseItem.classList.add('collapsed');
+
+    const rotateArrow = document.getElementById(`rotateArrow-${collapseID}`);
+    rotateArrow.classList.contains('rotated')
+      ? rotateArrow.classList.remove('rotated')
+      : rotateArrow.classList.add('rotated');
+  };
+
   useEffect(() => {
     setPriceValue([
       Math.floor(Number(priceSettings.priceFrom)),
@@ -153,9 +165,40 @@ const FilterPanel = ({
             <div>
               <div className="dropdown-divider mt-4 mb-4"></div>
               <div className="text-left">
-                <div className="fs-3 fw-bold mb-4">Kategorie</div>
-                {filtersData &&
-                  filtersData.categories.map((category) => (
+                <div className="fs-3 fw-bold mb-4">
+                  <span>Kategorie</span>
+                  {filtersData?.categories.length > 2 ? (
+                    <div
+                      id="rotateArrow-1"
+                      className="float-right fs-3 expand-arrow"
+                      onClick={() => handleCollapse(1)}>
+                      <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                  ) : null}
+                </div>
+                {filtersData?.categories.length > 2 ? (
+                  <div className="attributes-list collapsed" id="collapse-1">
+                    {filtersData?.categories.map((category) => (
+                      <div className=" text-left mb-2" key={'filterCategory' + category.categoryID}>
+                        <label className="filterContainer">
+                          <span className="ml-2">{category.categoryName}</span>
+                          <span className="text-right fw-bold">
+                            {` (${category.numberOfProducts})`}
+                          </span>
+                          <input
+                            type="checkbox"
+                            id={'filterCategory' + category.categoryID}
+                            onChange={(event) => {
+                              handleFilterChange(event);
+                            }}
+                          />
+                          <span className="checkmark"></span>
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  filtersData?.categories.map((category) => (
                     <div className=" text-left mb-2" key={'filterCategory' + category.categoryID}>
                       <label className="filterContainer">
                         <span className="ml-2">{category.categoryName}</span>
@@ -172,13 +215,47 @@ const FilterPanel = ({
                         <span className="checkmark"></span>
                       </label>
                     </div>
-                  ))}
+                  ))
+                )}
                 <div className="dropdown-divider mt-4 mb-4"></div>
               </div>
               <div className="text-left pb-2">
-                <div className="fs-3 fw-bold mb-4">Producenci</div>
-                {filtersData &&
-                  filtersData.manufacturers.map((manufacturer) => (
+                <div className="fs-3 fw-bold mb-4">
+                  <span>Producenci</span>
+                  {filtersData?.manufacturers.length > 2 ? (
+                    <div
+                      id="rotateArrow-2"
+                      className="float-right fs-3 expand-arrow"
+                      onClick={() => handleCollapse(2)}>
+                      <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                  ) : null}
+                </div>
+                {filtersData?.manufacturers.length > 2 ? (
+                  <div className="attributes-list collapsed" id="collapse-2">
+                    {filtersData?.manufacturers.map((manufacturer) => (
+                      <div
+                        className=" text-left mb-2"
+                        key={'filterManufacturer' + manufacturer.ManufacturerID}>
+                        <label className="filterContainer">
+                          <span className="ml-2">{manufacturer.ManufacturerName}</span>
+                          <span className="text-right fw-bold">
+                            {` (${manufacturer.numberOfProducts})`}
+                          </span>
+                          <input
+                            type="checkbox"
+                            id={`filterManufacturer${manufacturer.ManufacturerID}`}
+                            onChange={(event) => {
+                              handleFilterChange(event);
+                            }}
+                          />
+                          <span className="checkmark"></span>
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  filtersData?.manufacturers.map((manufacturer) => (
                     <div
                       className=" text-left mb-2"
                       key={'filterManufacturer' + manufacturer.ManufacturerID}>
@@ -197,7 +274,8 @@ const FilterPanel = ({
                         <span className="checkmark"></span>
                       </label>
                     </div>
-                  ))}
+                  ))
+                )}
                 <div className="dropdown-divider mt-4 mb-4"></div>
               </div>
 
@@ -253,17 +331,48 @@ const FilterPanel = ({
 
               <div className="text-left pb-2">
                 <div className="fs-3 fw-bold mb-4">Atrybuty</div>
-                {filtersData &&
-                  filtersData.filters.map((attribute, index) => (
-                    <div className="text-left mb-4" key={`groupFilter${index}`}>
-                      <div className="mb-3">
-                        <span className="fw-bold fs-5">{attribute.property}</span>
-                        <span className="text-right fw-bold fs-5">
-                          {` (${attribute.numberOfProducts})`}
-                        </span>
-                      </div>
-                      <div className=" mt-2">
-                        {attribute.values.map((value, index) => (
+                {filtersData?.filters.map((attribute, index) => (
+                  <div className="text-left mb-4" key={`groupFilter${index}`}>
+                    <div className="mb-3">
+                      <span className="fw-bold fs-6">{attribute.property}</span>
+                      <span className="text-right fw-bold">
+                        {` (${attribute.numberOfProducts})`}
+                      </span>
+                      {attribute.values.length > 2 ? (
+                        <div
+                          id={`rotateArrow-${index + 3}`}
+                          className="float-right fs-5 expand-arrow"
+                          onClick={() => handleCollapse(index + 3)}>
+                          <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                      ) : null}
+                    </div>
+                    <div className=" mt-2">
+                      {attribute.values.length > 2 ? (
+                        <div className="attributes-list collapsed" id={`collapse-${index + 3}`}>
+                          {attribute.values.map((value) => (
+                            <div
+                              className="mb-2"
+                              key={`group_F${attribute.property}value_F${value.value}`}>
+                              <label className="filterContainer">
+                                <span className="ml-2 fs-6">{value.value}</span>
+                                <span className="text-right fw-bold fs-6">
+                                  {` (${value.numberOfProducts})`}
+                                </span>
+                                <input
+                                  type="checkbox"
+                                  id={`group_F${attribute.property}value_F${value.value}`}
+                                  onChange={(event) => {
+                                    handleAtributeChange(event);
+                                  }}
+                                />
+                                <span className="checkmark"></span>
+                              </label>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        attribute.values.map((value) => (
                           <div
                             className="mb-2"
                             key={`group_F${attribute.property}value_F${value.value}`}>
@@ -282,11 +391,12 @@ const FilterPanel = ({
                               <span className="checkmark"></span>
                             </label>
                           </div>
-                        ))}
-                      </div>
-                      <div className="dropdown-divider mt-4 mb-4"></div>
+                        ))
+                      )}
                     </div>
-                  ))}
+                    <div className="dropdown-divider mt-4 mb-4"></div>
+                  </div>
+                ))}
               </div>
             </div>
             {showResetButton ? (

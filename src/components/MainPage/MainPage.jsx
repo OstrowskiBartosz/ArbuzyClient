@@ -25,7 +25,7 @@ const categoryList = [
   ]
 ];
 
-const MainPage = (props) => {
+const MainPage = ({ setSearchValueToSend }) => {
   const dispatch = useDispatch();
   const products = useSelector((state) => ({
     mostBoughtCategoryProducts: state.products.mostBoughtCategoryProducts,
@@ -42,6 +42,8 @@ const MainPage = (props) => {
       try {
         const url = `${process.env.REACT_APP_API}/product/${resource}`;
         const response = await fetch(url, { method: 'get', credentials: 'include' });
+        if (response.status === 400 || response.status === 500)
+          throw new Error('Ooops, nie udało się pobrać elementów!');
         const json = await response.json();
         return json.data;
       } catch (err) {
@@ -84,7 +86,12 @@ const MainPage = (props) => {
         <div className="pb-3">
           <div className="d-flex flex-row justify-content-around flex-wrap mt-3 pb-3">
             <div className="categoryLink mt-3 pb-2 categoryText">
-              <Link className="clear-link" to={`/search?filterCategory=[1,2,3,4,5,6,7,8,9]`}>
+              <Link
+                className="clear-link"
+                to={`/search?filterCategory=[]`}
+                onClick={() => {
+                  setSearchValueToSend('');
+                }}>
                 Wszystkie produkty
               </Link>
             </div>
@@ -97,7 +104,10 @@ const MainPage = (props) => {
                 <div key={`c${index2}`} className="categoryLink pl-4 pr-4 pb-2 categoryText">
                   <Link
                     className="clear-link"
-                    to={`/search?filterCategory=[${category.categoryID}]`}>
+                    to={`/search?filterCategory=[${category.categoryID}]`}
+                    onClick={() => {
+                      setSearchValueToSend('');
+                    }}>
                     {category.categoryName}
                   </Link>
                 </div>
