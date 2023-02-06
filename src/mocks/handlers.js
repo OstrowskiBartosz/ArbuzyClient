@@ -3,14 +3,16 @@ import {
   mainPageProducts,
   cartItems3Items,
   profileInvoiceList,
-  profielUserData,
+  profilelUserData,
   InvoiceItems3Items,
   searchHintsProductsWithB,
   searchHintsCategoriesWithB,
   searchHintsManufacturersWithB,
   searchHintsProductsWithBar,
   searchHintsCategoriesWithBar,
-  searchHintsManufacturersWithBar
+  searchHintsManufacturersWithBar,
+  productID_13,
+  productID_4
 } from './resMocks';
 
 export const handlers = [
@@ -26,7 +28,8 @@ export const handlers = [
 
   // SESSION
   rest.get(`${process.env.REACT_APP_API}/session`, (req, res, ctx) => {
-    return res(ctx.json({ data: [], message: 'Not logged.' }));
+    return res(ctx.json({ data: [], message: 'Logged.' }));
+    // return res(ctx.json({ data: [], message: 'Not logged.' }));
   }),
   rest.delete(`${process.env.REACT_APP_API}/session`, (req, res, ctx) => {
     return res(ctx.json({ data: [], message: 'Logged out.' }));
@@ -56,18 +59,25 @@ export const handlers = [
   rest.get(`${process.env.REACT_APP_API}/cart/getItemsNumber`, (req, res, ctx) => {
     const cartItems = JSON.parse(JSON.stringify(cartItems3Items));
     const cartItemsLength = cartItems.cartItemsData.length;
-    return res(ctx.json({ data: { numberOfProducts: cartItemsLength }, message: 'No cart.' }));
+    return res(ctx.json({ data: { numberOfProducts: cartItemsLength }, message: 'Cart found.' }));
   }),
+
   rest.get(`${process.env.REACT_APP_API}/cart`, (req, res, ctx) => {
+    const cartItemsEdited = sessionStorage.getItem('cartItems');
+    if (cartItemsEdited) {
+      sessionStorage.removeItem('cartItems');
+      return res(ctx.json({ data: cartItemsEdited, message: 'No cart.' }));
+    }
     const cartItems = JSON.parse(JSON.stringify(cartItems3Items));
     return res(ctx.json({ data: cartItems, message: 'No cart.' }));
   }),
+
   rest.put(`${process.env.REACT_APP_API}/cartitem/:cartItemID/:operationSign`, (req, res, ctx) => {
     const { cartItemID } = req.params;
     const { operationSign } = req.params;
     const cartItems = JSON.parse(JSON.stringify(cartItems3Items));
-    const index = cartItems.cartItemsData.find((el) => el.Product.cartItemID === cartItemID);
-    const price = cartItems.cartItemsData[index].Prices[0].grossPrice;
+    const index = cartItems.cartItemsData.findIndex((el) => el.cartItemID === parseInt(cartItemID));
+    const price = cartItems.cartItemsData[index].Product.Prices[0].grossPrice;
     if (operationSign === '+') {
       cartItems.cartItemsData[index].quantity++;
       cartItems.cartData.totalQuantityofProducts++;
@@ -78,6 +88,7 @@ export const handlers = [
       cartItems.cartData.totalQuantityofProducts--;
       cartItems.cartData.totalPriceOfProducts -= price;
     }
+    sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
     return res(ctx.json({ data: cartItems, message: 'Success' }));
   }),
 
@@ -106,15 +117,20 @@ export const handlers = [
     return res(ctx.json({ data: profileInvoiceList, message: 'Success' }));
   }),
   rest.get(`${process.env.REACT_APP_API}/user`, (req, res, ctx) => {
-    const editedUserData = sessionStorage.getItem('profielUserData');
+    const editedUserData = JSON.parse(sessionStorage.getItem('profilelUserData'));
     if (editedUserData) {
+      if (editedUserData.companyName === '') editedUserData.companyName = null;
+      if (editedUserData.VATNumber === '') editedUserData.VATNumber = null;
+      sessionStorage.removeItem('profilelUserData');
       return res(ctx.json({ data: editedUserData, message: 'Successfully user retrieved data.' }));
     }
-    return res(ctx.json({ data: profielUserData, message: 'Successfully user retrieved data.' }));
+    return res(ctx.json({ data: profilelUserData, message: 'Successfully user retrieved data.' }));
   }),
   rest.put(`${process.env.REACT_APP_API}/user`, async (req, res, ctx) => {
-    sessionStorage.setItem('profielUserData', await JSON.stringify(req.json()));
-    return res(ctx.json({ data: profielUserData, message: 'Successfully user retrieved data.' }));
+    const jsonResponse = await req.json();
+    console.log(jsonResponse);
+    sessionStorage.setItem('profilelUserData', JSON.stringify(jsonResponse));
+    return res(ctx.json({ data: profilelUserData, message: 'Successfully user retrieved data.' }));
   }),
   rest.delete(`${process.env.REACT_APP_API}/user`, (req, res, ctx) => {
     return res(ctx.status(200));
@@ -122,19 +138,25 @@ export const handlers = [
 
   // INVOICE
   rest.get(`${process.env.REACT_APP_API}/invoice/:invoiceID`, (req, res, ctx) => {
-    const { invoiceID } = req.params;
-    if (invoiceID === '4') {
-      const InvoiceItems = JSON.parse(JSON.stringify(InvoiceItems3Items));
-      return res(ctx.json({ data: InvoiceItems, message: 'Success' }));
+    const InvoiceItemsEdited = sessionStorage.getItem('InvoiceItems');
+    if (InvoiceItemsEdited) {
+      sessionStorage.removeItem('InvoiceItems');
+      return res(ctx.json({ data: JSON.parse(InvoiceItemsEdited), message: 'Success' }));
     }
+
+    const InvoiceItems = JSON.parse(JSON.stringify(InvoiceItems3Items));
+    return res(ctx.json({ data: InvoiceItems, message: 'Success' }));
   }),
+
   rest.put(`${process.env.REACT_APP_API}/invoice/:invoiceID`, (req, res, ctx) => {
-    const { invoiceID } = req.params;
-    if (invoiceID === '4') {
-      const InvoiceItems = JSON.parse(JSON.stringify(InvoiceItems3Items));
-      InvoiceItems[0].status = 'Cancelled';
-      return res(ctx.json({ data: InvoiceItems, message: 'Success' }));
-    }
+    const InvoiceItems = JSON.parse(JSON.stringify(InvoiceItems3Items));
+    InvoiceItems.status = 'Cancelled';
+    sessionStorage.setItem('InvoiceItems', JSON.stringify(InvoiceItems));
+    return res(ctx.json({ data: InvoiceItems, message: 'Success' }));
+  }),
+
+  rest.post(`${process.env.REACT_APP_API}/invoice`, (req, res, ctx) => {
+    return res(ctx.json({ data: { invoiceID: 4 }, message: 'Items have been bought.' }));
   }),
 
   // SEARCHHINTS
@@ -177,15 +199,19 @@ export const handlers = [
   ),
 
   // SEARCHRESULTS DOKONCZYC
-  rest.get(`${process.env.REACT_APP_API}/product/productName/:productName`, (req, res, ctx) => {
-    const { productName } = req.params;
-    if (productName === 'b') {
-      return res(ctx.json({ data: searchHintsProductsWithB, message: 'Product retrieved.' }));
-    } else if (productName === 'bar') {
-      return res(ctx.json({ data: searchHintsProductsWithBar, message: 'Product retrieved.' }));
-    } else {
-      ctx.json({ data: [], message: 'Product retrieved.' });
+
+  // PRODUCTS DOKONCZYC
+  rest.get(`${process.env.REACT_APP_API}/product/:productID`, (req, res, ctx) => {
+    const { productID } = req.params;
+    if (Number(productID) === 13) {
+      return res(ctx.json({ data: productID_13, message: 'Product retrieved' }));
     }
+    if (Number(productID) === 4) {
+      return res(ctx.json({ data: productID_4, message: 'Product retrieved' }));
+    }
+  }),
+  rest.post(`${process.env.REACT_APP_API}/cartItem`, (req, res, ctx) => {
+    return res(ctx.json({ data: [], message: 'Product has been added to cart.' }));
   })
 ];
 

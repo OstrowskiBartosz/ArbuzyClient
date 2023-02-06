@@ -105,13 +105,15 @@ const PaymentPanel = ({ paymentMethod, setPaymenthMethod, showWarning, setShowWa
         </div>
       </div>
       <div>
-        <div
-          className={
-            showWarning ? 'visible text-center fw-bold fs-3 mt-5 text-danger' : 'invisible'
-          }>
-          <i className="fa-solid fa-triangle-exclamation"></i>
-          <span className="ml-3">Metoda płatności nie została wybrana</span>
-        </div>
+        {showWarning ? (
+          <div
+            className={
+              showWarning ? 'visible text-center fw-bold fs-3 mt-5 text-danger' : 'invisible'
+            }>
+            <i className="fa-solid fa-triangle-exclamation"></i>
+            <span className="ml-3">Metoda płatności nie została wybrana</span>
+          </div>
+        ) : null}
       </div>
     </div>
   );

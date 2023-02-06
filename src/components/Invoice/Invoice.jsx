@@ -39,9 +39,9 @@ const Invoice = (props) => {
       setBlockUI(true);
       const url = `${process.env.REACT_APP_API}/invoice/${invoiceID}`;
       const response = await fetch(url, { method: 'get', credentials: 'include' });
-      const json = await response.json();
       if (response.status === 400 || response.status === 500)
         throw new Error('Ooops, nie udało się pobrać elementów!');
+      const json = await response.json();
       setInvoiceData(json.data);
       setIsLoadingInvoiceData(false);
     } catch (err) {

@@ -71,7 +71,7 @@ export const profileInvoiceList = [
   }
 ];
 
-export const profielUserData = {
+export const profilelUserData = {
   ZIPCode: '45-256',
   cityName: 'Opole',
   companyName: null,
@@ -533,4 +533,82 @@ export const searchResults_Barracuda = {
   NumberOfpages: 1,
   minPrice: 161.87,
   maxPrice: 846.6
+};
+
+export const productID_13 = {
+  productID: 13,
+  categoryID: 1,
+  manufacturerID: 3,
+  quantity: 10,
+  productName: 'Barracuda Pro 1 TB 2.5" SATA III (ST1000LM049)',
+  description:
+    'Urządzenie zostało wykonane w technologii talerzowej. Jego budowa składa się między innymi z ruchomej głowicy i obracających się talerzy. Dysk może zostać wykorzystany w każdym komputerze – zarówno w konfiguracjach typowo domowych, jak i biznesowych, biurowych, gamingowych czy też specjalistycznych. Dysk HDD sprawdza się także w wielu innych urządzeniach. Pozwala na magazynowanie sporej ilości danych, gwarantuje też stabilną obsługę systemu operacyjnego i zainstalowanych programów oraz narzędzi. Dysk twardy został przystosowany do wnęki 3,5 cala. Jego obudowę wykonano z dobrej jakości materiałów, dzięki czemu charakteryzuje się wysoką wytrzymałością mechaniczną oraz odpornością na wpływ czynników zewnętrznych. Wymiary dysku przekładają się również na prosty montaż w każdej obudowie komputerowej. Dzięki temu jest on gotowy do użycia w bardzo krótkim czasie po jego wypakowaniu z pudełka. Zastosowana obudowa chroni dysk przed obciążeniem generowanym podczas intensywnej, wielogodzinnej pracy. |http://localhost:9000/images/description/HDD/500542_2022_04_19_11_40_26998522033.jpeg| Dysk twardy działa w oparciu o interfejs SATA III, którego przepustowość maksymalna wynosi 6 Gbit/s. Jest to odpowiedni parametr do codziennej pracy w komputerach domowych, biurowych i biznesowych. Interfejs jest kompatybilny z większością obecnie sprzedawanych komputerów oraz płyt głównych. Urządzenie jest więc uniwersalne, może zostać wykorzystane w różnych zastosowaniach. Użyta technologia zapewnia stabilną i sprawną pracę w różnych warunkach, związana między innymi z przenoszeniem plików. Talerze dysku twardego obracają się z prędkością 7200 obrotów na minutę, co przekłada się na najszybsze i najefektywniejsze działanie w kategorii dysków twardych HDD. Urządzenie pozwoli więc na obsługę wielu zdarzeń w tym samym czasie, zagwarantuje również szybkie i sprawne przenoszenie danych na dysk, a także na nośniki zewnętrzne. Prędkość obrotowa utrzymana na tym poziomie zapewni także stabilną realizację standardowych zadań, związanych między innymi z obsługą systemu operacyjnego. |http://localhost:9000/images/description/HDD/1727818_2020_10_12_19_29_07876566786.png| Dyski twarde HDD to standardowe nośniki do komputerów PC. Są tańsze i bardziej pojemne od dysków półprzewodnikowych i dlatego bardzo często wybierane są przez użytkowników, którzy potrzebują sporej przestrzeni dyskowej na magazynowanie pokaźnych ilości danych.| HDD to nośnik, który zaoferuje optymalny stosunek ceny do pojemności. Przechowuj archiwa, wykonuj kopie zapasowe systemu i programów, magazynuj zdjęcia, a wszystko to na nośniku Western Digital Caviar Blue.|Western Digital to jeden z niekwestionowanych liderów wśród producentów dysków twardych. Amerykańskie przedsiębiorstwo od lat dostarcza użytkownikom szeroką gamę nośników o bardzo dobrych parametrach działania.| nie zawiedzie oczekiwań użytkowników, zapewniając stabilną i pojemną przestrzeń do magazynowania danych, a także dopracowane parametry działania.|Dysk twardy SATA3 to nośnik w rozmiarze 3.5 cala, co powoduje, że jest to idealny wybór do komputerów stacjonarnych. Jego montaż jest bardzo prosty, nie wymaga przejściówek – wystarczy umieścić go w zatoce 3.5 cala i podłączyć do komputera.|Dysk twardy SATA3 został wyposażony w technologię NoTouch. Jest to rozwiązanie powodujące, że głowica zapisująca nie dotyka bezpośrednio powierzchni talerzy dysku, co wpływa zarówno na cichsze działanie i mniejsze drgania nośnika, jak i na wyższą trwałość głowicy zapisującej oraz samych talerzy. Rozwiązanie to zapewnia też wyższą trwałość nośnika na wstrząsy podczas transportu.',
+  Manufacturer: { manufacturerID: 3, manufacturerName: 'Seagate' },
+  Category: { categoryID: 1, categoryName: 'Dyski HDD' },
+  Prices: [
+    {
+      priceID: 13,
+      productID: 13,
+      netPrice: 214.96,
+      grossPrice: 264.4,
+      taxPercentage: 23,
+      fromDate: '2019-12-01T00:00:00.000Z',
+      toDate: '2020-08-20T21:00:00.000Z'
+    }
+  ],
+  Attributes: [
+    { attributeID: 81, property: 'Format dysku', value: '2.5"', type: '1' },
+    { attributeID: 82, property: 'Pojemność dysku [GB]', value: '1000', type: '1' },
+    { attributeID: 83, property: 'Prędkość obrotowa [obr./min.]', value: '7200', type: '0' },
+    { attributeID: 84, property: 'Interfejs', value: 'SATA III', type: '0' },
+    { attributeID: 85, property: 'Pamięć podręczna', value: '128', type: '0' },
+    {
+      attributeID: 86,
+      property: 'image',
+      value: '/images/products/13/1695259_2_i1064.jpg',
+      type: '2'
+    },
+    {
+      attributeID: 87,
+      property: 'image',
+      value: '/images/products/13/1695259_1_i1064.jpg',
+      type: '3'
+    }
+  ]
+};
+
+export const productID_4 = {
+  productID: 4,
+  categoryID: 1,
+  manufacturerID: 1,
+  quantity: 10,
+  productName: 'Blue 500 GB 2.5" SATA III (WD5000LPCX)',
+  description:
+    'Urządzenie zostało wykonane w technologii talerzowej. Jego budowa składa się między innymi z ruchomej głowicy i obracających się talerzy. Dysk może zostać wykorzystany w każdym komputerze – zarówno w konfiguracjach typowo domowych, jak i biznesowych, biurowych, gamingowych czy też specjalistycznych. Dysk HDD sprawdza się także w wielu innych urządzeniach. Pozwala na magazynowanie sporej ilości danych, gwarantuje też stabilną obsługę systemu operacyjnego i zainstalowanych programów oraz narzędzi. Dysk twardy został przystosowany do wnęki 3,5 cala. Jego obudowę wykonano z dobrej jakości materiałów, dzięki czemu charakteryzuje się wysoką wytrzymałością mechaniczną oraz odpornością na wpływ czynników zewnętrznych. Wymiary dysku przekładają się również na prosty montaż w każdej obudowie komputerowej. Dzięki temu jest on gotowy do użycia w bardzo krótkim czasie po jego wypakowaniu z pudełka. Zastosowana obudowa chroni dysk przed obciążeniem generowanym podczas intensywnej, wielogodzinnej pracy. |http://localhost:9000/images/description/HDD/500542_2022_04_19_11_40_26998522033.jpeg| Dysk twardy działa w oparciu o interfejs SATA III, którego przepustowość maksymalna wynosi 6 Gbit/s. Jest to odpowiedni parametr do codziennej pracy w komputerach domowych, biurowych i biznesowych. Interfejs jest kompatybilny z większością obecnie sprzedawanych komputerów oraz płyt głównych. Urządzenie jest więc uniwersalne, może zostać wykorzystane w różnych zastosowaniach. Użyta technologia zapewnia stabilną i sprawną pracę w różnych warunkach, związana między innymi z przenoszeniem plików. Talerze dysku twardego obracają się z prędkością 7200 obrotów na minutę, co przekłada się na najszybsze i najefektywniejsze działanie w kategorii dysków twardych HDD. Urządzenie pozwoli więc na obsługę wielu zdarzeń w tym samym czasie, zagwarantuje również szybkie i sprawne przenoszenie danych na dysk, a także na nośniki zewnętrzne. Prędkość obrotowa utrzymana na tym poziomie zapewni także stabilną realizację standardowych zadań, związanych między innymi z obsługą systemu operacyjnego. |http://localhost:9000/images/description/HDD/1727818_2020_10_12_19_29_07876566786.png| Dyski twarde HDD to standardowe nośniki do komputerów PC. Są tańsze i bardziej pojemne od dysków półprzewodnikowych i dlatego bardzo często wybierane są przez użytkowników, którzy potrzebują sporej przestrzeni dyskowej na magazynowanie pokaźnych ilości danych.| HDD to nośnik, który zaoferuje optymalny stosunek ceny do pojemności. Przechowuj archiwa, wykonuj kopie zapasowe systemu i programów, magazynuj zdjęcia, a wszystko to na nośniku Western Digital Caviar Blue.|Western Digital to jeden z niekwestionowanych liderów wśród producentów dysków twardych. Amerykańskie przedsiębiorstwo od lat dostarcza użytkownikom szeroką gamę nośników o bardzo dobrych parametrach działania.| nie zawiedzie oczekiwań użytkowników, zapewniając stabilną i pojemną przestrzeń do magazynowania danych, a także dopracowane parametry działania.|Dysk twardy SATA3 to nośnik w rozmiarze 3.5 cala, co powoduje, że jest to idealny wybór do komputerów stacjonarnych. Jego montaż jest bardzo prosty, nie wymaga przejściówek – wystarczy umieścić go w zatoce 3.5 cala i podłączyć do komputera.|Dysk twardy SATA3 został wyposażony w technologię NoTouch. Jest to rozwiązanie powodujące, że głowica zapisująca nie dotyka bezpośrednio powierzchni talerzy dysku, co wpływa zarówno na cichsze działanie i mniejsze drgania nośnika, jak i na wyższą trwałość głowicy zapisującej oraz samych talerzy. Rozwiązanie to zapewnia też wyższą trwałość nośnika na wstrząsy podczas transportu.',
+  Manufacturer: { manufacturerID: 1, manufacturerName: 'Western Digital' },
+  Category: { categoryID: 1, categoryName: 'Dyski HDD' },
+  Prices: [
+    {
+      priceID: 4,
+      productID: 4,
+      netPrice: 142.15,
+      grossPrice: 174.84,
+      taxPercentage: 23,
+      fromDate: '2019-12-01T00:00:00.000Z',
+      toDate: '2020-08-20T21:00:00.000Z'
+    }
+  ],
+  Attributes: [
+    { attributeID: 20, property: 'Format dysku', value: '2.5"', type: '1' },
+    { attributeID: 21, property: 'Pojemność dysku [GB]', value: '500', type: '1' },
+    { attributeID: 22, property: 'Prędkość obrotowa [obr./min.]', value: '5400', type: '0' },
+    { attributeID: 23, property: 'Interfejs', value: 'SATA III', type: '0' },
+    { attributeID: 24, property: 'Pamięć podręczna', value: '16', type: '0' },
+    {
+      attributeID: 25,
+      property: 'image',
+      value: '/images/products/4/769736_0_i1064.jpeg',
+      type: '2'
+    }
+  ]
 };

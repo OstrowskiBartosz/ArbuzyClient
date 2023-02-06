@@ -37,3 +37,18 @@ it('should change url after clicking footer link', async () => {
     });
   });
 });
+
+it('should change url after clicking footer link', async () => {
+  render(
+    <MockProviders>
+      <PageFooter />
+    </MockProviders>
+  );
+
+  fireEvent.click(screen.getByText(/Zamowienia/));
+  await waitFor(() => {
+    waitFor(() => {
+      expect(window.location.pathname).toBe('/profile/orders');
+    });
+  });
+});
