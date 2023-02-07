@@ -77,7 +77,9 @@ export const profilelUserData = {
   companyName: null,
   firstName: 'Bartosz',
   lastName: 'Ostrowski',
-  streetName: 'Ozimska 215/55'
+  streetName: 'Ozimska 215/55',
+  email: 'bartosz.ostrowski@gmail.com',
+  login: 'bartek'
 };
 
 export const InvoiceItems3Items = {

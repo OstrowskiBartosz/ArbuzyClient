@@ -80,6 +80,7 @@ const CartItem = ({ cartItem, fetchCartData, blockUI, setError, setBlockUI }) =>
           <div className="col-xl-1 align-text-center vertical-center smallScreenPadding">
             <i
               className={'fas fa-minus cursor-pointer ' + (blockUI ? 'disabled' : '')}
+              title="Decrease quantity"
               onClick={() => handleQuantityClick(cartItem.cartItemID, '-')}
               disabled={blockUI ? 'disabled' : false}></i>
             <div className="text-left pl-2 pr-2">
@@ -91,6 +92,7 @@ const CartItem = ({ cartItem, fetchCartData, blockUI, setError, setBlockUI }) =>
             </div>
             <i
               className={'fas fa-plus cursor-pointer ' + (blockUI ? 'disabled' : '')}
+              title="Increase quantity"
               onClick={() => handleQuantityClick(cartItem.cartItemID, '+')}
               disabled={blockUI ? 'disabled' : false}></i>
           </div>
@@ -107,6 +109,7 @@ const CartItem = ({ cartItem, fetchCartData, blockUI, setError, setBlockUI }) =>
             <span>
               <i
                 className="fas fa-trash-alt cursor-pointer"
+                title="Delete product from cart"
                 onClick={() => handleTrashClick(cartItem.cartItemID, cartItem.Product.productID)}
                 disabled={blockUI ? false : 'disabled'}></i>
             </span>

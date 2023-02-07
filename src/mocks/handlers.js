@@ -29,7 +29,6 @@ export const handlers = [
   // SESSION
   rest.get(`${process.env.REACT_APP_API}/session`, (req, res, ctx) => {
     return res(ctx.json({ data: [], message: 'Logged.' }));
-    // return res(ctx.json({ data: [], message: 'Not logged.' }));
   }),
   rest.delete(`${process.env.REACT_APP_API}/session`, (req, res, ctx) => {
     return res(ctx.json({ data: [], message: 'Logged out.' }));
@@ -65,17 +64,20 @@ export const handlers = [
   rest.get(`${process.env.REACT_APP_API}/cart`, (req, res, ctx) => {
     const cartItemsEdited = sessionStorage.getItem('cartItems');
     if (cartItemsEdited) {
-      sessionStorage.removeItem('cartItems');
-      return res(ctx.json({ data: cartItemsEdited, message: 'No cart.' }));
+      return res(ctx.json({ data: JSON.parse(cartItemsEdited), message: 'Success' }));
     }
     const cartItems = JSON.parse(JSON.stringify(cartItems3Items));
-    return res(ctx.json({ data: cartItems, message: 'No cart.' }));
+    return res(ctx.json({ data: cartItems, message: 'Success' }));
   }),
 
   rest.put(`${process.env.REACT_APP_API}/cartitem/:cartItemID/:operationSign`, (req, res, ctx) => {
     const { cartItemID } = req.params;
     const { operationSign } = req.params;
-    const cartItems = JSON.parse(JSON.stringify(cartItems3Items));
+
+    const cartItems =
+      JSON.parse(sessionStorage.getItem('cartItems')) ??
+      JSON.parse(JSON.stringify(cartItems3Items));
+
     const index = cartItems.cartItemsData.findIndex((el) => el.cartItemID === parseInt(cartItemID));
     const price = cartItems.cartItemsData[index].Product.Prices[0].grossPrice;
     if (operationSign === '+') {
@@ -94,21 +96,30 @@ export const handlers = [
 
   rest.delete(`${process.env.REACT_APP_API}/cartitem/:cartItemID`, (req, res, ctx) => {
     const { cartItemID } = req.params;
-    const cartItems = JSON.parse(JSON.stringify(cartItems3Items));
-    const index = cartItems.cartItemsData.find((el) => el.Product.cartItemID === cartItemID);
+
+    const cartItems =
+      JSON.parse(sessionStorage.getItem('cartItems')) ??
+      JSON.parse(JSON.stringify(cartItems3Items));
+    const index = cartItems.cartItemsData.findIndex((el) => el.cartItemID === parseInt(cartItemID));
     const quantity = cartItems.cartItemsData[index].quantity;
-    cartItems.slice(index);
+    const price = cartItems.cartItemsData[index].Product.Prices[0].grossPrice;
+    cartItems.cartItemsData.splice(index, 1);
     cartItems.cartData.totalQuantityofProducts -= quantity;
     cartItems.cartData.numberOfProducts -= 1;
+    cartItems.cartData.totalPriceOfProducts -= quantity * price;
+
+    sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
     return res(ctx.json({ data: cartItems, message: 'Success' }));
   }),
+
   rest.delete(`${process.env.REACT_APP_API}/cart/:cartID`, (req, res, ctx) => {
     const { cartID } = req.params;
-    const cartItems = JSON.parse(JSON.stringify(cartItems3Items));
-    if (cartID === 4) {
+    if (parseInt(cartID) === 4) {
+      const cartItems = JSON.parse(JSON.stringify(cartItems3Items));
       cartItems.cartData = null;
       cartItems.cartItemsData = [];
-      return res(ctx.json({ data: { cartData: null, cartItemsData: [] }, message: 'Success' }));
+      sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
+      return res(ctx.json({ data: cartItems, message: 'Success' }));
     }
   }),
 
@@ -128,7 +139,6 @@ export const handlers = [
   }),
   rest.put(`${process.env.REACT_APP_API}/user`, async (req, res, ctx) => {
     const jsonResponse = await req.json();
-    console.log(jsonResponse);
     sessionStorage.setItem('profilelUserData', JSON.stringify(jsonResponse));
     return res(ctx.json({ data: profilelUserData, message: 'Successfully user retrieved data.' }));
   }),

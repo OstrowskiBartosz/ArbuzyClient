@@ -6,13 +6,13 @@ import '@testing-library/jest-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { server } from './mocks/server';
 import { act } from 'react-dom/test-utils';
-
 import { Provider } from 'react-redux';
 import store from './store/store';
 import { sessionChange } from './store/storeSlices/sessionSlice';
 
 beforeAll(() => server.listen());
 afterEach(() => {
+  sessionStorage.clear();
   server.resetHandlers();
   act(() => store.dispatch(sessionChange(true)));
 });

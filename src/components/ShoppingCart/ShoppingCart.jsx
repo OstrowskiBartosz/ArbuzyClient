@@ -129,6 +129,7 @@ const ShoppingCart = (props) => {
                         <span className="fs-6 fw-bold align-text-center vertical-center">
                           <i
                             className="fas fa-trash-alt cursor-pointer"
+                            title="Delete whole cart"
                             onClick={() => handleWholeCartTrashClick(cartData.cartData.cartID)}
                             disabled={blockUI ? false : 'disabled'}></i>
                         </span>
