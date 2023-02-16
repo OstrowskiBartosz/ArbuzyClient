@@ -142,7 +142,7 @@ const Navbar = (props) => {
   }, []);
 
   return (
-    <Router history={history}>
+    <Router>
       <div id="all">
         <nav className="navbar navbar-expand-lg navbar-light bg-light Navbar-border fixed-top d-flex justify-content-between">
           <div>
@@ -292,7 +292,7 @@ const Navbar = (props) => {
                           <span className="sr-only">Loading...</span>
                         </div>
                       ) : (
-                        numberOfProducts
+                        <span title="Number of products in cart"> {numberOfProducts}</span>
                       )}
                     </span>
                   </Link>

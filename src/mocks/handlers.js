@@ -56,7 +56,9 @@ export const handlers = [
 
   // CART
   rest.get(`${process.env.REACT_APP_API}/cart/getItemsNumber`, (req, res, ctx) => {
-    const cartItems = JSON.parse(JSON.stringify(cartItems3Items));
+    const cartItems =
+      JSON.parse(sessionStorage.getItem('cartItems')) ??
+      JSON.parse(JSON.stringify(cartItems3Items));
     const cartItemsLength = cartItems.cartItemsData.length;
     return res(ctx.json({ data: { numberOfProducts: cartItemsLength }, message: 'Cart found.' }));
   }),
@@ -116,8 +118,11 @@ export const handlers = [
     const { cartID } = req.params;
     if (parseInt(cartID) === 4) {
       const cartItems = JSON.parse(JSON.stringify(cartItems3Items));
-      cartItems.cartData = null;
       cartItems.cartItemsData = [];
+      sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
+      cartItems.cartData.totalQuantityofProducts = 0;
+      cartItems.cartData.numberOfProducts = 0;
+      cartItems.cartData.totalPriceOfProducts = 0;
       sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
       return res(ctx.json({ data: cartItems, message: 'Success' }));
     }
@@ -177,7 +182,7 @@ export const handlers = [
     } else if (productName === 'bar') {
       return res(ctx.json({ data: searchHintsProductsWithBar, message: 'Product retrieved.' }));
     } else {
-      ctx.json({ data: [], message: 'Product retrieved.' });
+      return res(ctx.json({ data: searchHintsProductsWithBar, message: 'Product retrieved.' }));
     }
   }),
   rest.get(`${process.env.REACT_APP_API}/category/categoryName/:categoryName`, (req, res, ctx) => {

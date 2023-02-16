@@ -16,7 +16,10 @@ afterEach(() => {
   server.resetHandlers();
   act(() => store.dispatch(sessionChange(true)));
 });
-afterAll(() => server.close());
+afterAll(() => {
+  server.close();
+  jest.clearAllMocks();
+});
 
 const MockProviders = ({ children }) => {
   return (
