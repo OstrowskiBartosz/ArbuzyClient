@@ -614,3 +614,37 @@ export const productID_4 = {
     }
   ]
 };
+
+export const lastSearched = [
+  {
+    value: 'GeForce RTX 3080 Vision OC 10GB GDDR6X (GV-N3080VISION OC-10GD 2.0)',
+    url: '/search?q=GeForce RTX 3080 Vision OC 10GB GDDR6X (GV-N3080VISION OC-10GD 2.0)&s=domyślne&l=10&p=1',
+    isProduct: true
+  },
+  { value: 'b', url: '/search?q=b&s=domyślne&l=10&p=1', isProduct: false },
+  { value: 'bar', url: '/search?q=bar&s=domyślne&l=10&p=1', isProduct: false },
+  { value: 'Toshiba', url: '/search?filterManufacturer=[2]&s=domyślne&l=10&p=1', isProduct: false },
+  { value: 'Obudowy', url: '/search?filterCategory=[5]&s=domyślne&l=10&p=1', isProduct: false }
+];
+
+export const hintsManufacturers = [
+  { manufacturerID: 2, manufacturerName: 'Toshiba' },
+  { manufacturerID: 10, manufacturerName: 'Gigabyte' },
+  { manufacturerID: 23, manufacturerName: 'Ballistix' },
+  { manufacturerID: 27, manufacturerName: 'be quiet!' },
+  { manufacturerID: 29, manufacturerName: 'Gembird' },
+  { manufacturerID: 31, manufacturerName: 'Biostar' }
+];
+export const hintsCategories = [{ categoryID: 5, categoryName: 'Obudowy' }];
+export const hintsProducts = [
+  { productID: 1, productName: 'Barracuda 1 TB 3.5" SATA III (ST1000DM010)' },
+  { productID: 2, productName: 'P300 2 TB 3.5" SATA III (HDWD120UZSVA)' },
+  { productID: 3, productName: 'Barracuda 1 TB 2.5" SATA III (ST1000LM048)' },
+  { productID: 4, productName: 'Blue 500 GB 2.5" SATA III (WD5000LPCX)' },
+  { productID: 5, productName: '4 TB 3.5" SATA III X300 (HDWE140UZSVA)' },
+  { productID: 6, productName: 'P300 2 TB 3.5" SATA III (HDWD120UZSVA)' },
+  { productID: 7, productName: '500 GB 2.5" SATA II (MQ01ABD050)' },
+  { productID: 8, productName: 'FireCuda 1 TB 3.5" SATA III (ST1000DX002)' },
+  { productID: 9, productName: 'Caviar Blue 500 GB 3.5" SATA III (WD5000AAKX)' },
+  { productID: 10, productName: 'Digital Black 1 TB 3.5" SATA III (WD1003FZEX)' }
+];

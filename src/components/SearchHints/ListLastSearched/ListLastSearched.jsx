@@ -13,6 +13,7 @@ const ListLastSearched = ({ data, hideHints, removeLastSearched }) => {
         </Link>
         <i
           className="fa fa-times float-right mr-2 pt-1 lastSearchedCross"
+          title="Remove last search value"
           onClick={() => removeLastSearched(searchTerm.url)}></i>
       </td>
     </tr>

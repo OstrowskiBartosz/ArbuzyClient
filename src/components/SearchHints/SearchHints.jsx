@@ -68,6 +68,7 @@ const SearchHints = ({ searchValue, sendHintsSearchValue }) => {
 
   const getHints = async (searchValue) => {
     if (searchValue === '') return;
+    setError(null);
     setIsLoadingHints(true);
     let [productResponse, categoryResponse, manufacturerResponse] = await Promise.all([
       fetchData('product', searchValue),
@@ -88,14 +89,14 @@ const SearchHints = ({ searchValue, sendHintsSearchValue }) => {
     lastSearchedValues();
     let el = document.getElementById('searchInput');
 
-    el.addEventListener('focus', () => {
+    el?.addEventListener('focus', () => {
       setShowLastSearched(true);
     });
     document.addEventListener('click', hideHintsByMouseClick, false);
 
     return () => {
       document.removeEventListener('click', hideHintsByMouseClick, false);
-      el.removeEventListener('focus');
+      el?.removeEventListener('focus', null);
     };
   }, [hideHintsByMouseClick]);
 

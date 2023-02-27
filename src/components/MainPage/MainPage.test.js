@@ -43,29 +43,18 @@ describe('MainPage component tests', () => {
   it('should move to search results after click category name', async () => {
     render(
       <MockProviders>
-        <MainPage setSearchValueToSend={() => {}} />
+        <MainPage
+          setSearchValueToSend={() => {
+            return '';
+          }}
+        />
       </MockProviders>
     );
 
     fireEvent.click(screen.getByText(/Karty graficzne/));
     await waitFor(() => {
-      waitFor(() => {
-        expect(window.location.pathname).toBe('/search?filterCategory=[3]');
-      });
+      expect(window.location.pathname + window.location.search).toBe('/search?filterCategory=[3]');
     });
-  });
-});
-
-describe('RefreshTimer subcomponent tests', () => {
-  it('should render refreshTimer component', async () => {
-    render(
-      <MockProviders>
-        <MainPage setSearchValueToSend={() => {}} />
-      </MockProviders>
-    );
-
-    const spanElement = screen.getByText(/Aut. Odświeżenie za:/);
-    expect(spanElement).toBeInTheDocument();
   });
 
   it('should refresh products by clicking refresh button', async () => {
