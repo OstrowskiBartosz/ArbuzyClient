@@ -3,7 +3,7 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import './SearchHints.css';
 import useDebounce from '../../features/useDebounce';
 import ListHints from './ListHints/ListHints';
-import ListLastSearched from './LastLastSearched/ListLastSearched';
+import ListLastSearched from './ListLastSearched/ListLastSearched';
 
 const SearchHints = ({ searchValue, sendHintsSearchValue }) => {
   const searchHintsRef = useRef(null);
@@ -57,7 +57,7 @@ const SearchHints = ({ searchValue, sendHintsSearchValue }) => {
 
   const fetchData = async (resource, searchValue) => {
     try {
-      const url = `${process.env.REACT_APP_API}/${resource}/${resource}Name/${searchValue}`;
+      const url = `${process.env.REACT_APP_API}/${resource}/${resource}Hints/${searchValue}`;
       const response = await fetch(url, { method: 'get', credentials: 'include' });
       const data = await response.json();
       return data;
@@ -77,7 +77,7 @@ const SearchHints = ({ searchValue, sendHintsSearchValue }) => {
     ]);
 
     setHintsData({
-      products: productResponse?.data?.products ?? [],
+      products: productResponse?.data ?? [],
       categories: categoryResponse?.data ?? [],
       manufacturers: manufacturerResponse?.data ?? []
     });

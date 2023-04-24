@@ -10,6 +10,12 @@ import history from '../history';
 import { useDispatch } from 'react-redux';
 import { updateCartItems } from '../../store/storeSlices/cartItemsSlice';
 
+const scrollWithOffset = (el) => {
+  const yCoordinate = el.getBoundingClientRect().top + window.pageYOffset;
+  const yOffset = -130;
+  window.scrollTo({ top: yCoordinate + yOffset, behavior: 'smooth' });
+};
+
 const splitProductDesc = async (description) => {
   description.forEach((part, index) => {
     if (part.startsWith('http')) {
@@ -126,12 +132,12 @@ const Product = ({ setSearchValueToSend }) => {
     return (
       <>
         <div className="container-fluid" id="top">
-          <div className="row navbar-padding">
+          <div className="row navbar-padding containerProdct">
             <div className="col-sm-2"></div>
             <div className="col-sm-8">
               <div className="row">
                 <div className="col-12 mt-5 componentBackgroundColor mt-3 mb-3 shadow-sm bg-white rounded">
-                  <div className="row">
+                  <div className="row" id="productSummary">
                     <div className="col product-tree ml-2 mt-3">
                       <Link
                         className=" fw-bold"
@@ -287,7 +293,44 @@ const Product = ({ setSearchValueToSend }) => {
                       </div>
                     </div>
                   </div>
-                  <div className="dropdown-divider mt-4 mb-4"></div>
+
+                  <div className="stickyProductNav navbar navbar-expand-lg navbar-light bg-light ProductNavborder">
+                    <div className="d-flex justify-content-between">
+                      <ul className="navbar-nav mr-auto">
+                        <li className={'nav-item pr-3'}>
+                          <HashLink
+                            smooth
+                            to={`/product/${productID}#productSummary`}
+                            scroll={(el) => scrollWithOffset(el)}
+                            className="text-decoration-none">
+                            <span className="stickyProductNavLink">Podsumowanie produktu</span>
+                          </HashLink>
+                        </li>
+                        <div className="productNavigationDivider"></div>
+                        <li className={'nav-item pr-3 productNavigationPadding'}>
+                          <HashLink
+                            smooth
+                            to={`/product/${productID}#productDescription`}
+                            scroll={(el) => scrollWithOffset(el)}
+                            className="text-decoration-none">
+                            <span className="stickyProductNavLink">Opis produktu</span>
+                          </HashLink>
+                        </li>
+                        <div className="productNavigationDivider"></div>
+                        <li className={'nav-item pr-3 productNavigationPadding'}>
+                          <HashLink
+                            smooth
+                            to={`/product/${productID}#productSpecification`}
+                            scroll={(el) => scrollWithOffset(el)}
+                            className="text-decoration-none">
+                            <span className="stickyProductNavLink">Specyfikacja produktu</span>
+                          </HashLink>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div className="dropdown-divider mt-0 mb-4"></div>
                   <div id="productDescription" className="mt-5 mb-5 text-center">
                     <div className="fs-1 fw-bold mb-5">
                       <span>Opis produktu</span>
@@ -315,69 +358,101 @@ const Product = ({ setSearchValueToSend }) => {
                   <div className="dropdown-divider mt-4 mb-4"></div>
                   <div id="productSpecification" className="mt-5 mb-5 text-center">
                     <h1>Pełna specyfikacja</h1>
-                    <div className="row m-bot-10 mt-5">
-                      <span className="text-center fw-bold fs-5 mb-2">Dane produktu</span>
-                      <div className="col col-left">
-                        <span>Nazwa produktu:</span>
-                        <span>Producent:</span>
-                        <span>Kod produktu producenta:</span>
-                        <span className="pb-4">Kategoria produktu:</span>
-                      </div>
-                      <div className="col col-right">
-                        <span className="fw-bold">{productData.productName}</span>
-                        <span className="fw-bold">{productData.Manufacturer.manufacturerName}</span>
-                        <span className="fw-bold">
-                          {productData.productName.match(/\(([^)]+)\)/g)}
-                        </span>
-                        <span className="fw-bold  pb-4">{productData.Category.categoryName}</span>
-                      </div>
 
-                      <span className="text-center fw-bold fs-5 mb-2 ">Specyfikacja produktu</span>
-                      <div className="col col-left">
-                        {productData.Attributes.map((attribute, index) => {
-                          return Number(attribute.type) === 1 ? (
-                            <div key={index}>
-                              {attribute.property.replace(/\[(.*)\]/g, '') + ':'}
-                            </div>
-                          ) : null;
-                        })}
-                        {productData.Attributes.map((attribute, index) => {
-                          return Number(attribute.type) === 0 ? (
-                            <div key={index}>
-                              {attribute.property.replace(/\[(.*)\]/g, '') + ':'}
-                            </div>
-                          ) : null;
-                        })}
+                    <div class="row justify-content-center mt-5">
+                      <div class="col-auto">
+                        <span className="text-center fw-bold fs-4 mb-5">Dane produktu</span>
+                        <table className="table table-striped table-hover table-bordered m-auto">
+                          <tbody>
+                            <tr>
+                              <td className="text-right w-50 align-middle pr-3">
+                                Pełna nazwa produktu:
+                              </td>
+                              <td className="text-left w-50 align-middle pl-3 fw-bold">
+                                <span>
+                                  {productData.Manufacturer.manufacturerName}{' '}
+                                  {productData.productName}
+                                </span>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td className="text-right w-50 align-middle pr-3">Nazwa modelu:</td>
+                              <td className="text-left w-50 align-middle pl-3 fw-bold">
+                                <span>{productData.productName.replace(/\(([^)]+)\)/g, '')}</span>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td className="text-right w-50 align-middle pr-3">Producent:</td>
+                              <td className="text-left w-50 align-middle pl-3 fw-bold">
+                                <span>{productData.Manufacturer.manufacturerName}</span>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td className="text-right w-50 align-middle pr-3">
+                                Kod produktu producenta:
+                              </td>
+                              <td className="text-left w-50 align-middle pl-3 fw-bold">
+                                <span>{productData.productName.match(/\(([^)]+)\)/g)}</span>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td className="text-right w-50 align-middle pr-3">
+                                Kategoria produktu:
+                              </td>
+                              <td className="text-left  w-50 align-middle pl-3 fw-bold">
+                                <span>{productData.Category.categoryName}</span>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
-                      <div className="col col-right">
-                        {productData.Attributes.map((attribute, index) => {
-                          return Number(attribute.type) === 1 ? (
-                            <div key={index}>
-                              <span className="fw-bold">
-                                {attribute.value}{' '}
-                                {productData.Attributes[index].property.match(/\[(.*)\]/g)}
-                              </span>
-                            </div>
-                          ) : null;
-                        })}
-                        {productData.Attributes.map((attribute, index) => {
-                          return Number(attribute.type) === 0 ? (
-                            <div key={index}>
-                              <span className="fw-bold">
-                                {attribute.value}{' '}
-                                {productData.Attributes[index].property.match(/\[(.*)\]/g)}
-                              </span>
-                            </div>
-                          ) : null;
-                        })}
+                    </div>
+
+                    <div class="row justify-content-center mt-5">
+                      <div class="col-auto">
+                        <span className="text-center fw-bold fs-4 mb-5">Specyfikacje produktu</span>
+                        <table className="table table-striped table-hover table-bordered">
+                          <tbody>
+                            {productData.Attributes.map((attribute, index) => {
+                              return Number(attribute.type) === 1 ? (
+                                <tr>
+                                  <td className="text-right w-50 align-middle pr-3" key={index}>
+                                    {attribute.property + ':'}
+                                  </td>
+                                  <td className="text-left w-50 align-middle pl-3 fw-bold">
+                                    {attribute.value}{' '}
+                                    {productData.Attributes[index].property.match(/\[(.*)\]/g)}
+                                  </td>
+                                </tr>
+                              ) : null;
+                            })}
+
+                            {productData.Attributes.map((attribute, index) => {
+                              return Number(attribute.type) === 0 ? (
+                                <tr>
+                                  <td className="text-right w-50 align-middle pr-3" key={index}>
+                                    {attribute.property + ':'}
+                                  </td>
+                                  <td className="text-left w-50 align-middle pl-3 fw-bold">
+                                    {attribute.value}{' '}
+                                    {productData.Attributes[index].property.match(/\[(.*)\]/g)}
+                                  </td>
+                                </tr>
+                              ) : null;
+                            })}
+                          </tbody>
+                        </table>
                       </div>
                     </div>
                   </div>
                   <div className="row mb-2">
                     <div className="col-xl-5"></div>
                     <div className="col-xl-2">
-                      <HashLink smooth to={`/product/${productID}#top`}>
-                        <div className="border-bottom border border-primary">
+                      <HashLink
+                        smooth
+                        to={`/product/${productID}#top`}
+                        scroll={(el) => scrollWithOffset(el)}>
+                        <div className="ProductNavborder">
                           <div className=" text-center mt-2 mb-2">
                             wróć do góry <i className="fas fa-arrow-up"></i>
                           </div>

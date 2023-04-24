@@ -5,12 +5,13 @@ import {
   profileInvoiceList,
   profilelUserData,
   InvoiceItems3Items,
-  searchHintsProductsWithB,
-  searchHintsCategoriesWithB,
-  searchHintsManufacturersWithB,
-  searchHintsProductsWithBar,
-  searchHintsCategoriesWithBar,
-  searchHintsManufacturersWithBar,
+  hintsManufacturersWithB,
+  hintsManufacturersWithBar,
+  hintsCategoriesWithB,
+  hintsCategoriesWithBar,
+  hintsProductsWithB,
+  hintsProductsWithBar,
+  searchResultProducts,
   productID_13,
   productID_4
 } from './resMocks';
@@ -174,48 +175,7 @@ export const handlers = [
     return res(ctx.json({ data: { invoiceID: 4 }, message: 'Items have been bought.' }));
   }),
 
-  // SEARCHHINTS
-  rest.get(`${process.env.REACT_APP_API}/product/productName/:productName`, (req, res, ctx) => {
-    const { productName } = req.params;
-    if (productName === 'b') {
-      return res(ctx.json({ data: searchHintsProductsWithB, message: 'Product retrieved.' }));
-    } else if (productName === 'bar') {
-      return res(ctx.json({ data: searchHintsProductsWithBar, message: 'Product retrieved.' }));
-    } else {
-      return res(ctx.json({ data: searchHintsProductsWithBar, message: 'Product retrieved.' }));
-    }
-  }),
-  rest.get(`${process.env.REACT_APP_API}/category/categoryName/:categoryName`, (req, res, ctx) => {
-    const { categoryName } = req.params;
-    if (categoryName === 'b') {
-      return res(ctx.json({ data: searchHintsCategoriesWithB, message: 'Category retrieved.' }));
-    } else if (categoryName === 'bar') {
-      return res(ctx.json({ data: searchHintsCategoriesWithBar, message: 'Category retrieved.' }));
-    } else {
-      ctx.json({ data: [], message: 'Category retrieved.' });
-    }
-  }),
-  rest.get(
-    `${process.env.REACT_APP_API}/manufacturer/manufacturerName/:manufacturerName`,
-    (req, res, ctx) => {
-      const { manufacturerName } = req.params;
-      if (manufacturerName === 'b') {
-        return res(
-          ctx.json({ data: searchHintsManufacturersWithB, message: 'Manufacturer retrieved.' })
-        );
-      } else if (manufacturerName === 'bar') {
-        return res(
-          ctx.json({ data: searchHintsManufacturersWithBar, message: 'Manufacturer retrieved.' })
-        );
-      } else {
-        ctx.json({ data: [], message: 'Manufacturer retrieved.' });
-      }
-    }
-  ),
-
-  // SEARCHRESULTS DOKONCZYC
-
-  // PRODUCTS DOKONCZYC
+  // PRODUCT
   rest.get(`${process.env.REACT_APP_API}/product/:productID`, (req, res, ctx) => {
     const { productID } = req.params;
     if (Number(productID) === 13) {
@@ -227,7 +187,57 @@ export const handlers = [
   }),
   rest.post(`${process.env.REACT_APP_API}/cartItem`, (req, res, ctx) => {
     return res(ctx.json({ data: [], message: 'Product has been added to cart.' }));
-  })
+  }),
+
+  // SEARCHHINTS
+  rest.get(`${process.env.REACT_APP_API}/product/productHints/:productName`, (req, res, ctx) => {
+    const { productName } = req.params;
+    if (productName === 'b') {
+      return res(ctx.json({ data: hintsProductsWithB, message: 'Product hints retrieved.' }));
+    } else if (productName === 'bar') {
+      return res(ctx.json({ data: hintsProductsWithBar, message: 'Product hints retrieved.' }));
+    } else {
+      return res(ctx.json({ data: [], message: 'Product hints retrieved.' }));
+    }
+  }),
+  rest.get(`${process.env.REACT_APP_API}/category/categoryHints/:categoryName`, (req, res, ctx) => {
+    const { categoryName } = req.params;
+    if (categoryName === 'b') {
+      return res(ctx.json({ data: hintsCategoriesWithB, message: 'Category hints retrieved.' }));
+    } else if (categoryName === 'bar') {
+      return res(ctx.json({ data: hintsCategoriesWithBar, message: 'Category hints retrieved.' }));
+    } else {
+      ctx.json({ data: [], message: 'Category hints retrieved.' });
+    }
+  }),
+  rest.get(
+    `${process.env.REACT_APP_API}/manufacturer/manufacturerHints/:manufacturerName`,
+    (req, res, ctx) => {
+      const { manufacturerName } = req.params;
+      if (manufacturerName === 'b') {
+        return res(
+          ctx.json({ data: hintsManufacturersWithB, message: 'Manufacturer hints retrieved.' })
+        );
+      } else if (manufacturerName === 'bar') {
+        return res(
+          ctx.json({
+            data: hintsManufacturersWithBar,
+            message: 'Manufacturer hints retrieved.'
+          })
+        );
+      } else {
+        ctx.json({ data: [], message: 'Manufacturer hints retrieved.' });
+      }
+    }
+  )
+
+  // SEARCHRESULTS DOKONCZYC
+  // rest.get(
+  //   `${process.env.REACT_APP_API}/product/productName/bar?s=domy%C5%9Blne&p=1&l=10&`,
+  //   (req, res, ctx) => {
+  //     return res(ctx.json({ data: searchResultProducts, message: 'Product retrieved.' }));
+  //   }
+  // )
 ];
 
 //  const productId = req.url.searchParams.get('id')

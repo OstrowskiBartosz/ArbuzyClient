@@ -172,7 +172,7 @@ const FilterPanel = ({
                       id="rotateArrow-1"
                       className="float-right fs-3 expand-arrow"
                       onClick={() => handleCollapse(1)}>
-                      <i class="fa-solid fa-chevron-down"></i>
+                      <i className="fa-solid fa-chevron-down"></i>
                     </div>
                   ) : null}
                 </div>
@@ -227,7 +227,7 @@ const FilterPanel = ({
                       id="rotateArrow-2"
                       className="float-right fs-3 expand-arrow"
                       onClick={() => handleCollapse(2)}>
-                      <i class="fa-solid fa-chevron-down"></i>
+                      <i className="fa-solid fa-chevron-down"></i>
                     </div>
                   ) : null}
                 </div>
@@ -343,7 +343,7 @@ const FilterPanel = ({
                           id={`rotateArrow-${index + 3}`}
                           className="float-right fs-5 expand-arrow"
                           onClick={() => handleCollapse(index + 3)}>
-                          <i class="fa-solid fa-chevron-down"></i>
+                          <i className="fa-solid fa-chevron-down"></i>
                         </div>
                       ) : null}
                     </div>

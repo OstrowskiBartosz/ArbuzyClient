@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { updateProducts } from '../../store/storeSlices/productsSlice.js';
 import newAlert from '../../features/newAlert';
 import RefreshTimer from './RefreshTimer/RefreshTimer';
+import PromoItem from './PromoItem/PromoItem';
 import './MainPage.css';
 
 const categoryList = [
@@ -24,6 +25,15 @@ const categoryList = [
     { categoryName: 'Zasilacze', categoryID: 9 }
   ]
 ];
+
+const productData = {
+  Attributes: [{ value: '/images/products/13/1695259_2_i1064.jpg' }],
+  Manufacturer: { manufacturerName: 'Seagate' },
+  Prices: [{ grossPrice: 264.4, promoPrice: 235.2 }],
+  productID: 13,
+  productName: 'Barracuda Pro 1 TB 2.5" SATA III (ST1000LM049)',
+  productsCount: 2
+};
 
 const MainPage = ({ setSearchValueToSend }) => {
   const dispatch = useDispatch();
@@ -79,13 +89,13 @@ const MainPage = ({ setSearchValueToSend }) => {
   }, [handleFetchData, firstFetch]);
 
   return (
-    <div className="container mainpage mb-5 text-center ">
-      <div className="shadow-sm bg-white rounded mb-4">
-        <div className="categoryHeader mb-3 pt-3">Dostępne Kategorie</div>
+    <div className="container mainpage mb-5 text-center">
+      <div className="shadow bg-white rounded mb-4 ProductNavborder">
+        <div className="categoryHeader mb-3 pt-3">Kategorie Produktów</div>
         <div className="border-bottom border border-primary"></div>
         <div className="pb-3">
           <div className="d-flex flex-row justify-content-around flex-wrap mt-3 pb-3">
-            <div className="categoryLink mt-3 pb-2 categoryText">
+            <div className="categoryLink categoryText">
               <Link
                 className="clear-link"
                 to={`/search?filterCategory=[]`}
@@ -99,7 +109,7 @@ const MainPage = ({ setSearchValueToSend }) => {
           {categoryList.map((categoryGroup, index) => (
             <div
               key={`group${index}`}
-              className="d-flex flex-row justify-content-around flex-wrap mt-3 pb-3">
+              className="d-flex flex-row justify-content-around flex-wrap mt-2 pb-1">
               {categoryGroup.map((category, index2) => (
                 <div key={`c${index2}`} className="categoryLink pl-4 pr-4 pb-2 categoryText">
                   <Link
@@ -116,12 +126,17 @@ const MainPage = ({ setSearchValueToSend }) => {
           ))}
         </div>
       </div>
-
       <RefreshTimer
         dataTopCategory={products.mostBoughtCategoryProducts}
         handleFetchData={handleFetchData}
       />
-      <div className="shadow-sm bg-white rounded mb-4">
+
+      <div className="row">
+        <PromoItem productData={productData} promoType={'Daily'} />
+        <PromoItem productData={productData} promoType={'Weekly'} />
+      </div>
+
+      <div className="shadow bg-white rounded mb-4">
         <div className="categoryHeader mb-3 pt-3 display-inlineblock">
           Najczęściej Kupowane Produkty
         </div>
@@ -168,7 +183,7 @@ const MainPage = ({ setSearchValueToSend }) => {
           </div>
         )}
       </div>
-      <div className="shadow-sm bg-white rounded mb-4">
+      <div className="shadow bg-white rounded mb-4">
         <div className="categoryHeader mb-3 pt-3">Najczęściej Kupowana Kategoria</div>
         <div className="border-bottom border border-primary"></div>
         {isLoadingData ? (
@@ -213,7 +228,7 @@ const MainPage = ({ setSearchValueToSend }) => {
           </div>
         )}
       </div>
-      <div className="shadow-sm bg-white rounded mb-4">
+      <div className="shadow bg-white rounded mb-4">
         <div className="categoryHeader mb-3 pt-3">Może Ci się spodobać</div>
         <div className="border-bottom border border-primary"></div>
         {isLoadingData ? (
