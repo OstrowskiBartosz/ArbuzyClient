@@ -75,7 +75,6 @@ const SearchHints = ({ searchValue, sendHintsSearchValue }) => {
       fetchData('category', searchValue),
       fetchData('manufacturer', searchValue)
     ]);
-
     setHintsData({
       products: productResponse?.data ?? [],
       categories: categoryResponse?.data ?? [],

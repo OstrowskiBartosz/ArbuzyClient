@@ -116,7 +116,7 @@ const PromoItem = ({ productData, promoType }) => {
               <div className="col-sm-8 d-flex flex-column">
                 <div className="pt-3 px-3">
                   <div className="p-inline">
-                    <span className="fs-4 text-dark float-left pb-3">Cena standardowa:</span>
+                    <span className="fs-4 text-dark float-left pb-3 mt-1">Cena standardowa:</span>
                     <span className="fs-2 text-dark float-right">
                       {productData.Prices[0].grossPrice.toLocaleString('pl-PL', {
                         minimumFractionDigits: 2
@@ -137,10 +137,35 @@ const PromoItem = ({ productData, promoType }) => {
 
                 <div className="pt-0 px-3">
                   <div className="row pt-0">
-                    <span className="fs-4">
-                      Sztuk w magazynie:
-                      <span className="fw-bold fs-3"> {productData.productsCount}</span>
-                    </span>
+                    {productData.productsCount !== 0 ? (
+                      <div>
+                        <span className="fs-3 fw-bold">
+                          Sztuk w magazynie:
+                          <span className="fw-bold fs-3"> {productData.productsCount}</span>
+                        </span>
+                        <div className="progress mb-3">
+                          <div
+                            className="progress-bar"
+                            style={{ width: productData.productsCount * 10 + '%' }}
+                            role="progressbar"
+                            aria-valuenow="2"
+                            aria-valuemin="0"
+                            aria-valuemax="10"></div>
+                        </div>
+                      </div>
+                    ) : (
+                      <div>
+                        <span className="fs-3 fw-bold"> Produkt wyprzedany</span>
+                        <div className="progress mb-3">
+                          <div
+                            className="progress-bar w-0"
+                            role="progressbar"
+                            aria-valuenow="2"
+                            aria-valuemin="0"
+                            aria-valuemax="10"></div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                   <div className="row">
                     <span className="fs-4 float-center">Pozostało czasu</span>
@@ -193,12 +218,19 @@ const PromoItem = ({ productData, promoType }) => {
                     </div>
                   </div>
                 </div>
-
-                <div className="mr-4 ml-4 pt-2 mt-auto">
-                  <button className={`btn btn-primary btn-lg btn-block`}>
-                    Sprawdź produkt <i className="fas fa-sign-out-alt"></i>
-                  </button>
-                </div>
+                {productData.productsCount !== 0 ? (
+                  <div className="mr-4 ml-4 pt-2 mt-auto">
+                    <button className={`btn btn-primary btn-lg btn-block`}>
+                      Sprawdź produkt <i className="fas fa-sign-out-alt"></i>
+                    </button>
+                  </div>
+                ) : (
+                  <div className="mr-4 ml-4 pt-2 mt-auto">
+                    <button className={`btn btn-secondary btn-lg btn-block`}>
+                      Sprawdź produkt <i className="fas fa-sign-out-alt"></i>
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </Link>

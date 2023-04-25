@@ -217,50 +217,48 @@ export const logInInfo = {
   // message: 'Logged.'
 };
 
-export const searchHintsProductsWithB = {
-  products: [
-    {
-      productID: 1,
-      productName: 'Barracuda 1 TB 3.5" SATA III (ST1000DM010)'
-    },
-    {
-      productID: 2,
-      productName: 'P300 2 TB 3.5" SATA III (HDWD120UZSVA)'
-    },
-    {
-      productID: 3,
-      productName: 'Barracuda 1 TB 2.5" SATA III (ST1000LM048)'
-    },
-    {
-      productID: 4,
-      productName: 'Blue 500 GB 2.5" SATA III (WD5000LPCX)'
-    },
-    {
-      productID: 5,
-      productName: '4 TB 3.5" SATA III X300 (HDWE140UZSVA)'
-    },
-    {
-      productID: 6,
-      productName: 'P300 2 TB 3.5" SATA III (HDWD120UZSVA)'
-    },
-    {
-      productID: 7,
-      productName: '500 GB 2.5" SATA II (MQ01ABD050)'
-    },
-    {
-      productID: 8,
-      productName: 'FireCuda 1 TB 3.5" SATA III (ST1000DX002)'
-    },
-    {
-      productID: 9,
-      productName: 'Caviar Blue 500 GB 3.5" SATA III (WD5000AAKX)'
-    },
-    {
-      productID: 10,
-      productName: 'Digital Black 1 TB 3.5" SATA III (WD1003FZEX)'
-    }
-  ]
-};
+export const searchHintsProductsWithB = [
+  {
+    productID: 1,
+    productName: 'Barracuda 1 TB 3.5" SATA III (ST1000DM010)'
+  },
+  {
+    productID: 2,
+    productName: 'P300 2 TB 3.5" SATA III (HDWD120UZSVA)'
+  },
+  {
+    productID: 3,
+    productName: 'Barracuda 1 TB 2.5" SATA III (ST1000LM048)'
+  },
+  {
+    productID: 4,
+    productName: 'Blue 500 GB 2.5" SATA III (WD5000LPCX)'
+  },
+  {
+    productID: 5,
+    productName: '4 TB 3.5" SATA III X300 (HDWE140UZSVA)'
+  },
+  {
+    productID: 6,
+    productName: 'P300 2 TB 3.5" SATA III (HDWD120UZSVA)'
+  },
+  {
+    productID: 7,
+    productName: '500 GB 2.5" SATA II (MQ01ABD050)'
+  },
+  {
+    productID: 8,
+    productName: 'FireCuda 1 TB 3.5" SATA III (ST1000DX002)'
+  },
+  {
+    productID: 9,
+    productName: 'Caviar Blue 500 GB 3.5" SATA III (WD5000AAKX)'
+  },
+  {
+    productID: 10,
+    productName: 'Digital Black 1 TB 3.5" SATA III (WD1003FZEX)'
+  }
+];
 export const searchHintsCategoriesWithB = [{ categoryID: 5, categoryName: 'Obudowy' }];
 export const searchHintsManufacturersWithB = [
   { manufacturerID: 2, manufacturerName: 'Toshiba' },
@@ -891,4 +889,21 @@ export const searchResultProducts = {
   NumberOfpages: 1,
   minPrice: 161.87,
   maxPrice: 846.6
+};
+
+export const productDataWeekly = {
+  Attributes: [{ value: '/images/products/13/1695259_2_i1064.jpg' }],
+  Manufacturer: { manufacturerName: 'Seagate' },
+  Prices: [{ grossPrice: 264.4, promoPrice: 235.2 }],
+  productID: 13,
+  productName: 'Barracuda Pro 1 TB 2.5" SATA III (ST1000LM049)',
+  productsCount: 0
+};
+export const productDataDaily = {
+  Attributes: [{ value: '/images/products/13/1695259_2_i1064.jpg' }],
+  Manufacturer: { manufacturerName: 'Seagate' },
+  Prices: [{ grossPrice: 264.4, promoPrice: 235.2 }],
+  productID: 13,
+  productName: 'Barracuda Pro 1 TB 2.5" SATA III (ST1000LM049)',
+  productsCount: 2
 };

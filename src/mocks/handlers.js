@@ -12,6 +12,8 @@ import {
   hintsProductsWithB,
   hintsProductsWithBar,
   searchResultProducts,
+  productDataWeekly,
+  productDataDaily,
   productID_13,
   productID_4
 } from './resMocks';

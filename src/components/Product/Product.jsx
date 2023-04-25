@@ -359,8 +359,8 @@ const Product = ({ setSearchValueToSend }) => {
                   <div id="productSpecification" className="mt-5 mb-5 text-center">
                     <h1>Pełna specyfikacja</h1>
 
-                    <div class="row justify-content-center mt-5">
-                      <div class="col-auto">
+                    <div className="row justify-content-center mt-5">
+                      <div className="col-auto">
                         <span className="text-center fw-bold fs-4 mb-5">Dane produktu</span>
                         <table className="table table-striped table-hover table-bordered m-auto">
                           <tbody>
@@ -408,15 +408,15 @@ const Product = ({ setSearchValueToSend }) => {
                       </div>
                     </div>
 
-                    <div class="row justify-content-center mt-5">
-                      <div class="col-auto">
+                    <div className="row justify-content-center mt-5">
+                      <div className="col-auto">
                         <span className="text-center fw-bold fs-4 mb-5">Specyfikacje produktu</span>
                         <table className="table table-striped table-hover table-bordered">
                           <tbody>
                             {productData.Attributes.map((attribute, index) => {
                               return Number(attribute.type) === 1 ? (
-                                <tr>
-                                  <td className="text-right w-50 align-middle pr-3" key={index}>
+                                <tr key={index}>
+                                  <td className="text-right w-50 align-middle pr-3">
                                     {attribute.property + ':'}
                                   </td>
                                   <td className="text-left w-50 align-middle pl-3 fw-bold">
@@ -429,8 +429,8 @@ const Product = ({ setSearchValueToSend }) => {
 
                             {productData.Attributes.map((attribute, index) => {
                               return Number(attribute.type) === 0 ? (
-                                <tr>
-                                  <td className="text-right w-50 align-middle pr-3" key={index}>
+                                <tr key={index}>
+                                  <td className="text-right w-50 align-middle pr-3">
                                     {attribute.property + ':'}
                                   </td>
                                   <td className="text-left w-50 align-middle pl-3 fw-bold">

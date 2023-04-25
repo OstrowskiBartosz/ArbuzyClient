@@ -6,11 +6,11 @@ const resMocks = require('../../../mocks/resMocks.js');
 
 describe('ListHints subcomponent tests', () => {
   it('should show 5 manufacturer values', async () => {
-    const hintsManufacturers = resMocks.hintsManufacturers;
+    const searchHintsManufacturersWithB = resMocks.searchHintsManufacturersWithB;
     render(
       <MockProviders>
         <ListHints
-          data={hintsManufacturers}
+          data={searchHintsManufacturersWithB}
           resource={'manufacturer'}
           hideHints={() => {}}></ListHints>
       </MockProviders>
@@ -21,10 +21,13 @@ describe('ListHints subcomponent tests', () => {
   });
 
   it('should move user to product url after clicking product name', async () => {
-    const hintsProducts = resMocks.hintsProducts;
+    const searchHintsProductsWithB = resMocks.searchHintsProductsWithB;
     render(
       <MockProviders>
-        <ListHints data={hintsProducts} resource={'product'} hideHints={() => {}}></ListHints>
+        <ListHints
+          data={searchHintsProductsWithB}
+          resource={'product'}
+          hideHints={() => {}}></ListHints>
       </MockProviders>
     );
 
@@ -36,11 +39,11 @@ describe('ListHints subcomponent tests', () => {
   });
 
   it('should move user to manufacturer url after clicking manufacturer name', async () => {
-    const hintsManufacturers = resMocks.hintsManufacturers;
+    const searchHintsManufacturersWithB = resMocks.searchHintsManufacturersWithB;
     render(
       <MockProviders>
         <ListHints
-          data={hintsManufacturers}
+          data={searchHintsManufacturersWithB}
           resource={'manufacturer'}
           hideHints={() => {}}></ListHints>
       </MockProviders>
@@ -52,10 +55,13 @@ describe('ListHints subcomponent tests', () => {
   });
 
   it('should move user to category url after clicking category name', async () => {
-    const hintsCategories = resMocks.hintsCategories;
+    const searchHintsCategoriesWithB = resMocks.searchHintsCategoriesWithB;
     render(
       <MockProviders>
-        <ListHints data={hintsCategories} resource={'category'} hideHints={() => {}}></ListHints>
+        <ListHints
+          data={searchHintsCategoriesWithB}
+          resource={'category'}
+          hideHints={() => {}}></ListHints>
       </MockProviders>
     );
 

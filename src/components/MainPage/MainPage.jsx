@@ -26,7 +26,15 @@ const categoryList = [
   ]
 ];
 
-const productData = {
+const productDataWeekly = {
+  Attributes: [{ value: '/images/products/13/1695259_2_i1064.jpg' }],
+  Manufacturer: { manufacturerName: 'Seagate' },
+  Prices: [{ grossPrice: 264.4, promoPrice: 235.2 }],
+  productID: 13,
+  productName: 'Barracuda Pro 1 TB 2.5" SATA III (ST1000LM049)',
+  productsCount: 0
+};
+const productDataDaily = {
   Attributes: [{ value: '/images/products/13/1695259_2_i1064.jpg' }],
   Manufacturer: { manufacturerName: 'Seagate' },
   Prices: [{ grossPrice: 264.4, promoPrice: 235.2 }],
@@ -132,8 +140,8 @@ const MainPage = ({ setSearchValueToSend }) => {
       />
 
       <div className="row">
-        <PromoItem productData={productData} promoType={'Daily'} />
-        <PromoItem productData={productData} promoType={'Weekly'} />
+        <PromoItem productData={productDataDaily} promoType={'Daily'} />
+        <PromoItem productData={productDataWeekly} promoType={'Weekly'} />
       </div>
 
       <div className="shadow bg-white rounded mb-4">
