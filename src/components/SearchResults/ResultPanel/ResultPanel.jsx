@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateCartItems } from '../../../store/storeSlices/cartItemsSlice';
 import newAlert from '../../../features/newAlert';
 
-import '../SearchResults.css';
+import './ResultPanel.css';
 import history from '../../history';
 
 const ResultPanel = ({ isLoading, ProductsData, fetchSearchData }) => {
@@ -77,7 +77,7 @@ const ResultPanel = ({ isLoading, ProductsData, fetchSearchData }) => {
 
   if (isLoading && ProductsData === undefined) {
     return (
-      <div className="col-12 componentBackgroundColor mt-3 shadow-sm p-3 mb-1 bg-white rounded">
+      <div className="col-12 componentBackgroundColor mt-3 shadow p-3 mb-1 bg-white rounded">
         <div className="d-flex justify-content-center pt-5 pb-5 blockedUIScreen">
           <div className="spinner-border" role="status">
             <span className="sr-only">Loading...</span>
@@ -88,7 +88,7 @@ const ResultPanel = ({ isLoading, ProductsData, fetchSearchData }) => {
   } else if ((ProductsData && ProductsData.length === 0) || ProductsData === null) {
     return (
       <div className="row">
-        <div className="col-12 componentBackgroundColor mt-3 shadow-sm p-3 bg-white rounded">
+        <div className="col-12 componentBackgroundColor mt-3 shadow p-3 bg-white rounded">
           <span className="fs-1 fw-bold text-center mt-5 mb-5 pt-5 pb-5">
             Nie ma takich produkt :-(
           </span>
@@ -101,7 +101,7 @@ const ResultPanel = ({ isLoading, ProductsData, fetchSearchData }) => {
         {ProductsData &&
           ProductsData.map((product) => (
             <div className="row" key={'produkt' + product.productID}>
-              <div className="col-12 componentBackgroundColor mt-3 shadow-sm p-3 bg-white rounded">
+              <div className="col-12 componentBackgroundColor mt-3 shadow p-3 bg-white rounded">
                 <div
                   className={
                     isLoading ? 'row blockedUIScreenP opaciTySwitch' : 'row opaciTySwitch'

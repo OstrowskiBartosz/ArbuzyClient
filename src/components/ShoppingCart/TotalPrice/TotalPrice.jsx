@@ -5,7 +5,7 @@ const TotalPrice = ({ blockUI, TotalPrice }) => {
   return (
     <div className="row">
       <div className="col-xl-6"></div>
-      <div className="col-xl-6 mt-2 componentBackgroundColor mt-3 mb-3 shadow-sm p-3 bg-white rounded">
+      <div className="col-xl-6 mt-2 componentBackgroundColor mt-3 mb-3 shadow p-3 bg-white rounded">
         <div className={blockUI ? 'blockedUIScreen text-center' : ''}>
           <div className="row pb-2">
             <div className="col-6">

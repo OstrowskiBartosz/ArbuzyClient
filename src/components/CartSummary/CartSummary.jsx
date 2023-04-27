@@ -90,7 +90,7 @@ const CartSummary = (props) => {
       <div className="container-fluid">
         <div className="row navbar-padding">
           <div className="col-xl-3"></div>
-          <div className="col-xl-6 mt-5 componentBackgroundColor mt-3 mb-3 shadow-sm p-3 bg-white rounded">
+          <div className="col-xl-6 mt-5 componentBackgroundColor mt-3 mb-3 shadow p-3 bg-white rounded">
             <div className="row">
               <div className="col-xl-12">
                 <span className="p-2 m-2 fw-bold text-center">
@@ -132,7 +132,7 @@ const CartSummary = (props) => {
     if (cartData && cartData.cartItemsData && cartData.cartItemsData.length > 0) {
       return (
         <>
-          <div className="container options shadow-sm bg-white rounded">
+          <div className="container options shadow bg-white rounded">
             <div className="row">
               <div className="col-xl-12">
                 <span className="p-2 m-2 fs-1 fw-bold text-center">Podsumowanie</span>
@@ -174,7 +174,7 @@ const CartSummary = (props) => {
         <div className="container-fluid">
           <div className="row navbar-padding">
             <div className="col-3"></div>
-            <div className="col-6 mt-5 componentBackgroundColor mt-3 mb-3 shadow-sm p-3 bg-white rounded">
+            <div className="col-6 mt-5 componentBackgroundColor mt-3 mb-3 shadow p-3 bg-white rounded">
               <div className="row">
                 <div className="col-12">
                   <h1>Koszyk jest pusty, dodaj coś do niego :-) </h1>

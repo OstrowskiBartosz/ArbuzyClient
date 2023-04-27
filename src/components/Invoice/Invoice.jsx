@@ -65,7 +65,7 @@ const Invoice = (props) => {
     return <Redirect to="/login" />;
   } else if (isLoadingInvoiceData || error) {
     return (
-      <div className="container options shadow-sm bg-white rounded">
+      <div className="container options shadow bg-white rounded">
         <div className="text-center pb-3">
           <span className="fs-1 fw-bold">Szczegóły zamowienia</span>
         </div>
@@ -86,7 +86,7 @@ const Invoice = (props) => {
   } else {
     return (
       <>
-        <div className="container options shadow-sm bg-white rounded">
+        <div className="container options shadow bg-white rounded">
           <div className={blockUI ? 'blockedUIScreen text-center row position-relative' : ''}>
             <div
               className={blockUI ? 'spinner-border position-absolute blockUISpinner' : ''}

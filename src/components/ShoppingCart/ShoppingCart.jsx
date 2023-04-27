@@ -73,7 +73,7 @@ const ShoppingCart = (props) => {
           <div className="col-sm-1"></div>
           <div className="col-sm-10">
             <div className="row">
-              <div className="col-12 mt-5 componentBackgroundColor mt-3 mb-3 shadow-sm p-3 bg-white rounded">
+              <div className="col-12 mt-5 componentBackgroundColor mt-3 mb-3 shadow p-3 bg-white rounded">
                 <div className="row">
                   <div className="col-11">
                     <div className="font-weight-bold text-left">
@@ -84,7 +84,7 @@ const ShoppingCart = (props) => {
               </div>
             </div>
             <div className="row">
-              <div className="col-12 componentBackgroundColor shadow-sm p-3 bg-white rounded">
+              <div className="col-12 componentBackgroundColor shadow p-3 bg-white rounded">
                 <div className="d-flex justify-content-center pt-5 pb-5">
                   {isLoadingCartData && (
                     <div className="spinner-border" role="status">
@@ -113,7 +113,7 @@ const ShoppingCart = (props) => {
               <div className="col-sm-1"></div>
               <div className="col-sm-10">
                 <div className="row">
-                  <div className="col-12 mt-5 componentBackgroundColor mt-3 mb-3 shadow-sm p-3 bg-white rounded">
+                  <div className="col-12 mt-5 componentBackgroundColor mt-3 mb-3 shadow p-3 bg-white rounded">
                     <div className={blockUI ? 'blockedUIScreen text-center row' : 'row'}>
                       <div className="col-9 text-left">
                         <div className="font-weight-bold vertical-center text-left">
@@ -139,7 +139,7 @@ const ShoppingCart = (props) => {
                 </div>
                 <div className={blockUI ? 'blockedUIScreen text-center' : ''}>
                   <div className="row hideLabels">
-                    <div className="col-12 componentBackgroundColor shadow-sm p-3 bg-white rounded">
+                    <div className="col-12 componentBackgroundColor shadow p-3 bg-white rounded">
                       <div className="row CartBorder pb-2">
                         <div className="col-2 p-0"></div>
                         <div className="col-4 align-text-center">
@@ -191,7 +191,7 @@ const ShoppingCart = (props) => {
               <div className="col-sm-1"></div>
               <div className="col-sm-10">
                 <div className="row">
-                  <div className="col-12 mt-5 componentBackgroundColor mt-3 mb-3 shadow-sm p-3 bg-white rounded">
+                  <div className="col-12 mt-5 componentBackgroundColor mt-3 mb-3 shadow p-3 bg-white rounded">
                     <div className="row">
                       <div className="col-11">
                         <div className="font-weight-bold text-left">
@@ -206,7 +206,7 @@ const ShoppingCart = (props) => {
             </div>
             <div className="row">
               <div className="col-sm-1"></div>
-              <div className="col-sm-10 componentBackgroundColor mb-3 shadow-sm p-3 bg-white rounded">
+              <div className="col-sm-10 componentBackgroundColor mb-3 shadow p-3 bg-white rounded">
                 <div className="row pt-5 pb-5">
                   <div className="col-12 text-center">
                     <h1>Koszyk jest pusty, dodaj coś do niego :-) </h1>

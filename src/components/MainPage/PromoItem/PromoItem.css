@@ -1,0 +1,9 @@
+.promoText {
+  color: black;
+  text-decoration: none;
+}
+
+.promoText:hover {
+  color: rgb(0, 123, 255, 1);
+  text-decoration: none;
+}

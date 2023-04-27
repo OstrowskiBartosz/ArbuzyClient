@@ -1,0 +1,138 @@
+/* filters*/
+.filterContainer {
+  display: block;
+  position: relative;
+  padding-left: 25px;
+  cursor: pointer;
+  font-size: 17px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.filterContainer input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+}
+
+.filterContainer:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+.filterContainer input:checked ~ .checkmark {
+  background-color: #2196f3;
+}
+
+.checkmark:after {
+  content: '';
+  position: absolute;
+  display: none;
+}
+
+.filterContainer input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.filterContainer .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.attributes-list {
+  max-height: 400px;
+  -webkit-mask-image: linear-gradient(to bottom, black 100%, transparent 0%);
+  mask-image: linear-gradient(to bottom, black 100%, transparent 0%);
+  transition: all 0.5s linear;
+}
+
+.collapsed {
+  max-height: 60px;
+  -webkit-mask-image: linear-gradient(to bottom, black 30%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 30%, transparent 100%);
+  transition: all 2s cubic-bezier(0, 1, 0, 1);
+}
+
+.expand-arrow {
+  transition: all 0.25s linear;
+}
+
+.expand-arrow:hover {
+  cursor: pointer;
+  color: rgba(0, 123, 255, 1);
+  transform: rotate(180deg);
+}
+
+.rotated {
+  transform: rotate(180deg);
+}
+
+.filterButton {
+  position: -webkit-sticky;
+  position: sticky;
+  bottom: 65px;
+}
+.resetFilterButton {
+  position: -webkit-sticky;
+  position: sticky;
+  bottom: 15px;
+}
+
+.HideFiltersButton {
+  display: none;
+}
+@media (max-width: 1079px) {
+  .HideFiltersButton {
+    position: -webkit-sticky;
+    position: sticky;
+    bottom: 15px;
+    display: block;
+  }
+  .filterButton {
+    position: -webkit-sticky;
+    position: sticky;
+    bottom: 15px;
+  }
+  .resetFilterButton {
+    position: -webkit-sticky;
+    position: sticky;
+    bottom: 65px;
+    display: block;
+  }
+}
+
+.filtersSwitch {
+  transition: all 0.5s ease-in-out;
+}
+
+.f1 {
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: visibility 5s, opacity 5s linear;
+  transition: position 5s;
+}
+
+.f2 {
+  visibility: visible;
+  height: auto;
+}

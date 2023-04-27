@@ -95,7 +95,7 @@ const Profile = (props) => {
   } else if (isLoadingUser || isLoadingInvoice || error) {
     return (
       <>
-        <div className="container options shadow-sm bg-white rounded mb-5">
+        <div className="container options shadow bg-white rounded mb-5">
           <div className="d-flex flex-wrap">
             <div className="col">
               <Link to="/profile/orders">
@@ -149,7 +149,7 @@ const Profile = (props) => {
   } else {
     return (
       <>
-        <div className="container options shadow-sm bg-white rounded">
+        <div className="container options shadow bg-white rounded">
           <div className="d-flex flex-wrap">
             <div className="col">
               <Link to="/profile/orders">

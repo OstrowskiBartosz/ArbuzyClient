@@ -12,7 +12,7 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
 
 import history from '../../history';
-import '../SearchResults.css';
+import './FilterPanel.css';
 
 import { readyToRequest } from './utils';
 

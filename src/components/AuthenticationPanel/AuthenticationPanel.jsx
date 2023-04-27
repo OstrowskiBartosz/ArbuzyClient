@@ -33,7 +33,7 @@ const AuthenticationPanel = ({ redirect }) => {
         <div className="container-fluid">
           <div className="row navbar-padding">
             <div className="col-xl-4"></div>
-            <div className="col-xl-4 mt-5 componentBackgroundColor shadow-sm p-3 mb-5 bg-white rounded">
+            <div className="col-xl-4 mt-5 componentBackgroundColor shadow p-3 mb-5 bg-white rounded">
               <div className="card-body text-center">
                 <div
                   id="LogIn"

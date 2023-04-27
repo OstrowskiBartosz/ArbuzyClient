@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import history from '../../history';
-import '../SearchResults.css';
+import './SortPanel.css';
 import { pagination, sortingMethods } from './utils';
 
 const SortPanel = ({
@@ -146,7 +146,7 @@ const SortPanel = ({
   } else if ((ProductsData && ProductsData.length === 0) || ProductsData === null) {
     return (
       <div className="row">
-        <div className="col-12 componentBackgroundColor shadow-sm pb-3 bg-white rounded">
+        <div className="col-12 componentBackgroundColor shadow pb-3 bg-white rounded">
           <span className="fs-5 fw-bold text-center">Nie ma co sortować :-(</span>
         </div>
       </div>

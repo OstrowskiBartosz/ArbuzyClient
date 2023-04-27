@@ -208,26 +208,3 @@ footer {
   transition: all 0.5s;
   cursor: pointer;
 }
-
-.productCardWidth45 {
-  width: 48%;
-}
-
-.strikethrough {
-  position: relative;
-}
-.strikethrough:before {
-  position: absolute;
-  content: '';
-  left: 0;
-  top: 50%;
-  right: 0;
-  border-top: 2px solid;
-  border-color: inherit;
-
-  -webkit-transform: rotate(-7deg);
-  -moz-transform: rotate(-7deg);
-  -ms-transform: rotate(-7deg);
-  -o-transform: rotate(-7deg);
-  transform: rotate(-7deg);
-}

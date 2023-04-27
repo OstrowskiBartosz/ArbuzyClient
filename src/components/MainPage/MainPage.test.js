@@ -57,7 +57,7 @@ describe('MainPage component tests', () => {
     });
   });
 
-  it('should refresh products by clicking refresh button', async () => {
+  it('should refresh and load new promo and listed products after clicking refresh button', async () => {
     render(
       <MockProviders>
         <MainPage setSearchValueToSend={() => {}} />
@@ -65,8 +65,11 @@ describe('MainPage component tests', () => {
     );
 
     const refreshButton = screen.getByRole('button', { name: /refresh products button/i });
-    fireEvent.click(refreshButton);
-    const elements = screen.findAllByText(/Barracuda/);
-    expect((await elements).length).toEqual(9);
+    await fireEvent.click(refreshButton);
+
+    const loadedProductName = await screen.findByText('Blue 500 GB 2.5" SATA III (WD5000LPCX)');
+
+    const elements = await screen.findAllByRole('img');
+    expect(elements.length).toEqual(20);
   });
 });

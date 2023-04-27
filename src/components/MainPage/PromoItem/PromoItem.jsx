@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
+import './PromoItem.css';
 
 const getMondaysDate = () => {
   const todaysDate = new Date();
@@ -11,7 +12,7 @@ const getMondaysDate = () => {
 };
 const getTomorrowsDate = () => {
   const todaysDate = new Date();
-  const tomorrowDate = new Date(new Date().setDate(todaysDate.getDate() + 1));
+  const tomorrowDate = new Date(new Date().setDate(todaysDate.getDate()));
   tomorrowDate.setHours(24, 0, 0, 0);
   return tomorrowDate.getTime();
 };
@@ -47,9 +48,9 @@ const PromoItem = ({ productData, promoType }) => {
     hours: null,
     days: null
   });
-  const [targetDate, setTargetDate] = useState(getMondaysDate);
+  const [targetDate, setTargetDate] = useState(null);
 
-  const refreshTimer = () => {
+  const refreshTimer = useCallback(() => {
     const seconds = getSeconds(targetDate);
     const minutes = getMinutes(targetDate);
     const hours = getHours(targetDate);
@@ -61,19 +62,24 @@ const PromoItem = ({ productData, promoType }) => {
       hours: hours,
       days: days
     });
-  };
+  }, [targetDate]);
 
   useEffect(() => {
+    promoType === 'Weekly' ? setTargetDate(getMondaysDate) : setTargetDate(getTomorrowsDate);
+  }, [promoType, refreshTimer]);
+
+  useEffect(() => {
+    refreshTimer();
     const interval = setInterval(() => refreshTimer(), 1000);
     return () => clearInterval(interval);
-  });
+  }, [refreshTimer]);
 
-  if (!timeRemaining?.seconds || !productData) {
+  if (timeRemaining?.seconds === null || !productData) {
     return (
       <div className="col-sm-6">
         <div className="shadow bg-white rounded mb-4 ProductNavborder">
           <div className="pt-2 pb-2 d-block">
-            <span className="fw-bold fs-2">Mega promocja...</span>
+            <span className="fw-bold fs-2">Ładowanie...</span>
           </div>
           <div className="border-bottom border border-primary mb-3"></div>
           <div className="d-flex justify-content-center pt-5 pb-5">
@@ -84,16 +90,16 @@ const PromoItem = ({ productData, promoType }) => {
         </div>
       </div>
     );
-  } else if (timeRemaining?.seconds !== null) {
+  } else {
     return (
       <div className="col-sm-6">
         <div className="shadow bg-white rounded mb-4 ProductNavborder">
-          <Link className="clear-link pointer" to={`/product/${productData.productID}`}>
+          <Link className="promoText pointer" to={`/product/${productData.productID}`}>
             <div className="pt-2 pb-2">
               {promoType === 'Weekly' ? (
-                <span className="fw-bold fs-2">Mega promocja tygodnia</span>
+                <span className="fw-bold fs-2">Mega oferta tygodnia</span>
               ) : (
-                <span className="fw-bold fs-2">Mega promocja dnia</span>
+                <span className="fw-bold fs-2">Mega oferta dnia</span>
               )}
             </div>
             <div className="border-bottom border border-primary mb-3"></div>
@@ -126,7 +132,7 @@ const PromoItem = ({ productData, promoType }) => {
                   </div>
                   <div className="pt-5 p-inline">
                     <span className="fs-4 fw-bold float-left pb-3 pt-2">Cena tylko teraz:</span>
-                    <span className="fs-2 fw-bold float-right">
+                    <span className="fs-2 fw-bold text-decoration-underline float-right">
                       {productData.Prices[0].promoPrice.toLocaleString('pl-PL', {
                         minimumFractionDigits: 2
                       })}{' '}

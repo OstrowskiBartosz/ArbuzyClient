@@ -24,7 +24,7 @@ const Orders = ({ invoiceData, isLoadingInvoice }) => {
             <h1>Twoje zamówienia</h1>
           </div>
         </div>
-        <div className="col-12 componentBackgroundColor shadow-sm p-3 bg-white rounded">
+        <div className="col-12 componentBackgroundColor shadow p-3 bg-white rounded">
           <div className="d-flex justify-content-center pt-5 pb-5">
             <div className="spinner-border" role="status">
               <span className="sr-only">Loading...</span>

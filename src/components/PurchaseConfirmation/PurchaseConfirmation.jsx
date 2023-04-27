@@ -30,7 +30,7 @@ const PurchaseConfirmation = (props) => {
       <div className="container-fluid">
         <div className="row navbar-padding">
           <div className="col-3"></div>
-          <div className="col-6 mt-5 componentBackgroundColor mt-3 mb-3 shadow-sm p-3 bg-white rounded">
+          <div className="col-6 mt-5 componentBackgroundColor mt-3 mb-3 shadow p-3 bg-white rounded">
             <div className="row">
               <div className="col-12">
                 <div className="pb-5 text-center">

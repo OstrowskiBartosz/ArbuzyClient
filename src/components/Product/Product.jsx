@@ -115,7 +115,7 @@ const Product = ({ setSearchValueToSend }) => {
 
   if (isLoadingProduct || error) {
     return (
-      <div className="container options shadow-sm bg-white rounded mb-5">
+      <div className="container options shadow bg-white rounded mb-5">
         <div className="d-flex justify-content-center pt-5 pb-5">
           <div className="spinner-border" role="status">
             <span className="sr-only">Loading...</span>
@@ -136,7 +136,7 @@ const Product = ({ setSearchValueToSend }) => {
             <div className="col-sm-2"></div>
             <div className="col-sm-8">
               <div className="row">
-                <div className="col-12 mt-5 componentBackgroundColor mt-3 mb-3 shadow-sm bg-white rounded">
+                <div className="col-12 mt-5 componentBackgroundColor mt-3 mb-3 shadow bg-white rounded">
                   <div className="row" id="productSummary">
                     <div className="col product-tree ml-2 mt-3">
                       <Link

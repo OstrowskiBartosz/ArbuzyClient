@@ -35,7 +35,7 @@ const LogOut = (props) => {
         <div className="container-fluid">
           <div className="row navbar-padding">
             <div className="col-lg-4"></div>
-            <div className="col-lg-4 mt-5 componentBackgroundColor shadow-sm p-3 mb-5 bg-white rounded">
+            <div className="col-lg-4 mt-5 componentBackgroundColor shadow p-3 mb-5 bg-white rounded">
               <div className="card-body ">
                 <div className="p-3 text-left">
                   <h5 className="card-title bigfont">Czy na pewno chcesz się wylogować?</h5>
