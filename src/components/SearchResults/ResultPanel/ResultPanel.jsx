@@ -12,6 +12,7 @@ const ResultPanel = ({ isLoading, ProductsData, fetchSearchData }) => {
   const [blockUI, setblockUI] = useState(false);
 
   const isLogged = useSelector((state) => state.session.isLogged);
+  const [clickedButton, setClickedButton] = useState(null);
 
   const dispatch = useDispatch();
 
@@ -42,8 +43,9 @@ const ResultPanel = ({ isLoading, ProductsData, fetchSearchData }) => {
     fetchSearchData();
   };
 
-  const handleToCartClick = (event) => {
+  const handleToCartClick = (event, buttonID) => {
     setblockUI(true);
+    setClickedButton(buttonID);
 
     const data = {
       productID: event.currentTarget.id,
@@ -71,6 +73,7 @@ const ResultPanel = ({ isLoading, ProductsData, fetchSearchData }) => {
           dispatch(updateCartItems(true));
         }
         setblockUI(false);
+        setClickedButton(null);
       })
       .catch((error) => error);
   };
@@ -203,17 +206,26 @@ const ResultPanel = ({ isLoading, ProductsData, fetchSearchData }) => {
                       {isLogged ? (
                         product.quantity > 0 ? (
                           blockUI ? (
-                            <button
-                              className={`btn btn-primary btn-lg btn-block`}
-                              id={product.productID}
-                              disabled>
-                              Dodaj do koszyka <i className="fas fa-cart-plus"></i>
-                            </button>
+                            clickedButton === product.productID ? (
+                              <button
+                                className={`btn btn-warning btn-lg btn-block`}
+                                id={product.productID}
+                                disabled>
+                                Dodawanie...
+                              </button>
+                            ) : (
+                              <button
+                                className={`btn btn-primary btn-lg btn-block`}
+                                id={product.productID}
+                                disabled>
+                                Dodaj do koszyka <i className="fas fa-cart-plus"></i>
+                              </button>
+                            )
                           ) : (
                             <button
                               className={`btn btn-primary btn-lg btn-block`}
                               id={product.productID}
-                              onClick={(event) => handleToCartClick(event)}>
+                              onClick={(event) => handleToCartClick(event, product.productID)}>
                               Dodaj do koszyka <i className="fas fa-cart-plus"></i>
                             </button>
                           )

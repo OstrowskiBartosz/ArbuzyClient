@@ -20,5 +20,5 @@ export const checkValues = (priceValue, priceRange) => {
 export const readyToRequest = async (priceValue, priceRange, setPriceValue, fetchSearchData) => {
   const bool = await checkValues(priceValue, priceRange);
   if (bool) setURLPrice(priceValue, fetchSearchData);
-  else setPriceValue([Math.ceil(priceRange.minPrice), Math.floor(priceRange.maxPrice)]);
+  else setPriceValue([Math.floor(priceRange.minPrice), Math.ceil(priceRange.maxPrice)]);
 };
