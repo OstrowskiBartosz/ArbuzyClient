@@ -4,6 +4,7 @@ const initialState = {
   mostBoughtCategoryProducts: [],
   mostBoughtProducts: [],
   youMayLikeProducts: [],
+  promoProducts: [],
   lastUpdate: new Date().getTime()
 };
 
@@ -15,6 +16,7 @@ const productSlice = createSlice({
       state.mostBoughtCategoryProducts = action.payload.mostBoughtCategoryProducts;
       state.mostBoughtProducts = action.payload.mostBoughtProducts;
       state.youMayLikeProducts = action.payload.youMayLikeProducts;
+      state.promoProducts = action.payload.promoProducts;
       state.lastUpdate = action.payload.lastUpdate;
     }
   }

@@ -1,6 +1,6 @@
 import { rest } from 'msw';
 import {
-  mainPageProducts,
+  frontPageProducts,
   cartItems3Items,
   profileInvoiceList,
   profilelUserData,
@@ -47,14 +47,8 @@ export const handlers = [
   }),
 
   // MAIN PAGE
-  rest.get(`${process.env.REACT_APP_API}/product/mostBoughtCategoryProducts`, (req, res, ctx) => {
-    return res(ctx.json(mainPageProducts));
-  }),
-  rest.get(`${process.env.REACT_APP_API}/product/mostBoughtProducts`, (req, res, ctx) => {
-    return res(ctx.json(mainPageProducts));
-  }),
-  rest.get(`${process.env.REACT_APP_API}/product/youMayLikeThisProducts`, (req, res, ctx) => {
-    return res(ctx.json(mainPageProducts));
+  rest.get(`${process.env.REACT_APP_API}/product/frontPageProducts`, (req, res, ctx) => {
+    return res(ctx.json({ data: frontPageProducts, message: 'Products retrived.' }));
   }),
 
   // CART

@@ -26,29 +26,13 @@ const categoryList = [
   ]
 ];
 
-const productDataWeekly = {
-  Attributes: [{ value: '/images/products/13/1695259_2_i1064.jpg' }],
-  Manufacturer: { manufacturerName: 'Seagate' },
-  Prices: [{ grossPrice: 264.4, promoPrice: 235.2 }],
-  productID: 13,
-  productName: 'Barracuda Pro 1 TB 2.5" SATA III (ST1000LM049)',
-  productsCount: 0
-};
-const productDataDaily = {
-  Attributes: [{ value: '/images/products/13/1695259_2_i1064.jpg' }],
-  Manufacturer: { manufacturerName: 'Seagate' },
-  Prices: [{ grossPrice: 264.4, promoPrice: 235.2 }],
-  productID: 13,
-  productName: 'Barracuda Pro 1 TB 2.5" SATA III (ST1000LM049)',
-  productsCount: 2
-};
-
 const MainPage = ({ setSearchValueToSend }) => {
   const dispatch = useDispatch();
   const products = useSelector((state) => ({
     mostBoughtCategoryProducts: state.products.mostBoughtCategoryProducts,
     mostBoughtProducts: state.products.mostBoughtProducts,
-    youMayLikeProducts: state.products.youMayLikeProducts
+    youMayLikeProducts: state.products.youMayLikeProducts,
+    promoProducts: state.products.promoProducts
   }));
 
   const firstFetch = products?.mostBoughtCategoryProducts?.length === 0 ? true : false;
@@ -56,9 +40,9 @@ const MainPage = ({ setSearchValueToSend }) => {
   const [error, setError] = useState(null);
 
   const handleFetchData = useCallback(async () => {
-    const fetchData = async (resource) => {
+    const fetchData = async () => {
       try {
-        const url = `${process.env.REACT_APP_API}/product/${resource}`;
+        const url = `${process.env.REACT_APP_API}/product/frontPageProducts`;
         const response = await fetch(url, { method: 'get', credentials: 'include' });
         if (response.status === 400 || response.status === 500)
           throw new Error('Ooops, nie udało się pobrać elementów!');
@@ -70,23 +54,20 @@ const MainPage = ({ setSearchValueToSend }) => {
     };
 
     setIsLoadingData(true);
-    const [mostBoughtCategoryProducts, mostBoughtProducts, youMayLikeProducts] = await Promise.all([
-      fetchData('mostBoughtCategoryProducts'),
-      fetchData('mostBoughtProducts'),
-      fetchData('youMayLikeThisProducts')
-    ]);
+    const products = await fetchData();
 
     const refreshTimer = new Date().getTime();
     dispatch(
       updateProducts({
-        mostBoughtCategoryProducts: mostBoughtCategoryProducts,
-        mostBoughtProducts: mostBoughtProducts,
-        youMayLikeProducts: youMayLikeProducts,
+        mostBoughtCategoryProducts: products.mostBoughtCategoryProducts,
+        mostBoughtProducts: products.mostBoughtProducts,
+        youMayLikeProducts: products.youMayLikeProducts,
+        promoProducts: products.promoProducts,
         lastUpdate: refreshTimer
       })
     );
 
-    if (mostBoughtCategoryProducts && mostBoughtProducts && youMayLikeProducts) {
+    if (products?.promoProducts) {
       setIsLoadingData(false);
       newAlert('primary', 'Odświeżono!', 'Produkty zostały odświeżone.');
     }
@@ -140,8 +121,8 @@ const MainPage = ({ setSearchValueToSend }) => {
       />
 
       <div className="row">
-        <PromoItem productData={productDataDaily} promoType={'Daily'} />
-        <PromoItem productData={productDataWeekly} promoType={'Weekly'} />
+        <PromoItem productData={products.promoProducts.productDataDaily} promoType={'Daily'} />
+        <PromoItem productData={products.promoProducts.productDataWeekly} promoType={'Weekly'} />
       </div>
 
       <div className="shadow bg-white rounded mb-4">

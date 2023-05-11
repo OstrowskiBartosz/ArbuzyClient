@@ -1,59 +1,167 @@
-export const mainPageProducts = {
-  data: [
+export const frontPageProducts = {
+  youMayLikeProducts: [
     {
+      productID: 62,
+      productName: 'Fatal1ty B450 GAMING K4',
+      Prices: [{ productID: 62, grossPrice: 479 }],
+      Manufacturer: { manufacturerName: 'ASRock' },
+      Attributes: [{ value: '/images/products/62/4141573_0_i1064.jpg' }]
+    },
+    {
+      productID: 78,
+      productName: 'Core i5-10600K, 4.1 GHz, 12 MB, BOX (BX8070110600K)',
+      Prices: [{ productID: 78, grossPrice: 1229 }],
+      Manufacturer: { manufacturerName: 'Intel' },
+      Attributes: [{ value: '/images/products/78/6731004_1_i1064.jpg' }]
+    },
+    {
+      productID: 19,
+      productName: '545 Series 512GB SATA3 (SSDSC2KW512G8X1)',
+      Prices: [{ productID: 19, grossPrice: 554.91 }],
+      Manufacturer: { manufacturerName: 'Intel' },
+      Attributes: [{ value: '/images/products/19/1497912_0_i1064.jpg' }]
+    },
+    {
+      productID: 56,
+      productName: 'HLDS GP57EB40.AHLE10B',
+      Prices: [{ productID: 56, grossPrice: 136.42 }],
+      Manufacturer: { manufacturerName: 'LG' },
+      Attributes: [{ value: '/images/products/56/5809842_0_i1064.jpg' }]
+    },
+    {
+      productID: 37,
+      productName: 'TUF GeForce RTX 3090 Gaming OC 24GB GDDR6X (TUF-RTX3090-O24G-GAMING)',
+      Prices: [{ productID: 37, grossPrice: 6499 }],
+      Manufacturer: { manufacturerName: 'Gigabyte' },
+      Attributes: [{ value: '/images/products/37/5943753_5_f.jpg' }]
+    },
+    {
+      productID: 27,
+      productName: '970 EVO 500GB PCIe x4 NVMe (MZ-V7E500BW)',
+      Prices: [{ productID: 27, grossPrice: 498.96 }],
+      Manufacturer: { manufacturerName: 'Samsung' },
+      Attributes: [{ value: '/images/products/27/4160128_0_i1064.jpg' }]
+    }
+  ],
+  mostBoughtCategoryProducts: [
+    {
+      productID: 13,
+      productName: 'Barracuda Pro 1 TB 2.5" SATA III (ST1000LM049)',
+      productsCount: 2,
+      Prices: [{ grossPrice: 264.4 }],
+      Manufacturer: { manufacturerName: 'Seagate' },
+      Attributes: [{ value: '/images/products/13/1695259_2_i1064.jpg' }]
+    },
+    {
+      productID: 2,
+      productName: 'P300 2 TB 3.5" SATA III (HDWD120UZSVA)',
+      productsCount: 1,
+      Prices: [{ grossPrice: 257.99 }],
+      Manufacturer: { manufacturerName: 'Toshiba' },
+      Attributes: [{ value: '/images/products/2/860922_0_i1064.jpeg' }]
+    },
+    {
+      productID: 4,
+      productName: 'Blue 500 GB 2.5" SATA III (WD5000LPCX)',
+      productsCount: 1,
+      Prices: [{ grossPrice: 174.84 }],
+      Manufacturer: { manufacturerName: 'Western Digital' },
+      Attributes: [{ value: '/images/products/4/769736_0_i1064.jpeg' }]
+    },
+    {
+      productID: 7,
+      productName: '500 GB 2.5" SATA II (MQ01ABD050)',
+      productsCount: 1,
+      Prices: [{ grossPrice: 153.85 }],
+      Manufacturer: { manufacturerName: 'Toshiba' },
+      Attributes: [{ value: '/images/products/7/483906_0_i1064.jpg' }]
+    },
+    {
+      productID: 12,
+      productName: 'Barracuda 8 TB 3.5" SATA III (ST8000DM004)',
+      productsCount: 1,
+      Prices: [{ grossPrice: 846.6 }],
+      Manufacturer: { manufacturerName: 'Seagate' },
+      Attributes: [{ value: '/images/products/12/1727818_2_i1064.jpg' }]
+    },
+    {
+      productID: 1,
+      productName: 'Barracuda 1 TB 3.5" SATA III (ST1000DM010)',
+      productsCount: 0,
+      Prices: [{ grossPrice: 161.87 }],
+      Manufacturer: { manufacturerName: 'Seagate' },
+      Attributes: [{ value: '/images/products/1/1042371_4_i1064.jpg' }]
+    }
+  ],
+  mostBoughtProducts: [
+    {
+      productID: 13,
+      productName: 'Barracuda Pro 1 TB 2.5" SATA III (ST1000LM049)',
+      productsCount: 2,
+      Prices: [{ grossPrice: 264.4 }],
+      Manufacturer: { manufacturerName: 'Seagate' },
+      Attributes: [{ value: '/images/products/13/1695259_2_i1064.jpg' }]
+    },
+    {
+      productID: 2,
+      productName: 'P300 2 TB 3.5" SATA III (HDWD120UZSVA)',
+      productsCount: 1,
+      Prices: [{ grossPrice: 257.99 }],
+      Manufacturer: { manufacturerName: 'Toshiba' },
+      Attributes: [{ value: '/images/products/2/860922_0_i1064.jpeg' }]
+    },
+    {
+      productID: 4,
+      productName: 'Blue 500 GB 2.5" SATA III (WD5000LPCX)',
+      productsCount: 1,
+      Prices: [{ grossPrice: 174.84 }],
+      Manufacturer: { manufacturerName: 'Western Digital' },
+      Attributes: [{ value: '/images/products/4/769736_0_i1064.jpeg' }]
+    },
+    {
+      productID: 23,
+      productName: 'UV500 240GB SATA3 (SUV500/240G)',
+      productsCount: 1,
+      Prices: [{ grossPrice: 179 }],
+      Manufacturer: { manufacturerName: 'Kingston' },
+      Attributes: [{ value: '/images/products/23/4112080_0_i1064.jpg' }]
+    },
+    {
+      productID: 12,
+      productName: 'Barracuda 8 TB 3.5" SATA III (ST8000DM004)',
+      productsCount: 1,
+      Prices: [{ grossPrice: 846.6 }],
+      Manufacturer: { manufacturerName: 'Seagate' },
+      Attributes: [{ value: '/images/products/12/1727818_2_i1064.jpg' }]
+    },
+    {
+      productID: 7,
+      productName: '500 GB 2.5" SATA II (MQ01ABD050)',
+      productsCount: 1,
+      Prices: [{ grossPrice: 153.85 }],
+      Manufacturer: { manufacturerName: 'Toshiba' },
+      Attributes: [{ value: '/images/products/7/483906_0_i1064.jpg' }]
+    }
+  ],
+  promoProducts: {
+    productDataDaily: {
       Attributes: [{ value: '/images/products/13/1695259_2_i1064.jpg' }],
       Manufacturer: { manufacturerName: 'Seagate' },
-      Prices: [{ grossPrice: 264.4 }],
+      Prices: [{ grossPrice: 264.4, promoPrice: 235.2 }],
       productID: 13,
       productName: 'Barracuda Pro 1 TB 2.5" SATA III (ST1000LM049)',
       productsCount: 2
     },
-    {
-      Attributes: [{ value: '/images/products/2/860922_0_i1064.jpeg' }],
-      Manufacturer: { manufacturerName: 'Toshiba' },
-      Prices: [{ grossPrice: 257.99 }],
-      productID: 2,
-      productName: 'P300 2 TB 3.5" SATA III (HDWD120UZSVA)',
-      productsCount: 1
-    },
-    {
-      Attributes: [{ value: '/images/products/4/769736_0_i1064.jpeg' }],
-      Manufacturer: { manufacturerName: 'Western Digital' },
-      Prices: [{ grossPrice: 174.84 }],
-      productID: 4,
-      productName: 'Blue 500 GB 2.5" SATA III (WD5000LPCX)',
-      productsCount: 1
-    },
-    {
-      Attributes: [{ value: '/images/products/7/483906_0_i1064.jpg' }],
-      Manufacturer: { manufacturerName: 'Toshiba' },
-      Prices: [{ grossPrice: 153.85 }],
-      productID: 7,
-      productName: '500 GB 2.5" SATA II (MQ01ABD050)',
-      productsCount: 1
-    },
-    {
-      Attributes: [{ value: '/images/products/12/1727818_2_i1064.jpg' }],
+    productDataWeekly: {
+      Attributes: [{ value: '/images/products/13/1695259_2_i1064.jpg' }],
       Manufacturer: { manufacturerName: 'Seagate' },
-      Prices: [{ grossPrice: 846.6 }],
-      productID: 12,
-      productName: 'Barracuda 8 TB 3.5" SATA III (ST8000DM004)',
-      productsCount: 1
-    },
-    {
-      Attributes: [{ value: '/images/products/1/1042371_4_i1064.jpg' }],
-      value: '/images/products/1/1042371_4_i1064.jpg',
-      Manufacturer: { manufacturerName: 'Seagate' },
-      Prices: [{ grossPrice: 161.87 }],
-      grossPrice: 161.87,
-      productID: 1,
-      productName: 'Barracuda 1 TB 3.5" SATA III (ST1000DM010)',
-      productsCount: 4
+      Prices: [{ grossPrice: 264.4, promoPrice: 235.2 }],
+      productID: 13,
+      productName: 'Barracuda Pro 1 TB 2.5" SATA III (ST1000LM049)',
+      productsCount: 0
     }
-  ],
-  messaage: 'Product retrieved'
+  }
 };
-
 export const profileInvoiceList = [
   {
     VATNumber: null,
