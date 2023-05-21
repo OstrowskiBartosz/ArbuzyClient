@@ -32,7 +32,9 @@ const MainPage = ({ setSearchValueToSend }) => {
     mostBoughtCategoryProducts: state.products.mostBoughtCategoryProducts,
     mostBoughtProducts: state.products.mostBoughtProducts,
     youMayLikeProducts: state.products.youMayLikeProducts,
-    promoProducts: state.products.promoProducts
+    dailyPromoProduct: state.products.dailyPromoProduct,
+    weeklyPromoProduct: state.products.weeklyPromoProduct,
+    dailyDiscountProducts: state.products.dailyDiscountProducts
   }));
 
   const firstFetch = products?.mostBoughtCategoryProducts?.length === 0 ? true : false;
@@ -54,20 +56,21 @@ const MainPage = ({ setSearchValueToSend }) => {
     };
 
     setIsLoadingData(true);
-    const products = await fetchData();
-
+    const fetchedProducts = await fetchData();
     const refreshTimer = new Date().getTime();
     dispatch(
       updateProducts({
-        mostBoughtCategoryProducts: products.mostBoughtCategoryProducts,
-        mostBoughtProducts: products.mostBoughtProducts,
-        youMayLikeProducts: products.youMayLikeProducts,
-        promoProducts: products.promoProducts,
+        mostBoughtCategoryProducts: fetchedProducts.mostBoughtCategoryProducts,
+        mostBoughtProducts: fetchedProducts.mostBoughtProducts,
+        youMayLikeProducts: fetchedProducts.youMayLikeProducts,
+        dailyPromoProduct: fetchedProducts.dailyPromoProduct,
+        weeklyPromoProduct: fetchedProducts.weeklyPromoProduct,
+        dailyDiscountProducts: fetchedProducts.discountProducts,
         lastUpdate: refreshTimer
       })
     );
 
-    if (products?.promoProducts) {
+    if (fetchedProducts?.dailyPromoProduct?.productID) {
       setIsLoadingData(false);
       newAlert('primary', 'Odświeżono!', 'Produkty zostały odświeżone.');
     }
@@ -119,11 +122,18 @@ const MainPage = ({ setSearchValueToSend }) => {
         dataTopCategory={products.mostBoughtCategoryProducts}
         handleFetchData={handleFetchData}
       />
-
-      <div className="row">
-        <PromoItem productData={products.promoProducts.productDataDaily} promoType={'Daily'} />
-        <PromoItem productData={products.promoProducts.productDataWeekly} promoType={'Weekly'} />
-      </div>
+      {isLoadingData ? (
+        <div className="d-flex justify-content-center pt-5 pb-5">
+          <div className="spinner-border" role="status">
+            <span className="sr-only">Loading...</span>
+          </div>
+        </div>
+      ) : (
+        <div className="row">
+          <PromoItem productData={products && products?.dailyPromoProduct} promoType={'Daily'} />
+          <PromoItem productData={products && products?.weeklyPromoProduct} promoType={'Weekly'} />
+        </div>
+      )}
 
       <div className="shadow bg-white rounded mb-4">
         <div className="categoryHeader mb-3 pt-3 display-inlineblock">

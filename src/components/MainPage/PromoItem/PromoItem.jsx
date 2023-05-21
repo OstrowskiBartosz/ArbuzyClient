@@ -6,8 +6,8 @@ const getMondaysDate = () => {
   const todaysDate = new Date();
   const todaysDay = todaysDate.getDay();
   const nextMonday = new Date();
-  nextMonday.setDate(todaysDate.getDate() + (7 - todaysDay));
-  nextMonday.setHours(24, 0, 0, 0);
+  nextMonday.setDate(nextMonday.getDate() + ((7 - nextMonday.getDay()) % 7) + 1);
+  nextMonday.setHours(0, 0, 0, 0);
   return nextMonday.getTime();
 };
 const getTomorrowsDate = () => {
@@ -111,12 +111,21 @@ const PromoItem = ({ productData, promoType }) => {
 
             <div className="row pb-3">
               <div className="col-sm-4">
-                <div className="pt-5">
+                <div className="pt-5 p-relative">
                   <img
                     className="imageBig"
                     src={`${process.env.REACT_APP_API}${productData.Attributes[0].value}`}
                     alt="Zdjęcie produktu"
                   />
+
+                  <div className="discountBadge1"></div>
+                  <div className="discountBadge2"></div>
+                  <div className="discountBadge3"></div>
+                  <div className="discountBadge4">
+                    <span className="discountText fs-5 fw-bold">
+                      -{productData.promotionDiscount}%
+                    </span>
+                  </div>
                 </div>
               </div>
               <div className="col-sm-8 d-flex flex-column">
@@ -133,7 +142,7 @@ const PromoItem = ({ productData, promoType }) => {
                   <div className="pt-5 p-inline">
                     <span className="fs-4 fw-bold float-left pb-3 pt-2">Cena tylko teraz:</span>
                     <span className="fs-2 fw-bold text-decoration-underline float-right">
-                      {productData.Prices[0].promoPrice.toLocaleString('pl-PL', {
+                      {productData.Prices[1].grossPrice.toLocaleString('pl-PL', {
                         minimumFractionDigits: 2
                       })}{' '}
                       zł
@@ -143,16 +152,16 @@ const PromoItem = ({ productData, promoType }) => {
 
                 <div className="pt-0 px-3">
                   <div className="row pt-0">
-                    {productData.productsCount !== 0 ? (
+                    {productData.quantity !== 0 ? (
                       <div>
                         <span className="fs-3 fw-bold">
                           Sztuk w magazynie:
-                          <span className="fw-bold fs-3"> {productData.productsCount}</span>
+                          <span className="fw-bold fs-3"> {productData.quantity}</span>
                         </span>
                         <div className="progress mb-3">
                           <div
                             className="progress-bar"
-                            style={{ width: productData.productsCount * 10 + '%' }}
+                            style={{ width: productData.quantity * 10 + '%' }}
                             role="progressbar"
                             aria-valuenow="2"
                             aria-valuemin="0"

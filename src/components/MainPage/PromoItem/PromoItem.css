@@ -7,3 +7,54 @@
   color: rgb(0, 123, 255, 1);
   text-decoration: none;
 }
+
+.discountBadge1 {
+  position: absolute;
+  right: 30px;
+  top: 20px;
+  width: 45px;
+  height: 45px;
+  background-color: orangered;
+  transform: rotate(15deg);
+}
+
+.discountBadge2 {
+  position: absolute;
+  right: 30px;
+  top: 20px;
+  width: 45px;
+  height: 45px;
+  background-color: orangered;
+  transform: rotate(-15deg);
+}
+
+.discountBadge3 {
+  position: absolute;
+  right: 30px;
+  top: 20px;
+  width: 45px;
+  height: 45px;
+  background-color: orangered;
+  transform: rotate(45deg);
+}
+
+.discountBadge4 {
+  position: absolute;
+  right: 30px;
+  top: 20px;
+  width: 45px;
+  height: 45px;
+}
+
+.discountText {
+  color: white;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  z-index: 150;
+}
+
+/* transform: rotate(90deg); */
