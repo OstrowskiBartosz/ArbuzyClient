@@ -3,47 +3,42 @@
   text-decoration: none;
 }
 
-.promoText:hover {
-  color: rgb(0, 123, 255, 1);
-  text-decoration: none;
-}
-
 .discountBadge1 {
   position: absolute;
-  right: 30px;
-  top: 20px;
-  width: 45px;
-  height: 45px;
+  right: 0px;
+  top: 0px;
+  width: 50px;
+  height: 50px;
   background-color: orangered;
   transform: rotate(15deg);
 }
 
 .discountBadge2 {
   position: absolute;
-  right: 30px;
-  top: 20px;
-  width: 45px;
-  height: 45px;
+  right: 0px;
+  top: 0px;
+  width: 50px;
+  height: 50px;
   background-color: orangered;
   transform: rotate(-15deg);
 }
 
 .discountBadge3 {
   position: absolute;
-  right: 30px;
-  top: 20px;
-  width: 45px;
-  height: 45px;
+  right: 0px;
+  top: 0px;
+  width: 50px;
+  height: 50px;
   background-color: orangered;
   transform: rotate(45deg);
 }
 
-.discountBadge4 {
+.discountBadgeText {
   position: absolute;
-  right: 30px;
-  top: 20px;
-  width: 45px;
-  height: 45px;
+  right: 0px;
+  top: 0px;
+  width: 50px;
+  height: 50px;
 }
 
 .discountText {
@@ -57,4 +52,22 @@
   z-index: 150;
 }
 
-/* transform: rotate(90deg); */
+.promoImageContainer {
+  margin: auto;
+}
+
+.promoImage {
+  max-width: 230px;
+  height: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.promoTitle {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  max-width: 100%;
+}

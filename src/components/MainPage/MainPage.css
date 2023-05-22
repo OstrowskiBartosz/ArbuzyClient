@@ -1,22 +1,6 @@
-.row {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-}
 .row > [class*='col-'] {
   display: flex;
   flex-direction: column;
-}
-
-.container {
-  cursor: auto;
-  user-select: auto;
-}
-
-hr {
-  margin-bottom: 0px;
-  margin-top: 0px;
 }
 
 .container.mainpage {
@@ -24,98 +8,19 @@ hr {
   padding: 10px;
 }
 
-@media (max-width: 392px) {
-  .container.mainpage {
-    margin-top: 121px;
-    padding: 10px;
-  }
-}
-
-@media (min-width: 992px) {
-  .categoryCol {
-    max-width: 250px;
-    margin-right: 10px;
-  }
-}
-
-@media (max-width: 991.98px) {
-  .categoryCol {
-    margin-bottom: 10px;
-  }
-
-  .categoryBar {
-    columns: 3;
-  }
-
-  .carouselCol {
-    margin-bottom: 10px;
-  }
-}
-
-.container.categoryGallery {
-  padding-left: 15px;
-}
-
-.imageRow {
+.mainPageImageContainer {
   height: 150px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.imageCol {
-  padding: 15px;
-  min-width: 180px;
-}
-
-@media (max-width: 1199.98px) {
-  .imageCol {
-    min-width: 250px;
-  }
-}
-
-.imageSmall {
-  max-width: 100px;
+.mainPageImage {
+  max-height: 150px;
+  max-width: 150px;
   margin: auto;
-}
-
-.imageBig {
-  max-width: 175px;
-  margin: auto;
-}
-
-.imagePrice {
-  margin: auto;
-  margin-top: 15px;
-  font-size: 0.9em;
-  font-weight: bold;
-}
-
-.imageDescription {
-  margin: auto;
-  font-size: 0.8em;
-  padding: 5px;
-}
-
-html {
-  height: 100%;
-  box-sizing: border-box;
-}
-
-body {
-  position: relative;
-  margin: 0;
-  padding-bottom: 260px;
-  min-height: 100%;
-}
-
-footer {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  padding: 1rem;
-}
-
-.all {
-  margin-top: 86px;
 }
 
 .clear-link {
@@ -144,26 +49,6 @@ footer {
 .categoryBar .categoryLink:hover {
   color: rgb(0, 123, 255, 1);
   cursor: pointer;
-}
-
-.carousel {
-  margin-top: 10px !important;
-  min-width: 680px;
-}
-
-.carousel .thumbs-wrapper {
-  margin: 0px !important;
-}
-
-.oftenBoughtRow {
-  margin-top: 10px;
-}
-
-.testheader {
-  text-align: center;
-  font-weight: bold;
-  font-size: 25px;
-  padding-bottom: 10px;
 }
 
 .cursor-pointer {

@@ -6,6 +6,7 @@ import { updateProducts } from '../../store/storeSlices/productsSlice.js';
 import newAlert from '../../features/newAlert';
 import RefreshTimer from './RefreshTimer/RefreshTimer';
 import PromoItem from './PromoItem/PromoItem';
+import ListedProducts from './ListedProducts/ListedProducts.jsx';
 import './MainPage.css';
 
 const categoryList = [
@@ -134,145 +135,62 @@ const MainPage = ({ setSearchValueToSend }) => {
           <PromoItem productData={products && products?.weeklyPromoProduct} promoType={'Weekly'} />
         </div>
       )}
-
-      <div className="shadow bg-white rounded mb-4">
-        <div className="categoryHeader mb-3 pt-3 display-inlineblock">
-          Najczęściej Kupowane Produkty
+      {isLoadingData ? (
+        <div className="d-flex justify-content-center pt-5 pb-5">
+          <div className="spinner-border" role="status">
+            <span className="sr-only">Loading...</span>
+          </div>
         </div>
-        <div className="border-bottom border border-primary"></div>
-        {isLoadingData ? (
-          <div className="d-flex justify-content-center pt-5 pb-5">
-            <div className="spinner-border" role="status">
-              <span className="sr-only">Loading...</span>
-            </div>
+      ) : (
+        <ListedProducts
+          products={products && products?.dailyDiscountProducts}
+          productsTitle={'Dzisiaj przecenione produkty'}
+          isLoadingData={isLoadingData}
+          error={error}
+        />
+      )}
+      {isLoadingData ? (
+        <div className="d-flex justify-content-center pt-5 pb-5">
+          <div className="spinner-border" role="status">
+            <span className="sr-only">Loading...</span>
           </div>
-        ) : (
-          <div className="row">
-            {products.mostBoughtProducts.map((product, index) => (
-              <div key={index} className="col imageCol">
-                <Link className="clear-link" to={'/product/' + product.productID}>
-                  <div className="row imageRow">
-                    <img
-                      className="imageSmall"
-                      src={`${process.env.REACT_APP_API}${product.Attributes[0].value}`}
-                      alt="Zdjęcie produktu"
-                    />
-                  </div>
-                  <div className="row pb-2">
-                    <span className="fw-bold fs-3">
-                      {product.Prices[0].grossPrice.toLocaleString('pl-PL', {
-                        minimumFractionDigits: 2
-                      })}{' '}
-                      zł
-                    </span>
-                  </div>
-                  <div className="row imageLink">
-                    <span className="fs-7 pointer">
-                      {product.Manufacturer.manufacturerName} {product.productName}
-                    </span>
-                  </div>
-                </Link>
-              </div>
-            ))}
+        </div>
+      ) : (
+        <ListedProducts
+          products={products && products?.mostBoughtProducts}
+          productsTitle={'Najcześciej kupowane produkty'}
+          isLoadingData={isLoadingData}
+          error={error}
+        />
+      )}
+      {isLoadingData ? (
+        <div className="d-flex justify-content-center pt-5 pb-5">
+          <div className="spinner-border" role="status">
+            <span className="sr-only">Loading...</span>
           </div>
-        )}
-        {error && (
-          <div className="d-flex justify-content-center pt-5 pb-5">
-            <span>{error}</span>
+        </div>
+      ) : (
+        <ListedProducts
+          products={products && products?.mostBoughtCategoryProducts}
+          productsTitle={'Najcześciej kupowana kategoria'}
+          isLoadingData={isLoadingData}
+          error={error}
+        />
+      )}
+      {isLoadingData ? (
+        <div className="d-flex justify-content-center pt-5 pb-5">
+          <div className="spinner-border" role="status">
+            <span className="sr-only">Loading...</span>
           </div>
-        )}
-      </div>
-      <div className="shadow bg-white rounded mb-4">
-        <div className="categoryHeader mb-3 pt-3">Najczęściej Kupowana Kategoria</div>
-        <div className="border-bottom border border-primary"></div>
-        {isLoadingData ? (
-          <div className="d-flex justify-content-center pt-5 pb-5">
-            <div className="spinner-border" role="status">
-              <span className="sr-only">Loading...</span>
-            </div>
-          </div>
-        ) : (
-          <div className="row">
-            {products.mostBoughtCategoryProducts.map((product, index) => (
-              <div key={index} className="col imageCol">
-                <Link className="clear-link" to={'/product/' + product.productID}>
-                  <div className="row imageRow">
-                    <img
-                      className="imageSmall"
-                      src={`${process.env.REACT_APP_API}${product.Attributes[0].value}`}
-                      alt="Zdjęcie produktu"
-                    />
-                  </div>
-                  <div className="row pb-2">
-                    <span className="fw-bold fs-3">
-                      {product.Prices[0].grossPrice.toLocaleString('pl-PL', {
-                        minimumFractionDigits: 2
-                      })}{' '}
-                      zł
-                    </span>
-                  </div>
-                  <div className="row imageLink">
-                    <span className="fs-7 pointer">
-                      {product.Manufacturer.anufacturerName} {product.productName}
-                    </span>
-                  </div>
-                </Link>
-              </div>
-            ))}
-          </div>
-        )}
-        {error && (
-          <div className="d-flex justify-content-center pt-5 pb-5">
-            <span>{error}</span>
-          </div>
-        )}
-      </div>
-      <div className="shadow bg-white rounded mb-4">
-        <div className="categoryHeader mb-3 pt-3">Może Ci się spodobać</div>
-        <div className="border-bottom border border-primary"></div>
-        {isLoadingData ? (
-          <div className="d-flex justify-content-center pt-5 pb-5">
-            <div className="spinner-border" role="status">
-              <span className="sr-only">Loading...</span>
-            </div>
-          </div>
-        ) : (
-          <div className="row">
-            {products.youMayLikeProducts.map((product, index) => (
-              <div key={index} className="col imageCol">
-                <Link className="clear-link pointer" to={'/product/' + product.productID}>
-                  <div className="row imageRow">
-                    <img
-                      className="imageSmall"
-                      src={`${process.env.REACT_APP_API}${product.Attributes[0].value}`}
-                      alt="Zdjęcie produktu"
-                    />
-                  </div>
-
-                  <div className="row pb-2">
-                    <span className="fw-bold fs-3">
-                      {product.Prices[0].grossPrice.toLocaleString('pl-PL', {
-                        minimumFractionDigits: 2
-                      })}{' '}
-                      zł
-                    </span>
-                  </div>
-                  <div className="row imageLink pointer">
-                    <span className="fs-7 pointer">
-                      {product.Manufacturer.manufacturerName} {product.productName}
-                    </span>
-                  </div>
-                </Link>
-              </div>
-            ))}
-          </div>
-        )}
-        {error && (
-          <div className="d-flex justify-content-center pt-5 pb-5">
-            <span>{error}</span>
-          </div>
-        )}
-      </div>
+        </div>
+      ) : (
+        <ListedProducts
+          products={products && products?.youMayLikeProducts}
+          productsTitle={'Może Ci się spodobać'}
+          isLoadingData={isLoadingData}
+          error={error}
+        />
+      )}
     </div>
   );
 };
