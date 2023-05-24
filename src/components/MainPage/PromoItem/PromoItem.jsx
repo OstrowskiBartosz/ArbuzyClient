@@ -76,7 +76,7 @@ const PromoItem = ({ productData, promoType }) => {
 
   if (timeRemaining?.seconds === null || !productData) {
     return (
-      <div className="col-sm-6">
+      <div className="col-xl-6">
         <div className="shadow bg-white rounded mb-4 ProductNavborder">
           <div className="pt-2 pb-2 d-block">
             <span className="fw-bold fs-2">Ładowanie...</span>
@@ -92,7 +92,7 @@ const PromoItem = ({ productData, promoType }) => {
     );
   } else {
     return (
-      <div className="col-sm-6">
+      <div className="col-xl-6">
         <div className="shadow bg-white rounded mb-4 ProductNavborder">
           <Link className="promoText pointer" to={`/product/${productData.productID}`}>
             <div className="pt-2 pb-2">
@@ -111,7 +111,7 @@ const PromoItem = ({ productData, promoType }) => {
             </div>
 
             <div className="row pb-3">
-              <div className="col-sm-5">
+              <div className="col-xl-5">
                 <div className="promoImageContainer position-relative">
                   <img
                     className="promoImage"
@@ -130,7 +130,7 @@ const PromoItem = ({ productData, promoType }) => {
                   </div>
                 </div>
               </div>
-              <div className="col-sm-7 d-flex flex-column">
+              <div className="col-xl-7 d-flex flex-column">
                 <div className="pt-3 px-3">
                   <div className="p-inline">
                     <span className="fs-5 text-dark float-left pb-3">Cena regularna:</span>
