@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import './ListedProducts.css';
 
 const ListedProducts = ({ products, isLoadingData, numberOFProducts, error }) => {
+  const [scrollArrows, setScrollArrows] = useState({ arrowLeft: false, arrowRight: false });
   return (
     <div className="shadow bg-white rounded mb-4 ProductNavborderTransparent">
       {isLoadingData ? (
@@ -18,7 +20,7 @@ const ListedProducts = ({ products, isLoadingData, numberOFProducts, error }) =>
                 <div className="col-lg-12 order-lg-2 order-1">
                   <div className="pt-2 mb-1 text-center">
                     <div className="podiumColor">
-                      <i class="fa-solid fa-ranking-star fs-2"></i>
+                      <i className="fa-solid fa-ranking-star fs-2"></i>
                     </div>
                     <div className="fs-5 pt-1 fw-bold text-center">
                       Produkty na kolejnych miejscach
@@ -30,90 +32,106 @@ const ListedProducts = ({ products, isLoadingData, numberOFProducts, error }) =>
             </>
           ) : null}
 
-          <div className="row">
-            {products.map((product, index) => (
-              <div key={index} className={`col-lg-${12 / numberOFProducts}`}>
-                <div className="m-2 p-2 mainPageProductBorder">
-                  <div className="row invisibleButtons">
-                    <div className="col-6">
-                      <div className="mainPageProductIcon">
-                        <Link to={'/product/' + product.productID}>
-                          <div>
-                            <i className="fas fa-arrow-up-right-from-square mainPageProductIcon fs-5 float-left"></i>
-                          </div>
-                        </Link>
-                      </div>
-                    </div>
-                    <div className="col-6">
-                      <div className="">
-                        <i className="fas fa-cart-shopping mainPageProductIcon fs-5 float-right"></i>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="mainPageImageContainer position-relative">
-                    <Link className="clear-link pointer" to={'/product/' + product.productID}>
-                      <img
-                        className="mainPageImage"
-                        src={`${process.env.REACT_APP_API}${product.Attributes[0].value}`}
-                        alt="Zdjęcie produktu"
-                      />
-                    </Link>
-                    {product.promotionDiscount ? (
-                      <div className="discountBadgeGroup">
-                        <div className="discountBadge1"></div>
-                        <div className="discountBadge2"></div>
-                        <div className="discountBadge3"></div>
-                        <div className="discountBadgeText">
-                          <span className="discountText fs-5 fw-bold">
-                            -{product.promotionDiscount}%
-                          </span>
+          <div className="row position-relative mx-0">
+            <div className="scrollArrowLeft shadow circle d-flex">
+              <div className="m-auto">
+                <i className="fa-solid fa-arrow-left"></i>
+              </div>
+            </div>
+            <div className="inlineScroll" id="inlineScroll">
+              {products.map((product, index) => (
+                <div key={index} className={`d-inline cardWidth d-flex`}>
+                  <div className="m-2 p-2 mainPageProductBorder">
+                    <div className="row invisibleButtons">
+                      <div className="col-6">
+                        <div className="mainPageProductIcon">
+                          <Link to={'/product/' + product.productID}>
+                            <div>
+                              <i className="fas fa-arrow-up-right-from-square mainPageProductIcon fs-5 float-left"></i>
+                            </div>
+                          </Link>
                         </div>
                       </div>
-                    ) : null}
-                  </div>
+                      <div className="col-6">
+                        <div className="">
+                          <i className="fas fa-cart-shopping mainPageProductIcon fs-5 float-right"></i>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="mainPageImageContainer position-relative">
+                      <Link className="clear-link pointer" to={'/product/' + product.productID}>
+                        <img
+                          className="mainPageImage"
+                          src={`${process.env.REACT_APP_API}${product.Attributes[0].value}`}
+                          alt="Zdjęcie produktu"
+                        />
+                      </Link>
+                      {product.promotionDiscount ? (
+                        <div className="discountBadgeGroup">
+                          <div className="discountBadge1"></div>
+                          <div className="discountBadge2"></div>
+                          <div className="discountBadge3"></div>
+                          <div className="discountBadgeText">
+                            <span className="discountText fs-5 fw-bold">
+                              -{product.promotionDiscount}%
+                            </span>
+                          </div>
+                        </div>
+                      ) : null}
+                    </div>
 
-                  <div className="pb-2">
-                    <Link className="clear-link pointer" to={'/product/' + product.productID}>
-                      {product.promotionName ? (
-                        <span className="fs-5 crossedText">
-                          {product.Prices[0].grossPrice.toLocaleString('pl-PL', {
-                            minimumFractionDigits: 2
-                          })}{' '}
-                          zł
-                        </span>
-                      ) : (
-                        <span className="fw-bold fs-5">
-                          {product.Prices[0].grossPrice.toLocaleString('pl-PL', {
-                            minimumFractionDigits: 2
-                          })}{' '}
-                          zł
-                        </span>
-                      )}
-
-                      {product.promotionName ? (
-                        <div>
-                          <span className="fw-bold fs-3">
-                            {product.Prices[1].grossPrice.toLocaleString('pl-PL', {
+                    <div className="pb-2">
+                      <Link className="clear-link pointer" to={'/product/' + product.productID}>
+                        {product.promotionName ? (
+                          <span className="fs-5 crossedText">
+                            {product.Prices[0].grossPrice.toLocaleString('pl-PL', {
                               minimumFractionDigits: 2
                             })}{' '}
                             zł
                           </span>
-                        </div>
-                      ) : null}
+                        ) : (
+                          <span className="fw-bold fs-5">
+                            {product.Prices[0].grossPrice.toLocaleString('pl-PL', {
+                              minimumFractionDigits: 2
+                            })}{' '}
+                            zł
+                          </span>
+                        )}
+
+                        {product.promotionName ? (
+                          <div>
+                            <span className="fw-bold fs-3">
+                              {product.Prices[1].grossPrice.toLocaleString('pl-PL', {
+                                minimumFractionDigits: 2
+                              })}{' '}
+                              zł
+                            </span>
+                          </div>
+                        ) : null}
+                      </Link>
+                    </div>
+                    <Link className="clear-link pointer" to={'/product/' + product.productID}>
+                      <div className="imageLink pointer">
+                        <span className="fs-7 pointer px-2 mainPageProductName">
+                          {product.Manufacturer.manufacturerName}{' '}
+                          {product.productName.replace(/ *\([^)]*\) */g, '')}
+                        </span>
+                      </div>
                     </Link>
                   </div>
-                  <Link className="clear-link pointer" to={'/product/' + product.productID}>
-                    <div className="imageLink pointer">
-                      <span className="fs-7 pointer px-2 mainPageProductName">
-                        {product.Manufacturer.manufacturerName}{' '}
-                        {product.productName.replace(/ *\([^)]*\) */g, '')}
-                      </span>
-                    </div>
-                  </Link>
                 </div>
+              ))}
+            </div>
+            <div
+              className="scrollArrowRight shadow circle d-flex"
+              onClick={() => {
+                console.log('qqq');
+                document.getElementById('inlineScroll').scrollLeft += 100;
+              }}>
+              <div className="m-auto">
+                <i className="fa-solid fa-arrow-right"></i>
               </div>
-            ))}
+            </div>
           </div>
         </>
       )}

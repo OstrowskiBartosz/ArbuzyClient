@@ -214,18 +214,18 @@ const MainPage = ({ setSearchValueToSend }) => {
             </div>
           </div>
           <div className="row d-flex">
-            <div className="col-lg-9 prTopSold">
+            <div className="col-lg-3 prTopSold">
+              <TopSoldProduct
+                productData={products && products?.dailyPromoProduct}
+                promoType={'Daily'}
+              />
+            </div>
+            <div className="col-lg-9 plTopSold">
               <ListedProducts
                 products={products && products?.mostBoughtCategoryProducts}
                 isLoadingData={isLoadingData}
                 numberOFProducts={4}
                 error={error}
-              />
-            </div>
-            <div className="col-lg-3 plTopSold">
-              <TopSoldProduct
-                productData={products && products?.dailyPromoProduct}
-                promoType={'Daily'}
               />
             </div>
           </div>

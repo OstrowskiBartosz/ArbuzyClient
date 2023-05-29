@@ -24,7 +24,7 @@ const TopSoldProduct = ({ productData }) => {
         <div className="shadow bg-white rounded mb-4 ProductNavborder">
           <div className="pt-2 mb-1 text-center">
             <div className="crownColor">
-              <i class="fas fa-crown fs-2"></i>
+              <i className="fas fa-crown fs-2"></i>
             </div>
             <div className="fs-5 pt-1 fw-bold text-center">Najczęściej kupowany</div>
           </div>
