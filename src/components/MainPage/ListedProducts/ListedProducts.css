@@ -133,7 +133,7 @@
   border: 3px solid transparent;
 }
 
-.podiumColor {
+.iconBiColor {
   background: linear-gradient(
     to right,
     rgba(0, 123, 255, 1) 0%,
@@ -151,7 +151,7 @@
   border-radius: 30px;
   position: absolute;
   left: 10px;
-  top: 35%;
+  top: 50%;
   font-size: 25px;
   cursor: pointer;
   z-index: 25;
@@ -166,7 +166,7 @@
   border-radius: 30px;
   position: absolute;
   right: 10px;
-  top: 35%;
+  top: 50%;
   font-size: 25px;
   cursor: pointer;
   z-index: 25;
@@ -183,17 +183,50 @@
 
 .inlineScroll {
   width: 100%;
-  height: 150%;
+  height: 350px;
   white-space: nowrap;
   position: relative;
-  overflow-x: scroll;
+  overflow-x: hidden;
   overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
   scroll-behavior: smooth;
 }
 
-.cardWidth {
+.inlineScrollTopSold {
+  width: 100%;
+  height: 430px;
+  white-space: nowrap;
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+}
+
+.topSold {
+  width: 324px;
+  float: left;
+}
+
+.stickyRunnersUp {
+  position: sticky;
+  left: 0px;
+  right: 50%;
+}
+
+.stickyBorder {
+  width: 2100px;
+}
+
+.borderkwqeqew {
+  width: 100% !important;
+}
+
+.frontPageProductTitle {
   display: inline-block !important;
-  width: 300px;
-  max-width: 300px;
+  width: 324px;
+}
+
+.boarderWidth {
+  width: 1776px;
+  margin-left: auto;
+  margin-right: auto;
 }

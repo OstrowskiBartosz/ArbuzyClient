@@ -6,7 +6,6 @@ import { updateProducts } from '../../store/storeSlices/productsSlice.js';
 import newAlert from '../../features/newAlert';
 import RefreshTimer from './RefreshTimer/RefreshTimer';
 import PromoItem from './PromoItem/PromoItem';
-import TopSoldProduct from './TopSoldProduct/TopSoldProduct';
 import ListedProducts from './ListedProducts/ListedProducts';
 import './MainPage.css';
 
@@ -154,6 +153,7 @@ const MainPage = ({ setSearchValueToSend }) => {
             </div>
           </div>
           <ListedProducts
+            listedID={'dailyDiscountProducts'}
             products={products && products?.dailyDiscountProducts}
             isLoadingData={isLoadingData}
             numberOFProducts={6}
@@ -178,22 +178,13 @@ const MainPage = ({ setSearchValueToSend }) => {
               </div>
             </div>
           </div>
-          <div className="row">
-            <div className="col-lg-3 prTopSold">
-              <TopSoldProduct
-                productData={products && products?.dailyPromoProduct}
-                promoType={'Daily'}
-              />
-            </div>
-            <div className="col-lg-9 plTopSold">
-              <ListedProducts
-                products={products && products?.mostBoughtProducts}
-                isLoadingData={isLoadingData}
-                numberOFProducts={4}
-                error={error}
-              />
-            </div>
-          </div>
+          <ListedProducts
+            listedID={'mostBoughtProducts'}
+            products={products && products?.mostBoughtProducts}
+            isLoadingData={isLoadingData}
+            topSold={true}
+            error={error}
+          />
         </>
       )}
       {isLoadingData ? (
@@ -213,22 +204,13 @@ const MainPage = ({ setSearchValueToSend }) => {
               </div>
             </div>
           </div>
-          <div className="row d-flex">
-            <div className="col-lg-3 prTopSold">
-              <TopSoldProduct
-                productData={products && products?.dailyPromoProduct}
-                promoType={'Daily'}
-              />
-            </div>
-            <div className="col-lg-9 plTopSold">
-              <ListedProducts
-                products={products && products?.mostBoughtCategoryProducts}
-                isLoadingData={isLoadingData}
-                numberOFProducts={4}
-                error={error}
-              />
-            </div>
-          </div>
+          <ListedProducts
+            listedID={'mostBoughtCategoryProducts'}
+            products={products && products?.mostBoughtCategoryProducts}
+            isLoadingData={isLoadingData}
+            topSold={true}
+            error={error}
+          />
         </>
       )}
       {isLoadingData ? (
@@ -249,6 +231,7 @@ const MainPage = ({ setSearchValueToSend }) => {
             </div>
           </div>
           <ListedProducts
+            listedID={'youMayLikeProducts'}
             products={products && products?.youMayLikeProducts}
             isLoadingData={isLoadingData}
             numberOFProducts={6}

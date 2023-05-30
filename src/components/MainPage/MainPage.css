@@ -94,20 +94,7 @@
   cursor: pointer;
 }
 
-.prTopSold {
-  padding-right: 0.25rem;
-}
-.plTopSold {
-  padding-left: 0.25rem;
-}
-
 @media (max-width: 991px) {
-  .prTopSold {
-    padding-right: 12px;
-  }
-  .plTopSold {
-    padding-left: 12px;
-  }
   .mainPageImageContainer {
     max-width: 200px;
     margin-left: auto;

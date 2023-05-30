@@ -1,0 +1,7 @@
+.productCard {
+  display: inline-block !important;
+  width: 300px;
+  max-width: 300px;
+  min-height: 334px;
+  max-height: 350px;
+}
