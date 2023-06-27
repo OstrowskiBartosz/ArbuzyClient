@@ -194,9 +194,32 @@ const ResultPanel = ({ isLoading, ProductsData, fetchSearchData }) => {
                   <div className="col-xl-3">
                     <div className="placement-bottomAddToCart"></div>
                     <div className="fw-bold fs-1 text-center mt-3 mb-3">
-                      <span>
-                        {product.Prices[0].grossPrice.toFixed(2).replace('.', ',') + ' zł'}
-                      </span>
+                      {product.promotionName ? (
+                        <div>
+                          <span className="text-decoration-line-through fw-normal fs-6">
+                            {product.Prices[0].grossPrice.toFixed(2).replace('.', ',') + ' zł'}
+                          </span>{' '}
+                          <span className="fw-bold fs-3">
+                            {product.Prices[product.Prices.length - 1].grossPrice
+                              .toFixed(2)
+                              .replace('.', ',') + ' zł'}
+                          </span>
+                          <div className="searchResultsDiscountBadgeGroup">
+                            <div className="discountBadge1"></div>
+                            <div className="discountBadge2"></div>
+                            <div className="discountBadge3"></div>
+                            <div className="discountBadgeText">
+                              <span className="discountText fs-5 fw-bold">
+                                -{product.promotionDiscount}%
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        <span className="fs-3">
+                          {product.Prices[0].grossPrice.toFixed(2).replace('.', ',') + ' zł'}
+                        </span>
+                      )}
                     </div>
                     <div className="mb-2 mt-2 text-center fs-5">
                       <span>Dostępne sztuki:</span>

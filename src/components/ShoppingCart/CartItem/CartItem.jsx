@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import newAlert from '../../../features/newAlert';
 import { updateCartItems } from '../../../store/storeSlices/cartItemsSlice';
+import './CartItem.css';
 
 const CartItem = ({ cartItem, fetchCartData, blockUI, setError, setBlockUI }) => {
   const dispatch = useDispatch();
@@ -73,7 +74,38 @@ const CartItem = ({ cartItem, fetchCartData, blockUI, setError, setBlockUI }) =>
           </div>
           <div className="col-xl-2 align-text-center fs-5 fw-bold vertical-center smallScreenPadding">
             <div className="text-left">
-              {String(cartItem.Product.Prices[0].grossPrice.toFixed(2)).replace('.', ',')} zł
+              {cartItem.Product.promotionName === null ? (
+                <span>
+                  {String(cartItem.Product.Prices[0].grossPrice.toFixed(2)).replace('.', ',')}
+                  {' zł '}
+                </span>
+              ) : (
+                <div>
+                  <span className="fw-normal fs-6 text-decoration-line-through">
+                    {String(cartItem.Product.Prices[0].grossPrice.toFixed(2)).replace('.', ',')}
+                    {' zł'}
+                  </span>
+                  <span className="fw-bold fs-5">
+                    {' '}
+                    {String(
+                      cartItem.Product.Prices[
+                        cartItem.Product.Prices.length - 1
+                      ].grossPrice.toFixed(2)
+                    ).replace('.', ',')}
+                    {' zł '}
+                  </span>
+                  <div className="cartItemDiscountBadgeGroup">
+                    <div className="discountBadge1"></div>
+                    <div className="discountBadge2"></div>
+                    <div className="discountBadge3"></div>
+                    <div className="discountBadgeText">
+                      <span className="discountText fs-5 fw-bold">
+                        -{cartItem.Product.promotionDiscount}%
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
             <div className="placement-bottomAddToCart"></div>
           </div>
@@ -98,9 +130,24 @@ const CartItem = ({ cartItem, fetchCartData, blockUI, setError, setBlockUI }) =>
           </div>
           <div className="col-xl-2 align-text-center fs-5 fw-bold vertical-center smallScreenPadding">
             <div className="text-left">
-              {String(
-                (cartItem.Product.Prices[0].grossPrice * cartItem.quantity).toFixed(2)
-              ).replace('.', ',')}{' '}
+              {cartItem.Product.promotionName === null ? null : (
+                <span className="fw-normal fs-6 text-decoration-line-through">
+                  {String(
+                    (cartItem.Product.Prices[0].grossPrice * cartItem.quantity).toFixed(2)
+                  ).replace('.', ',')}
+                  {' zł '}
+                </span>
+              )}
+              {cartItem.Product.promotionName === null
+                ? String(
+                    (cartItem.Product.Prices[0].grossPrice * cartItem.quantity).toFixed(2)
+                  ).replace('.', ',')
+                : String(
+                    (
+                      cartItem.Product.Prices[cartItem.Product.Prices.length - 1].grossPrice *
+                      cartItem.quantity
+                    ).toFixed(2)
+                  ).replace('.', ',')}{' '}
               zł
             </div>
             <div className="placement-bottomAddToCart"></div>

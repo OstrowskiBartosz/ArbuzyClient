@@ -7,16 +7,16 @@ const ListedProducts = ({ listedID, products, isLoadingData, topSold, error }) =
     const element = document.getElementById(listedID);
     const maxScrollWidth = element.scrollWidth - element.clientWidth;
 
-    direction === 'right' ? (element.scrollLeft += 300) : (element.scrollLeft -= 300);
+    direction === 'right' ? (element.scrollLeft += 270) : (element.scrollLeft -= 270);
     setScrollArrows({
-      arrowLeft: direction === 'left' && element.scrollLeft - 300 <= 0 ? false : true,
-      arrowRight: direction === 'right' && element.scrollLeft + 300 >= maxScrollWidth ? false : true
+      arrowLeft: direction === 'left' && element.scrollLeft - 270 <= 0 ? false : true,
+      arrowRight: direction === 'right' && element.scrollLeft + 270 >= maxScrollWidth ? false : true
     });
   };
 
   const [scrollArrows, setScrollArrows] = useState({ arrowLeft: false, arrowRight: true });
   return (
-    <div className="shadow bg-white rounded mb-4 px-2 overflow-auto">
+    <div className="shadow bg-white rounded mb-4 overflow-auto">
       {isLoadingData ? (
         <div className="d-flex justify-content-center pt-5 pb-5">
           <div className="spinner-border" role="status">
@@ -39,35 +39,46 @@ const ListedProducts = ({ listedID, products, isLoadingData, topSold, error }) =
 
             <div className={topSold ? 'inlineScrollTopSold' : 'inlineScroll'} id={listedID}>
               {topSold ? (
-                <>
-                  <div className="row stickyBorder">
-                    <div className="frontPageProductTitle">
-                      <div className="pt-2 mb-1 text-center">
-                        <div className="iconBiColor">
-                          <i className="fas fa-crown fs-2"></i>
-                        </div>
-                        <div className="fs-5 pt-1 fw-bold text-center">Najczęściej kupowany</div>
+                <div className="d-flex flex-row justify-content-start">
+                  <div className="frontPageProductTitle">
+                    <div className="pt-2 mb-2">
+                      <div className="iconBiColor">
+                        <i className="fas fa-crown fs-4"></i>
                       </div>
-                      <div className="border-bottom border border-primary"></div>
+                      <div className="fs-5 pt-1 fw-bold">Najczęściej kupowany</div>
                     </div>
-
-                    <div className="frontPageProductTitle stickyRunnersUp pl-1">
-                      <div className="pt-2 mb-1">
-                        <div className="iconBiColor">
-                          <i className="fa-solid fa-ranking-star fs-2"></i>
-                        </div>
-                        <div className="fs-5 pt-1 fw-bold">Czesto kupowane produkty</div>
-                      </div>
-                      <div className="border-bottom border border-primary boarderWidth"></div>
-                    </div>
+                    <div className="border-bottom border border-primary"></div>
                   </div>
-                </>
+
+                  <div className="frontPageProductTitle stickyRunnersUp pl-2">
+                    <div className="pt-2 mb-2">
+                      <div className="iconBiColor">
+                        <i className="fa-solid fa-ranking-star fs-4"></i>
+                      </div>
+                      <div className="fs-5 pt-1 fw-bold">Często kupowane produkty</div>
+                    </div>
+                    <div className="border border-bottom border-primary boarderWidth"></div>
+                  </div>
+                </div>
               ) : null}
-              <FrontPageProduct product={products[0]} />
-              <div className="d-inline-block pr-2"></div>
-              {products.map((product, index) => (
-                <FrontPageProduct product={product} key={index} />
-              ))}
+              {topSold ? (
+                <div>
+                  <FrontPageProduct product={products[0]} />
+                  <div className="d-inline-block pl-2">
+                    {products.map((product, index) =>
+                      index === 0 ? null : <FrontPageProduct product={product} key={index} />
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <div className="d-inline-block">
+                    {products.map((product, index) => (
+                      <FrontPageProduct product={product} key={index} />
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
             {scrollArrows.arrowRight ? (

@@ -226,25 +226,82 @@ const Product = ({ setSearchValueToSend }) => {
                           <div className="row pb-2 text-center">
                             <div>
                               <div>
-                                <span className="fs-1 fw-bold pt-2">
-                                  {productData.Prices[0].grossPrice.toLocaleString('pl-PL', {
-                                    minimumFractionDigits: 2
-                                  })}{' '}
-                                  zł
-                                </span>
+                                {productData.promotionName !== null ? (
+                                  <>
+                                    <span className="fs-5 fw-normal pt-2 text-decoration-line-through">
+                                      {productData.Prices[0].grossPrice.toLocaleString('pl-PL', {
+                                        minimumFractionDigits: 2
+                                      })}{' '}
+                                      zł
+                                    </span>
+                                    <span className="fs-2 fw-bold pt-2">
+                                      {' '}
+                                      {productData.Prices[
+                                        productData.Prices.length - 1
+                                      ].grossPrice.toLocaleString('pl-PL', {
+                                        minimumFractionDigits: 2
+                                      })}{' '}
+                                      zł
+                                    </span>
+                                  </>
+                                ) : (
+                                  <span className="fs-3 fw-bold pt-2">
+                                    {productData.Prices[0].grossPrice.toLocaleString('pl-PL', {
+                                      minimumFractionDigits: 2
+                                    })}{' '}
+                                    zł
+                                  </span>
+                                )}
                               </div>
                               <div className="">
-                                <span className="fs-6 fw-normal">
-                                  {productData.Prices[0].netPrice} zł +{' '}
-                                  {(
-                                    Number(productData.Prices[0].grossPrice) -
-                                    Number(productData.Prices[0].netPrice)
-                                  ).toLocaleString('pl-PL', { minimumFractionDigits: 2 })}{' '}
-                                  zł{' '}
-                                  <span className="fw-bold">
-                                    ({productData.Prices[0].taxPercentage}% VAT)
+                                {productData.promotionName !== null ? (
+                                  <div className="p-relative">
+                                    <span className="fs-6 fw-normal">
+                                      {productData.Prices[productData.Prices.length - 1].netPrice}{' '}
+                                      zł +{' '}
+                                      {(
+                                        Number(
+                                          productData.Prices[productData.Prices.length - 1]
+                                            .grossPrice
+                                        ) -
+                                        Number(
+                                          productData.Prices[productData.Prices.length - 1].netPrice
+                                        )
+                                      ).toLocaleString('pl-PL', { minimumFractionDigits: 2 })}{' '}
+                                      zł{' '}
+                                      <span className="fw-bold">
+                                        (
+                                        {
+                                          productData.Prices[productData.Prices.length - 1]
+                                            .taxPercentage
+                                        }
+                                        % VAT)
+                                      </span>
+                                    </span>
+                                    <div className="productDiscountBadgeGroup">
+                                      <div className="discountBadge1"></div>
+                                      <div className="discountBadge2"></div>
+                                      <div className="discountBadge3"></div>
+                                      <div className="discountBadgeText">
+                                        <span className="discountText fs-5 fw-bold">
+                                          -{productData.promotionDiscount}%
+                                        </span>
+                                      </div>
+                                    </div>
+                                  </div>
+                                ) : (
+                                  <span className="fs-6 fw-normal">
+                                    {productData.Prices[0].netPrice} zł +{' '}
+                                    {(
+                                      Number(productData.Prices[0].grossPrice) -
+                                      Number(productData.Prices[0].netPrice)
+                                    ).toLocaleString('pl-PL', { minimumFractionDigits: 2 })}{' '}
+                                    zł{' '}
+                                    <span className="fw-bold">
+                                      ({productData.Prices[0].taxPercentage}% VAT)
+                                    </span>
                                   </span>
-                                </span>
+                                )}
                               </div>
                             </div>
                           </div>

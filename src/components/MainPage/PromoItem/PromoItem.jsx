@@ -95,19 +95,21 @@ const PromoItem = ({ productData, promoType }) => {
       <div className="col-xl-6">
         <div className="shadow bg-white rounded mb-4 ProductNavborder">
           <Link className="promoText pointer" to={`/product/${productData.productID}`}>
-            <div className="pt-2 pb-2">
-              {promoType === 'Weekly' ? (
-                <span className="fw-bold fs-3">Mega oferta tygodnia</span>
-              ) : (
-                <span className="fw-bold fs-3">Mega oferta dnia</span>
-              )}
-            </div>
-            <div className="border-bottom border border-primary mb-3"></div>
-            <div className="imageLink pointer mx-3 pb-3">
-              <span className="fs-4 pointer fw-bold promoTitle">
-                {productData.Manufacturer.manufacturerName}{' '}
-                {productData.productName.replace(/ *\([^)]*\) */g, '')}
-              </span>
+            <div>
+              <div className="pt-2 pb-2">
+                {promoType === 'Weekly' ? (
+                  <span className="fw-bold fs-4">Mega oferta tygodnia</span>
+                ) : (
+                  <span className="fw-bold fs-4">Mega oferta dnia</span>
+                )}
+              </div>
+              <div className="border-bottom border border-primary mb-3"></div>
+              <div className="imageLink pointer mx-3 pb-3">
+                <span className="fs-5 pointer fw-bold promoTitle">
+                  {productData.Manufacturer.manufacturerName}{' '}
+                  {productData.productName.replace(/ *\([^)]*\) */g, '')}
+                </span>
+              </div>
             </div>
 
             <div className="row pb-3">
@@ -130,61 +132,71 @@ const PromoItem = ({ productData, promoType }) => {
                   </div>
                 </div>
               </div>
+
               <div className="col-xl-7 d-flex flex-column">
-                <div className="pt-3 px-3">
-                  <div className="p-inline">
-                    <span className="fs-5 text-dark float-left pb-3">Cena regularna:</span>
-                    <span className="fs-4 text-dark float-right">
-                      {productData.Prices[0].grossPrice.toLocaleString('pl-PL', {
-                        minimumFractionDigits: 2
-                      })}{' '}
-                      zł
-                    </span>
+                <div className="pl-3 pr-3 pb-2">
+                  <div className="">
+                    <div className="d-inline-block float-left">
+                      <span className=" fs-5 text-dark">Cena regularna:</span>
+                    </div>
+                    <div className="d-inline-block float-right">
+                      <span className="fs-5 text-dark">
+                        {productData.Prices[0].grossPrice.toLocaleString('pl-PL', {
+                          minimumFractionDigits: 2
+                        })}{' '}
+                        zł
+                      </span>
+                    </div>
                   </div>
-                  <div className="pt-5 p-inline">
-                    <span className="fs-5 fw-bold float-left pb-3 pt-2">Cena tylko teraz:</span>
-                    <span className="fs-4 fw-bold text-decoration-underline float-right">
-                      {productData.Prices[1].grossPrice.toLocaleString('pl-PL', {
-                        minimumFractionDigits: 2
-                      })}{' '}
-                      zł
-                    </span>
+
+                  <div>
+                    <div className="d-inline-block float-left">
+                      <span className=" fs-5 fw-bold">Cena tylko teraz:</span>
+                    </div>
+                    <div className="d-inline-block float-right">
+                      <span className=" fs-5 fw-bold text-decoration-underline">
+                        {productData.Prices[1].grossPrice.toLocaleString('pl-PL', {
+                          minimumFractionDigits: 2
+                        })}{' '}
+                        zł
+                      </span>
+                    </div>
                   </div>
                 </div>
 
-                <div className="pt-0 px-3">
-                  <div className="row pt-0">
-                    {productData.quantity !== 0 ? (
-                      <div>
-                        <span className="fs-5 fw-bold">
-                          Pozostało sztuk:
-                          <span className="fw-bold fs-5"> {productData.quantity}</span>
-                        </span>
-                        <div className="progress mb-3">
-                          <div
-                            className="progress-bar"
-                            style={{ width: productData.quantity * 10 + '%' }}
-                            role="progressbar"
-                            aria-valuenow="2"
-                            aria-valuemin="0"
-                            aria-valuemax="10"></div>
-                        </div>
+                <div className="row pl-3 pr-3 pb-2">
+                  {productData.quantity !== 0 ? (
+                    <div>
+                      <span className="fs-5">
+                        Pozostało sztuk:
+                        <span className="fw-bold fs-5"> {productData.quantity}</span>
+                      </span>
+                      <div className="progress">
+                        <div
+                          className="progress-bar"
+                          style={{ width: productData.quantity * 10 + '%' }}
+                          role="progressbar"
+                          aria-valuenow="2"
+                          aria-valuemin="0"
+                          aria-valuemax="10"></div>
                       </div>
-                    ) : (
-                      <div>
-                        <span className="fs-5 fw-bold"> Produkt wyprzedany</span>
-                        <div className="progress mb-3">
-                          <div
-                            className="progress-bar w-0"
-                            role="progressbar"
-                            aria-valuenow="2"
-                            aria-valuemin="0"
-                            aria-valuemax="10"></div>
-                        </div>
+                    </div>
+                  ) : (
+                    <div>
+                      <span className="fs-5 fw-bold"> Produkt wyprzedany</span>
+                      <div className="progress">
+                        <div
+                          className="progress-bar w-0"
+                          role="progressbar"
+                          aria-valuenow="2"
+                          aria-valuemin="0"
+                          aria-valuemax="10"></div>
                       </div>
-                    )}
-                  </div>
-                  <div className="row mx-5">
+                    </div>
+                  )}
+                </div>
+                <div>
+                  <div className="row">
                     <span className="fs-5 float-center">Pozostało czasu</span>
                   </div>
                   <div>
@@ -268,58 +280,60 @@ const PromoItem = ({ productData, promoType }) => {
                       </div>
                     )}
                   </div>
-                  <div>
-                    {promoType === 'Weekly' ? (
-                      <div className="row mx-5">
-                        <div className="col-1"></div>
-                        <div className="col-2">
-                          <span className="fs-6">dni</span>
-                        </div>
-                        <div className="col-2">
-                          <span className="fs-6">godz.</span>
-                        </div>
-                        <div className="col-1"></div>
-                        <div className="col-2">
-                          <span className="fs-6">min.</span>
-                        </div>
-                        <div className="col-1"></div>
-                        <div className="col-2">
-                          <span className="fs-6 ">sek.</span>
-                        </div>
-                        <div className="col-1"></div>
-                      </div>
-                    ) : (
-                      <div className="row mx-5">
-                        <div className="col-2"></div>
-                        <div className="col-2">
-                          <span className="fs-6">godz.</span>
-                        </div>
-                        <div className="col-1"></div>
-                        <div className="col-2">
-                          <span className="fs-6">min.</span>
-                        </div>
-                        <div className="col-1"></div>
-                        <div className="col-2">
-                          <span className="fs-6">sek.</span>
-                        </div>
-                        <div className="col-2"></div>
-                      </div>
-                    )}
-                  </div>
                 </div>
-                {productData.productsCount !== 0 ? (
-                  <div className="mr-4 ml-4 pt-2 mt-auto">
-                    <button className={`btn btn-primary btn-lg btn-block`}>
-                      Sprawdź produkt <i className="fas fa-arrow-up-right-from-square"></i>
-                    </button>
-                  </div>
-                ) : (
-                  <div className="mr-4 ml-4 pt-2 mt-auto">
-                    <button className={`btn btn-secondary btn-lg btn-block`}>
-                      Sprawdź produkt <i className="fas fa-arrow-up-right-from-square"></i>
-                    </button>
-                  </div>
-                )}
+                <div>
+                  {promoType === 'Weekly' ? (
+                    <div className="row mx-5">
+                      <div className="col-1"></div>
+                      <div className="col-2">
+                        <span className="fs-6">dni</span>
+                      </div>
+                      <div className="col-2">
+                        <span className="fs-6">godz.</span>
+                      </div>
+                      <div className="col-1"></div>
+                      <div className="col-2">
+                        <span className="fs-6">min.</span>
+                      </div>
+                      <div className="col-1"></div>
+                      <div className="col-2">
+                        <span className="fs-6 ">sek.</span>
+                      </div>
+                      <div className="col-1"></div>
+                    </div>
+                  ) : (
+                    <div className="row mx-5">
+                      <div className="col-2"></div>
+                      <div className="col-2">
+                        <span className="fs-6">godz.</span>
+                      </div>
+                      <div className="col-1"></div>
+                      <div className="col-2">
+                        <span className="fs-6">min.</span>
+                      </div>
+                      <div className="col-1"></div>
+                      <div className="col-2">
+                        <span className="fs-6">sek.</span>
+                      </div>
+                      <div className="col-2"></div>
+                    </div>
+                  )}
+                </div>
+                <div>
+                  {productData.productsCount !== 0 ? (
+                    <div className="mr-4 ml-4 mt-3">
+                      <button className={`btn btn-primary btn-lg btn-block`}>
+                        Sprawdź produkt <i className="fas fa-arrow-up-right-from-square"></i>
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="mr-4 ml-4 mt-3">
+                      <button className={`btn btn-secondary btn-lg btn-block`}>
+                        Sprawdź produkt <i className="fas fa-arrow-up-right-from-square"></i>
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </Link>

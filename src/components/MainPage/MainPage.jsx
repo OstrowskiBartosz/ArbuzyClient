@@ -83,28 +83,26 @@ const MainPage = ({ setSearchValueToSend }) => {
 
   return (
     <div className="container mainpage mb-5 text-center">
-      <div className="shadow bg-white rounded mb-4 ProductNavborder">
-        <div className="categoryHeader mb-3 pt-3">Kategorie Produktów</div>
+      <div className="shadow bg-white rounded mb-4 ProductNavborder pb-3">
+        <div className="fs-4 fw-bold mb-3 pt-3">Kategorie Produktów</div>
         <div className="border-bottom border border-primary"></div>
-        <div className="pb-3">
-          <div className="d-flex flex-row justify-content-around flex-wrap mt-3 pb-3">
-            <div className="categoryLink categoryText">
-              <Link
-                className="clear-link"
-                to={`/search?filterCategory=[]`}
-                onClick={() => {
-                  setSearchValueToSend('');
-                }}>
-                Wszystkie produkty
-              </Link>
-            </div>
+        <div className="d-flex flex-row justify-content-around flex-wrap pt-2 mb-1">
+          <div className="fs-5 fw-bold pb-1">
+            <Link
+              className="clear-link"
+              to={`/search?filterCategory=[]`}
+              onClick={() => {
+                setSearchValueToSend('');
+              }}>
+              Wszystkie kategorie
+            </Link>
           </div>
+        </div>
+        <div className="d-flex flex-row justify-content-around">
           {categoryList.map((categoryGroup, index) => (
-            <div
-              key={`group${index}`}
-              className="d-flex flex-row justify-content-around flex-wrap mt-2 pb-1">
+            <div key={`group${index}`}>
               {categoryGroup.map((category, index2) => (
-                <div key={`c${index2}`} className="categoryLink pl-4 pr-4 pb-2 categoryText">
+                <div key={`c${index2}`} className="fs-5 fw-bold p-2">
                   <Link
                     className="clear-link"
                     to={`/search?filterCategory=[${category.categoryID}]`}

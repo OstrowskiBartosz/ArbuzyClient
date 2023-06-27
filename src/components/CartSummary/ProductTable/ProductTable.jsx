@@ -25,13 +25,55 @@ const ProductTable = ({ cartData }) => {
                 </Link>
               </td>
               <td className="fw-bold text-center">
-                {String(cartItem.Product.Prices[0].grossPrice.toFixed(2)).replace('.', ',')} zł
+                {cartItem.Product.promotionName !== null ? (
+                  <div>
+                    <span className="text-decoration-line-through fw-normal">
+                      {String(cartItem.Product.Prices[0].grossPrice.toFixed(2)).replace('.', ',') +
+                        ' zł'}
+                    </span>
+                    <span>
+                      {' '}
+                      {String(
+                        cartItem.Product.Prices[
+                          cartItem.Product.Prices.length - 1
+                        ].grossPrice.toFixed(2)
+                      ).replace('.', ',') + ' zł'}
+                    </span>
+                  </div>
+                ) : (
+                  <>
+                    {String(
+                      (cartItem.Product.Prices[0].grossPrice * cartItem.quantity).toFixed(2)
+                    ).replace('.', ',') + ' zł'}
+                  </>
+                )}
               </td>
               <td className="fw-bold text-center">{cartItem.quantity}</td>
               <td className="fw-bold text-center">
-                {String(
-                  (cartItem.Product.Prices[0].grossPrice * cartItem.quantity).toFixed(2)
-                ).replace('.', ',') + ' zł'}
+                {cartItem.Product.promotionName !== null ? (
+                  <>
+                    <span className="text-decoration-line-through fw-normal">
+                      {String(
+                        (cartItem.Product.Prices[0].grossPrice * cartItem.quantity).toFixed(2)
+                      ).replace('.', ',') + ' zł'}
+                    </span>
+                    <span>
+                      {' '}
+                      {String(
+                        (
+                          cartItem.Product.Prices[cartItem.Product.Prices.length - 1].grossPrice *
+                          cartItem.quantity
+                        ).toFixed(2)
+                      ).replace('.', ',') + ' zł'}
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    {String(
+                      (cartItem.Product.Prices[0].grossPrice * cartItem.quantity).toFixed(2)
+                    ).replace('.', ',') + ' zł'}
+                  </>
+                )}
               </td>
             </tr>
           ))}
