@@ -6,6 +6,8 @@ import { updateCartItems } from '../../../store/storeSlices/cartItemsSlice';
 import newAlert from '../../../features/newAlert';
 import getFormData from '../utils/getFormData';
 
+import { postData } from '../../../features/sharableMethods/httpRequests';
+
 const SignUp = (props) => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -14,25 +16,16 @@ const SignUp = (props) => {
   const dispatch = useDispatch();
 
   const handleSignupSubmit = async (event) => {
-    event.preventDefault();
-    setIsLoading(true);
-    setError(null);
-
     try {
-      const signupData = getFormData('SignupForm');
-      const url = `${process.env.REACT_APP_API}/user`;
-      const response = await fetch(url, {
-        method: 'post',
-        credentials: 'include',
-        body: JSON.stringify(signupData),
-        headers: new Headers({ 'content-type': 'application/json' })
-      });
-      if (response.status === 400 || response.status === 500)
-        throw new Error('Ooops, spróbuj ponownie później!');
+      event.preventDefault();
+      setIsLoading(true);
+      setError(null);
 
-      const json = await response.json();
-      if (json.message !== 'signedup') {
-        setError(json.message);
+      const signupData = getFormData('SignupForm');
+      const fetch = await postData('user', signupData);
+      const response = await fetch.json();
+      if (response.message !== 'User has been signed up.') {
+        setError(response.message);
       } else {
         dispatch(sessionChange(true));
         dispatch(updateCartItems(true));
@@ -187,7 +180,6 @@ const SignUp = (props) => {
                 name="ZIPCode"
                 className="form-control"
                 placeholder="kod pocztowy"
-                size="5"
                 maxLength="5"
                 required
                 onChange={(event) => {

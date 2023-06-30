@@ -9,6 +9,7 @@ import './Product.css';
 import history from '../history';
 import { useDispatch } from 'react-redux';
 import { updateCartItems } from '../../store/storeSlices/cartItemsSlice';
+import { getData, postData } from '../../features/sharableMethods/httpRequests';
 
 const scrollWithOffset = (el) => {
   const yCoordinate = el.getBoundingClientRect().top + window.pageYOffset;
@@ -54,23 +55,18 @@ const Product = ({ setSearchValueToSend }) => {
     setCurrentImage(`${image}`);
   };
 
-  const handleToCartClick = (event) => {
-    event.persist();
-    event.preventDefault();
-    setBlockUI(true);
-    const data = {
-      productID: event.currentTarget.id,
-      quantity: 1
-    };
-    const url = `${process.env.REACT_APP_API}/cartItem`;
-    fetch(url, {
-      method: 'post',
-      body: JSON.stringify(data),
-      credentials: 'include',
-      headers: { 'Content-Type': 'application/json' }
-    })
-      .then((response) => response.json())
-      .then((response) => {
+  const handleToCartClick = async (event) => {
+    try {
+      event.persist();
+      event.preventDefault();
+      setBlockUI(true);
+      const productData = {
+        productID: event.currentTarget.id,
+        quantity: 1
+      };
+      const fetch = await postData('cartItem', productData);
+      const response = await fetch.json();
+      if (fetch.ok) {
         if (response.message === 'Product has been added to cart.') {
           newAlert('primary', 'Dodano produkt', 'Produkt został dodany do koszyka.');
           dispatch(updateCartItems(true));
@@ -83,25 +79,30 @@ const Product = ({ setSearchValueToSend }) => {
           newAlert('danger', 'Wystąpił błąd.', 'Wystąpił nieoczekiwany błąd.');
           dispatch(updateCartItems(true));
         }
-        setBlockUI(false);
-      })
-      .catch((error) => error);
+      } else {
+        setError(response.message);
+      }
+    } catch (err) {
+      setError(err);
+    } finally {
+      setBlockUI(false);
+    }
   };
 
   useEffect(() => {
     const fetchProductData = async () => {
       try {
-        const url = `${process.env.REACT_APP_API}/product/${productID}`;
-        const response = await fetch(url, { method: 'get', credentials: 'include' });
-        const json = await response.json();
+        const endpoint = `product/${productID}`;
+        const fetch = await getData(endpoint);
+        const response = await fetch.json();
 
-        const productDescription = await splitProductDesc(json.data.description.split('|'));
-        const mainImageIndex = json.data.Attributes.findIndex((ele) => Number(ele.type) === 2);
-        setProductData(json.data);
+        const productDescription = await splitProductDesc(response.data.description.split('|'));
+        const mainImageIndex = response.data.Attributes.findIndex((ele) => Number(ele.type) === 2);
+        setProductData(response.data);
         setError(null);
         setIsLoadingProduct(false);
         setProductDescription(productDescription);
-        setCurrentImage(json.data.Attributes[mainImageIndex].value);
+        setCurrentImage(response.data.Attributes[mainImageIndex].value);
       } catch (err) {
         setError(err.message);
         setProductData(null);

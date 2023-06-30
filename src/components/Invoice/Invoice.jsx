@@ -7,6 +7,7 @@ import InvoiceItemsList from './InvoiceItemsList/InvoiceItemsList';
 import InvoiceDetailsList from './InvoiceDetailsList/InvoiceDetailsList';
 import './Invoice.css';
 import MoveBack from '../../features/additionalComponents/MoveBack/MoveBack';
+import { getData, putData } from '../../features/sharableMethods/httpRequests';
 
 const Invoice = (props) => {
   const isLogged = useSelector((state) => state.session.isLogged);
@@ -20,14 +21,14 @@ const Invoice = (props) => {
   const handleCancelClick = async (invoiceID) => {
     try {
       setBlockUI(true);
-      const url = `${process.env.REACT_APP_API}/invoice/${invoiceID}`;
-      const response = await fetch(url, { method: 'put', credentials: 'include' });
-      const json = await response.json();
-      if (response.ok) {
+      const endpoint = `invoice/${invoiceID}`;
+      const fetch = await putData(endpoint);
+      const response = await fetch.json();
+      if (fetch.ok) {
         newAlert('primary', 'Anulowane!', 'Zamówienie zostało anulowane.');
         fetchInvoiceData();
       } else {
-        setError(json.message);
+        setError(response.message);
       }
     } catch (err) {
       setError(err.message);
@@ -37,19 +38,17 @@ const Invoice = (props) => {
   const fetchInvoiceData = useCallback(async () => {
     try {
       setBlockUI(true);
-      const url = `${process.env.REACT_APP_API}/invoice/${invoiceID}`;
-      const response = await fetch(url, { method: 'get', credentials: 'include' });
-      if (response.status === 400 || response.status === 500)
-        throw new Error('Ooops, nie udało się pobrać elementów!');
-      const json = await response.json();
-      setInvoiceData(json.data);
+      const endpoint = `invoice/${invoiceID}`;
+      const fetch = await getData(endpoint);
+      const response = await fetch.json();
+      setInvoiceData(response.data);
       setIsLoadingInvoiceData(false);
     } catch (err) {
       setError(err.message);
     } finally {
       setBlockUI(false);
     }
-  }, []);
+  }, [invoiceID]);
 
   useEffect(() => {
     if (isLogged) fetchInvoiceData();

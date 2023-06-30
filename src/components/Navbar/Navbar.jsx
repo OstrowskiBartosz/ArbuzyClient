@@ -20,6 +20,7 @@ import RouteNotFound from '../RouteNotFound/RouteNotFound.jsx';
 import MessageAlert from '../MessageAlert/MessageAlert.jsx';
 
 import { cartItemsChange } from '../../store/storeSlices/cartItemsSlice';
+import { getData } from '../../features/sharableMethods/httpRequests';
 
 import './Navbar.css';
 import ScrollToTop from '../../features/additionalComponents/scrollToTop/scrollToTop.jsx';
@@ -60,16 +61,18 @@ const Navbar = (props) => {
   ];
 
   const fetchCartData = useCallback(async () => {
-    const url = `${process.env.REACT_APP_API}/cart/getItemsNumber`;
-    const response = await fetch(url, { method: 'get', credentials: 'include' });
-    const json = await response.json();
-    setIsLoadingCartData(false);
-    dispatch(
-      cartItemsChange({
-        numberOfProducts: json?.data?.numberOfProducts ?? 0,
-        updateCartItems: false
-      })
-    );
+    try {
+      const endpoint = `cart/getItemsNumber`;
+      const fetch = await getData(endpoint);
+      const response = await fetch.json();
+      setIsLoadingCartData(false);
+      dispatch(
+        cartItemsChange({
+          numberOfProducts: response?.data?.numberOfProducts ?? 0,
+          updateCartItems: false
+        })
+      );
+    } catch (err) {}
   }, [dispatch]);
 
   const getHintsSearchValue = (searchValueFromHints, urlFromHints, isProduct) => {
