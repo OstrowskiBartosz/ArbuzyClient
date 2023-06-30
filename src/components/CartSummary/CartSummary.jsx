@@ -8,6 +8,7 @@ import ProductTable from './ProductTable/ProductTable';
 import PaymentPanel from './PaymentPanel/PaymentPanel';
 import newAlert from '../../features/newAlert';
 import MoveBack from '../../features/additionalComponents/MoveBack/MoveBack';
+import { getData, postData } from '../../features/sharableMethods/httpRequests';
 
 const CartSummary = (props) => {
   const [userData, setUserData] = useState(null);
@@ -28,17 +29,11 @@ const CartSummary = (props) => {
         newAlert('danger', 'Płatność!', 'Wybierz sposób płatności');
         return;
       }
-      const url = `${process.env.REACT_APP_API}/invoice`;
-      const response = await fetch(url, {
-        method: 'post',
-        body: JSON.stringify({ paymentMethod: paymentMethod }),
-        credentials: 'include',
-        headers: new Headers({ 'content-type': 'application/json' })
-      });
-      const json = await response.json();
-      if (response.ok) {
+      const fetch = await postData('invoice', { paymentMethod: paymentMethod });
+      if (fetch.ok) {
+        const response = await fetch.json();
         dispatch(updateCartItems(true));
-        history.push(`/purchaseconfirmation/${json.data.invoiceID}`);
+        history.push(`/purchaseconfirmation/${response.data.invoiceID}`);
       }
     } catch (err) {
       setError(err.message);
@@ -46,26 +41,21 @@ const CartSummary = (props) => {
   };
 
   const handleFetchData = useCallback(async () => {
-    const fetchData = async (resource) => {
-      try {
-        const url = `${process.env.REACT_APP_API}/${resource}`;
-        const response = await fetch(url, { method: 'get', credentials: 'include' });
-        const json = await response.json();
-        return json.data;
-      } catch (err) {
-        setError(err.message);
+    try {
+      const [userResponse, cartResponse] = await Promise.all([
+        await getData('user'),
+        await getData('cart')
+      ]);
+
+      if (userResponse && cartResponse) {
+        const cartData = await cartResponse.json();
+        const userData = await userResponse.json();
+        setCartData(cartData.data);
+        setUserData(userData.data);
+        setIsLoadingData(false);
       }
-    };
-
-    const [userData, cartData] = await Promise.all([
-      await fetchData('user'),
-      await fetchData('cart')
-    ]);
-
-    if (cartData && userData) {
-      setCartData(cartData);
-      setUserData(userData);
-      setIsLoadingData(false);
+    } catch (err) {
+      setError(err.message);
     }
   }, []);
 

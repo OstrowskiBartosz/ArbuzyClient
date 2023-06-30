@@ -6,6 +6,8 @@ import { updateCartItems } from '../../../store/storeSlices/cartItemsSlice';
 import newAlert from '../../../features/newAlert';
 import getFormData from '../utils/getFormData';
 
+import { postData } from '../../../features/sharableMethods/httpRequests';
+
 const LogIn = (props) => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -13,30 +15,20 @@ const LogIn = (props) => {
   const dispatch = useDispatch();
 
   const handleLoginSubmit = async (event) => {
-    event.preventDefault();
-    setIsLoading(true);
-    setError(null);
-
     try {
+      event.preventDefault();
+      setIsLoading(true);
+      setError(null);
       const loginData = getFormData('loginForm');
-      const url = `${process.env.REACT_APP_API}/session`;
-      const response = await fetch(url, {
-        method: 'post',
-        credentials: 'include',
-        body: JSON.stringify(loginData),
-        headers: new Headers({ 'content-type': 'application/json' })
-      });
-      if (response.status === 400 || response.status === 500)
-        throw new Error('Ooops, spróbuj ponownie później!');
-
-      const json = await response.json();
-
-      if (json.message === 'Logged.') {
+      const endPoint = 'session';
+      const fetch = await postData(endPoint, loginData);
+      const response = await fetch.json();
+      if (response.message === 'Logged.') {
         dispatch(sessionChange(true));
         dispatch(updateCartItems(true));
         newAlert('primary', 'Zalogowano!', 'Uzytkownik został zalogowany.');
       } else {
-        setError(json.message);
+        setError(response.message);
       }
     } catch (err) {
       setError(err.message);

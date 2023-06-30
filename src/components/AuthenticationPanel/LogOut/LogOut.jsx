@@ -8,23 +8,32 @@ import newAlert from '../../../features/newAlert';
 import MoveBack from '../../../features/additionalComponents/MoveBack/MoveBack';
 import './LogOut.css';
 
+import { deleteData } from '../../../features/sharableMethods/httpRequests';
+
 const LogOut = (props) => {
+  const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const isLogged = useSelector((state) => state.session.isLogged);
 
   const dispatch = useDispatch();
 
   const handleLogout = async () => {
-    setIsLoading(true);
-    const url = `${process.env.REACT_APP_API}/session`;
-    fetch(url, { method: 'delete', credentials: 'include' })
-      .then((response) => response.text())
-      .then((data) => {
-        setIsLoading(false);
+    try {
+      setIsLoading(true);
+      setError(null);
+      const fetch = await deleteData('session');
+      const response = await fetch.json();
+      if ((response.message = 'Logged out.')) {
         dispatch(sessionChange(false));
         dispatch(updateCartItems(true));
         newAlert('danger', 'Wylogowano!', 'Użytkownik został wylogowany.');
-      });
+      } else {
+        setError(response.message);
+      }
+    } catch (err) {
+      setError(err.message);
+    }
+    setIsLoading(false);
   };
 
   if (isLogged === false) {
@@ -39,6 +48,12 @@ const LogOut = (props) => {
               <div className="card-body ">
                 <div className="p-3 text-left">
                   <h5 className="card-title bigfont">Czy na pewno chcesz się wylogować?</h5>
+                  <div className={error ? 'error' : 'd-none'}>
+                    <div className="errorWarning">
+                      <i className="fas fa-exclamation-triangle errorWarning"></i>
+                      <div className="errorMessage">{error}</div>
+                    </div>
+                  </div>
                   <div className="loginSignupSubmitButton">
                     <button
                       className="btn btn-outline-primary"

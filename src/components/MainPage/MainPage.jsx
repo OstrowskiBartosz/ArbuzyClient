@@ -7,6 +7,7 @@ import newAlert from '../../features/newAlert';
 import RefreshTimer from './RefreshTimer/RefreshTimer';
 import PromoItem from './PromoItem/PromoItem';
 import ListedProducts from './ListedProducts/ListedProducts';
+import { getData } from '../../features/sharableMethods/httpRequests';
 import './MainPage.css';
 
 const categoryList = [
@@ -45,12 +46,10 @@ const MainPage = ({ setSearchValueToSend }) => {
   const handleFetchData = useCallback(async () => {
     const fetchData = async () => {
       try {
-        const url = `${process.env.REACT_APP_API}/product/frontPageProducts`;
-        const response = await fetch(url, { method: 'get', credentials: 'include' });
-        if (response.status === 400 || response.status === 500)
-          throw new Error('Ooops, nie udało się pobrać elementów!');
-        const json = await response.json();
-        return json.data;
+        const endpoint = `product/frontPageProducts`;
+        const fetch = await getData(endpoint);
+        const response = await fetch.json();
+        return response.data;
       } catch (err) {
         setError(err.message);
       }
