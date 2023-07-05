@@ -40,9 +40,14 @@ const getData = async (endpoint) => {
   return response;
 };
 
-const putData = async (endpoint) => {
+const putData = async (endpoint, body) => {
   const url = getURL(endpoint);
-  const response = await fetch(url, { method: 'put', credentials: 'include' });
+  const response = await fetch(url, {
+    method: 'put',
+    credentials: 'include',
+    body: JSON.stringify(body),
+    headers: new Headers({ 'content-type': 'application/json' })
+  });
 
   if (response.status === 400 || response.status === 500)
     throw new Error('Ooops, spróbuj ponownie później!');

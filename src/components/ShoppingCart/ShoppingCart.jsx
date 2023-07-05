@@ -7,6 +7,7 @@ import MoveBack from '../../features/additionalComponents/MoveBack/MoveBack';
 import newAlert from '../../features/newAlert';
 import CartItem from './CartItem/CartItem';
 import TotalPrice from './TotalPrice/TotalPrice';
+import { getData, deleteData } from '../../features/sharableMethods/httpRequests';
 
 import './ShoppingCart.css';
 
@@ -24,12 +25,11 @@ const ShoppingCart = (props) => {
 
   const fetchCartData = useCallback(async () => {
     try {
-      const url = `${process.env.REACT_APP_API}/cart`;
-      const response = await fetch(url, { method: 'get', credentials: 'include' });
-      const json = await response.json();
-      if (json.data.cartItemsData.length === 0) setIsEmpty(true);
+      const request = await getData('cart');
+      const response = await request.json();
+      if (response.data.cartItemsData.length === 0) setIsEmpty(true);
       setisLoadingCartData(false);
-      setCartData(json.data);
+      setCartData(response.data);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -40,9 +40,8 @@ const ShoppingCart = (props) => {
   const handleWholeCartTrashClick = async (cartID) => {
     try {
       setBlockUI(true);
-      const url = `${process.env.REACT_APP_API}/cart/${cartID}`;
-      const response = await fetch(url, { method: 'delete', credentials: 'include' });
-      if (response.ok) {
+      const request = await deleteData(`cart/${cartID}`);
+      if (request.ok) {
         newAlert('danger', 'Usunięto koszyk', 'Cały koszyk został usunięty.');
         fetchCartData();
         dispatch(updateCartItems(true));

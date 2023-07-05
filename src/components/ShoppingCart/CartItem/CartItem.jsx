@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import newAlert from '../../../features/newAlert';
 import { updateCartItems } from '../../../store/storeSlices/cartItemsSlice';
+import { putData, deleteData } from '../../../features/sharableMethods/httpRequests';
 import './CartItem.css';
 
 const CartItem = ({ cartItem, fetchCartData, blockUI, setError, setBlockUI }) => {
@@ -13,9 +14,8 @@ const CartItem = ({ cartItem, fetchCartData, blockUI, setError, setBlockUI }) =>
     async (cartItemID) => {
       try {
         setBlockUI(true);
-        const url = `${process.env.REACT_APP_API}/cartitem/${cartItemID}`;
-        const response = await fetch(url, { method: 'delete', credentials: 'include' });
-        if (response.ok) {
+        const request = await deleteData(`cartitem/${cartItemID}`);
+        if (request.ok) {
           newAlert('danger', 'Usunięto produkt', 'Produkt został usunięty z koszyka.');
           fetchCartData();
           dispatch(updateCartItems(true));
@@ -33,12 +33,11 @@ const CartItem = ({ cartItem, fetchCartData, blockUI, setError, setBlockUI }) =>
     try {
       setBlockUI(true);
       if (cartItem.quantity > 1 || (cartItem.quantity === 1 && operationSign !== '-')) {
-        const url = `${process.env.REACT_APP_API}/cartitem/${cartItemID}/${operationSign}`;
-        const response = await fetch(url, { method: 'put', credentials: 'include' });
-        const json = await response.json();
-        if (json.message === 'The quantity has been updated.') {
+        const request = await putData(`cartitem/${cartItemID}/${operationSign}`);
+        const response = await request.json();
+        if (response.message === 'The quantity has been updated.') {
           newAlert('primary', 'Zmieniono ilość', 'Ilość danego produktu została zwiększona.');
-        } else if (json.message === 'Quantity limit.') {
+        } else if (response.message === 'Quantity limit.') {
           newAlert('danger', 'Limit produktu.', 'Brak dodatkowych sztuk produktu.');
         }
       } else {

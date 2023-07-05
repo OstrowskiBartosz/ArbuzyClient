@@ -8,6 +8,7 @@ import Orders from './Orders/Orders.jsx';
 import Complaints from './Complaints/Complaints.jsx';
 import Settings from './Settings/Settings.jsx';
 import MoveBack from '../../features/additionalComponents/MoveBack/MoveBack';
+import { getData } from '../../features/sharableMethods/httpRequests';
 
 const Profile = (props) => {
   let { tabName } = useParams();
@@ -26,12 +27,9 @@ const Profile = (props) => {
   const fetchInvoiceData = useCallback(async () => {
     try {
       setIsLoadingInvoice(true);
-      const url = `${process.env.REACT_APP_API}/invoice`;
-      const response = await fetch(url, { method: 'get', credentials: 'include' });
-      if (response.status === 400 || response.status === 500)
-        throw new Error('Ooops, nie udało się pobrać elementów! Spróbuj ponownie za chwilę!');
-      const json = await response.json();
-      setInvoiceData(json.data);
+      const fetch = await getData('invoice');
+      const response = await fetch.json();
+      setInvoiceData(response.data);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -42,10 +40,9 @@ const Profile = (props) => {
   const fetchUserData = useCallback(async () => {
     try {
       setIsLoadingUser(true);
-      const url = `${process.env.REACT_APP_API}/user`;
-      const response = await fetch(url, { method: 'get', credentials: 'include' });
-      const json = await response.json();
-      setUserData(json.data);
+      const fetch = await getData('user');
+      const response = await fetch.json();
+      setUserData(response.data);
     } catch (err) {
       setError(err.message);
     } finally {

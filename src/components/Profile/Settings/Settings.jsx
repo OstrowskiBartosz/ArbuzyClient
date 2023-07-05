@@ -4,6 +4,17 @@ import { useDispatch } from 'react-redux';
 import { sessionChange } from '../../../store/storeSlices/sessionSlice.js';
 import { updateCartItems } from '../../../store/storeSlices/cartItemsSlice';
 import newAlert from '../../../features/newAlert';
+import { putData, deleteData } from '../../../features/sharableMethods/httpRequests';
+
+const getUserFormData = async () => {
+  let myForm = document.getElementById('updateForm');
+  let formData = new FormData(myForm);
+  let object = {};
+  formData.forEach((value, key) => {
+    object[key] = value;
+  });
+  return object;
+};
 
 const Settings = ({ isLoadingUser, userData, fetchUserData, setError }) => {
   const [showUserEdit, setShowUserEdit] = useState(false);
@@ -16,27 +27,17 @@ const Settings = ({ isLoadingUser, userData, fetchUserData, setError }) => {
   const editUserData = async () => {
     try {
       setBlockUI(true);
-      let myForm = document.getElementById('updateForm');
-      let formData = new FormData(myForm);
-      let object = {};
-      formData.forEach((value, key) => {
-        object[key] = value;
-      });
-      const url = `${process.env.REACT_APP_API}/user`;
-      const response = await fetch(url, {
-        body: JSON.stringify(object),
-        method: 'put',
-        credentials: 'include',
-        headers: new Headers({ 'content-type': 'application/json' })
-      });
+      const userFormData = await getUserFormData();
+      const request = await putData('user', userFormData);
       setShowUserEdit(!showUserEdit);
-      if (response.ok) {
+      if (request.ok) {
         fetchUserData();
         newAlert('primary', 'Zmieniono dane', 'Dane użytkownika zostały zmienione.');
       }
-      setBlockUI(false);
     } catch (err) {
       setError(err.message);
+    } finally {
+      setBlockUI(false);
     }
   };
 
@@ -47,16 +48,16 @@ const Settings = ({ isLoadingUser, userData, fetchUserData, setError }) => {
   const deleteUser = () => {
     try {
       setBlockUI(true);
-      const url = `${process.env.REACT_APP_API}/user`;
-      const response = fetch(url, { method: 'delete', credentials: 'include' });
-      if (response.ok) {
+      const request = deleteData('user');
+      if (request.ok) {
         newAlert('danger', 'Użytkownik usuniety', 'Użytkownik został usunięty.');
         dispatch(sessionChange(false));
         dispatch(updateCartItems(true));
-        setBlockUI(false);
       }
     } catch (err) {
       setError(err.message);
+    } finally {
+      setBlockUI(false);
     }
   };
 

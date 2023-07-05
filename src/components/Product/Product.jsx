@@ -9,11 +9,7 @@ import './Product.css';
 import history from '../history';
 import { useDispatch } from 'react-redux';
 import { updateCartItems } from '../../store/storeSlices/cartItemsSlice';
-<<<<<<< HEAD
 import { getData, postData } from '../../features/sharableMethods/httpRequests';
-=======
-import { getData, postData } from '../../features/sharableMethods/dataConnect';
->>>>>>> 78d1f43dcb43130a127d2fc4d707280ceadbd4a8
 
 const scrollWithOffset = (el) => {
   const yCoordinate = el.getBoundingClientRect().top + window.pageYOffset;

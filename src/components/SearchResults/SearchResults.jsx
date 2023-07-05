@@ -8,6 +8,7 @@ import SortPanel from './SortPanel/SortPanel';
 import FilterPanel from './FilterPanel/FilterPanel';
 import { uncheckAll, checkFilters, checkAttributes } from './utils';
 import MoveBack from '../../features/additionalComponents/MoveBack/MoveBack';
+import { getData } from '../../features/sharableMethods/httpRequests';
 
 const SearchResults = ({ searchValue }) => {
   let location = useLocation();
@@ -42,22 +43,22 @@ const SearchResults = ({ searchValue }) => {
       searchParams.delete('q');
       searchParams.delete('w');
 
-      const url = `${process.env.REACT_APP_API}/product/productName/${searchValue}?s=${productSort}&p=${productPage}&l=${productLimit}&${searchParams}`;
-      const response = await fetch(url, { method: 'get', credentials: 'include' });
-      const json = await response.json();
+      const endpoint = `product/productName/${searchValue}?s=${productSort}&p=${productPage}&l=${productLimit}&${searchParams}`;
+      const request = await getData(endpoint);
+      const response = await request.json();
 
       setIsLoadingProductsData(false);
-      setProductsData(json.data);
-      setNumberOFProducts((json.data && json.data.numberOfProducts) ?? 0);
+      setProductsData(response.data);
+      setNumberOFProducts((response.data && response.data.numberOfProducts) ?? 0);
 
       setPriceSettings({
-        priceFrom: searchParams.get('priceFrom') ?? json.data.minPrice,
-        priceTo: searchParams.get('priceTo') ?? json.data.maxPrice
+        priceFrom: searchParams.get('priceFrom') ?? response.data.minPrice,
+        priceTo: searchParams.get('priceTo') ?? response.data.maxPrice
       });
 
       setPriceRange({
-        minPrice: json.data.minPrice,
-        maxPrice: json.data.maxPrice
+        minPrice: response.data.minPrice,
+        maxPrice: response.data.maxPrice
       });
 
       setSortSettings({

@@ -16,8 +16,6 @@ const SortPanel = ({
   const [productSort, setProductSort] = useState(sortSettings.productSort);
   const [productPage, setProductPage] = useState(sortSettings.productPage);
 
-  // const pages = pagination(NumberOfpages, activePage);
-
   const [pages, setPages] = useState(pagination(NumberOfpages, activePage));
   const [nextPage, setNextPage] = useState(NumberOfpages !== activePage ? true : false);
   const [prevPage, setPrevPage] = useState(activePage > 1 ? true : false);
@@ -85,8 +83,6 @@ const SortPanel = ({
     setNextPage(NumberOfpages !== activePage ? true : false);
     setPages(pagination(NumberOfpages, activePage));
   }, [NumberOfpages, activePage, ProductsData]);
-
-  // useEffect(() => {}, [ProductsData]);
 
   if (isLoading && ProductsData === undefined) {
     return (

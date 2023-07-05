@@ -4,6 +4,7 @@ import './SearchHints.css';
 import useDebounce from '../../features/useDebounce';
 import ListHints from './ListHints/ListHints';
 import ListLastSearched from './ListLastSearched/ListLastSearched';
+import { getData } from '../../features/sharableMethods/httpRequests';
 
 const SearchHints = ({ searchValue, sendHintsSearchValue }) => {
   const searchHintsRef = useRef(null);
@@ -57,10 +58,10 @@ const SearchHints = ({ searchValue, sendHintsSearchValue }) => {
 
   const fetchData = async (resource, searchValue) => {
     try {
-      const url = `${process.env.REACT_APP_API}/${resource}/${resource}Hints/${searchValue}`;
-      const response = await fetch(url, { method: 'get', credentials: 'include' });
-      const data = await response.json();
-      return data;
+      const endpoint = `${resource}/${resource}Hints/${searchValue}`;
+      const request = await getData(endpoint);
+      const response = await request.json();
+      return response;
     } catch (err) {
       setError(err.message);
     }
