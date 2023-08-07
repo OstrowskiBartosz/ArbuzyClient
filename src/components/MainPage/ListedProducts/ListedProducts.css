@@ -62,11 +62,11 @@
 }
 
 .mainPageProductName {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  display: inline-block;
   max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .productPageBar {
@@ -140,6 +140,7 @@
     rgba(0, 123, 255, 1) 50%,
     rgba(100, 100, 100, 1) 50%
   );
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }

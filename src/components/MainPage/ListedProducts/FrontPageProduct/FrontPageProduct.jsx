@@ -4,7 +4,7 @@ import './FrontPageProduct.css';
 const FrontPageProduct = ({ product }) => {
   return (
     <div className={`d-inline productCard d-flex`}>
-      <div className="mainPageProductBorder mt-1">
+      <div className="mainPageProductBorder">
         <div className="row invisibleButtons">
           <div className="col-6">
             <div className="mainPageProductIcon px-2 mt-2">

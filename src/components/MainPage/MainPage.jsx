@@ -127,11 +127,17 @@ const MainPage = ({ setSearchValueToSend }) => {
           </div>
         </div>
       ) : (
-        <div className="row">
-          <PromoItem productData={products && products?.dailyPromoProduct} promoType={'Daily'} />
-          <PromoItem productData={products && products?.weeklyPromoProduct} promoType={'Weekly'} />
+        <div className="sub-container">
+          <div className="row">
+            <PromoItem productData={products && products?.dailyPromoProduct} promoType={'Daily'} />
+            <PromoItem
+              productData={products && products?.weeklyPromoProduct}
+              promoType={'Weekly'}
+            />
+          </div>
         </div>
       )}
+
       {isLoadingData ? (
         <div className="d-flex justify-content-center pt-5 pb-5">
           <div className="spinner-border" role="status">
@@ -139,7 +145,7 @@ const MainPage = ({ setSearchValueToSend }) => {
           </div>
         </div>
       ) : (
-        <>
+        <div className="sub-container">
           <div className="row">
             <div className="col-lg-12">
               <div className="shadow bg-white rounded ProductNavborder mb-1">
@@ -153,11 +159,12 @@ const MainPage = ({ setSearchValueToSend }) => {
             listedID={'dailyDiscountProducts'}
             products={products && products?.dailyDiscountProducts}
             isLoadingData={isLoadingData}
-            numberOFProducts={6}
+            topSold={false}
             error={error}
           />
-        </>
+        </div>
       )}
+
       {isLoadingData ? (
         <div className="d-flex justify-content-center pt-5 pb-5">
           <div className="spinner-border" role="status">
@@ -165,7 +172,7 @@ const MainPage = ({ setSearchValueToSend }) => {
           </div>
         </div>
       ) : (
-        <>
+        <div className="sub-container">
           <div className="row">
             <div className="col-lg-12">
               <div className="shadow bg-white rounded ProductNavborder mb-1">
@@ -182,8 +189,9 @@ const MainPage = ({ setSearchValueToSend }) => {
             topSold={true}
             error={error}
           />
-        </>
+        </div>
       )}
+
       {isLoadingData ? (
         <div className="d-flex justify-content-center pt-5 pb-5">
           <div className="spinner-border" role="status">
@@ -191,7 +199,7 @@ const MainPage = ({ setSearchValueToSend }) => {
           </div>
         </div>
       ) : (
-        <>
+        <div className="sub-container">
           <div className="row">
             <div className="col-lg-12">
               <div className="shadow bg-white rounded ProductNavborder mb-1">
@@ -208,8 +216,9 @@ const MainPage = ({ setSearchValueToSend }) => {
             topSold={true}
             error={error}
           />
-        </>
+        </div>
       )}
+
       {isLoadingData ? (
         <div className="d-flex justify-content-center pt-5 pb-5">
           <div className="spinner-border" role="status">
@@ -217,7 +226,7 @@ const MainPage = ({ setSearchValueToSend }) => {
           </div>
         </div>
       ) : (
-        <>
+        <div className="sub-container">
           <div className="row">
             <div className="col-lg-12">
               <div className="shadow bg-white rounded ProductNavborder mb-1">
@@ -231,10 +240,10 @@ const MainPage = ({ setSearchValueToSend }) => {
             listedID={'youMayLikeProducts'}
             products={products && products?.youMayLikeProducts}
             isLoadingData={isLoadingData}
-            numberOFProducts={6}
+            topSold={false}
             error={error}
           />
-        </>
+        </div>
       )}
     </div>
   );
