@@ -3,6 +3,10 @@
   text-decoration: none;
 }
 
+.promoText:hover {
+  color: blue;
+}
+
 .discountBadge1 {
   position: absolute;
   right: 0px;

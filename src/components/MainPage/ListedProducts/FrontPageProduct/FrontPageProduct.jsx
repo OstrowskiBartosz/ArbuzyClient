@@ -9,13 +9,17 @@ const FrontPageProduct = ({ product }) => {
           <div className="col-6">
             <div className="mainPageProductIcon px-2 mt-2">
               <Link to={'/product/' + product.productID}>
-                <i className="fas fa-arrow-up-right-from-square mainPageProductIcon fs-5 float-left"></i>
+                <i
+                  className="fas fa-arrow-up-right-from-square mainPageProductIcon fs-5 float-left"
+                  title="move to product page"></i>
               </Link>
             </div>
           </div>
           <div className="col-6">
             <div className="mainPageProductIcon px-2 mt-2">
-              <i className="fas fa-cart-shopping mainPageProductIcon fs-5 float-right"></i>
+              <i
+                className="fas fa-cart-shopping mainPageProductIcon fs-5 float-right"
+                title="add product to cart"></i>
             </div>
           </div>
         </div>

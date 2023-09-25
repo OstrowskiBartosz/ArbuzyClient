@@ -137,7 +137,7 @@ const PromoItem = ({ productData, promoType }) => {
                 <div className="pl-3 pr-3 pb-2">
                   <div className="">
                     <div className="d-inline-block float-left">
-                      <span className=" fs-5 text-dark">Cena regularna:</span>
+                      <span className="fs-5 text-dark">Cena regularna:</span>
                     </div>
                     <div className="d-inline-block float-right">
                       <span className="fs-5 text-dark">

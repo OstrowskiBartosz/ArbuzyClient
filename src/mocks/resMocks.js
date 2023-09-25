@@ -1,52 +1,75 @@
+// MAIN PAGE
+
 export const frontPageProducts = {
   youMayLikeProducts: [
     {
-      productID: 62,
-      productName: 'Fatal1ty B450 GAMING K4',
-      Prices: [{ productID: 62, grossPrice: 479 }],
-      Manufacturer: { manufacturerName: 'ASRock' },
-      Attributes: [{ value: '/images/products/62/4141573_0_i1064.jpg' }]
-    },
-    {
-      productID: 78,
-      productName: 'Core i5-10600K, 4.1 GHz, 12 MB, BOX (BX8070110600K)',
-      Prices: [{ productID: 78, grossPrice: 1229 }],
-      Manufacturer: { manufacturerName: 'Intel' },
-      Attributes: [{ value: '/images/products/78/6731004_1_i1064.jpg' }]
-    },
-    {
-      productID: 19,
-      productName: '545 Series 512GB SATA3 (SSDSC2KW512G8X1)',
-      Prices: [{ productID: 19, grossPrice: 554.91 }],
-      Manufacturer: { manufacturerName: 'Intel' },
-      Attributes: [{ value: '/images/products/19/1497912_0_i1064.jpg' }]
-    },
-    {
-      productID: 56,
-      productName: 'HLDS GP57EB40.AHLE10B',
-      Prices: [{ productID: 56, grossPrice: 136.42 }],
-      Manufacturer: { manufacturerName: 'LG' },
-      Attributes: [{ value: '/images/products/56/5809842_0_i1064.jpg' }]
-    },
-    {
-      productID: 37,
-      productName: 'TUF GeForce RTX 3090 Gaming OC 24GB GDDR6X (TUF-RTX3090-O24G-GAMING)',
-      Prices: [{ productID: 37, grossPrice: 6499 }],
+      productID: 28,
+      productName: 'GeForce RTX 3060 Eagle OC 12GB GDDR6 (GV-N3060EAGLE OC-12GD 2.0)',
+      promotionName: null,
+      promotionDiscount: null,
+      Prices: [{ productID: 28, grossPrice: 2029 }],
       Manufacturer: { manufacturerName: 'Gigabyte' },
-      Attributes: [{ value: '/images/products/37/5943753_5_f.jpg' }]
+      Attributes: [{ value: '/images/products/28/5948080_0_f.jpg' }]
     },
     {
-      productID: 27,
-      productName: '970 EVO 500GB PCIe x4 NVMe (MZ-V7E500BW)',
-      Prices: [{ productID: 27, grossPrice: 498.96 }],
-      Manufacturer: { manufacturerName: 'Samsung' },
-      Attributes: [{ value: '/images/products/27/4160128_0_i1064.jpg' }]
+      productID: 57,
+      productName: 'HLDS GP57EW40.AHLE10B',
+      promotionName: null,
+      promotionDiscount: null,
+      Prices: [
+        { productID: 57, grossPrice: 125 },
+        { productID: 57, grossPrice: 115 },
+        { productID: 57, grossPrice: 100.05 }
+      ],
+      Manufacturer: { manufacturerName: 'Corsair' },
+      Attributes: [{ value: '/images/products/57/5809841_2_i1064.jpg' }]
+    },
+    {
+      productID: 84,
+      productName: 'Ryzen 5 7600X, 4.7 GHz, 32 MB, BOX (100-100000593WOF)',
+      promotionName: null,
+      promotionDiscount: null,
+      Prices: [
+        { productID: 84, grossPrice: 1529.1 },
+        { productID: 84, grossPrice: 1699 }
+      ],
+      Manufacturer: { manufacturerName: 'AMD' },
+      Attributes: [{ value: '/images/products/84/11788491_0_i1064.jpg' }]
+    },
+    {
+      productID: 69,
+      productName: 'TUF Gaming 650W (90YE00D1-B0NA00)',
+      promotionName: null,
+      promotionDiscount: null,
+      Prices: [{ productID: 69, grossPrice: 493 }],
+      Manufacturer: { manufacturerName: 'Asus' },
+      Attributes: [{ value: '/images/products/69/7351414_0_i1064.jpg' }]
+    },
+    {
+      productID: 21,
+      productName: '480GB SATA3 (GP-GSTFS31480GNTD)',
+      promotionName: null,
+      promotionDiscount: null,
+      Prices: [{ productID: 21, grossPrice: 225.76 }],
+      Manufacturer: { manufacturerName: 'Gigabyte' },
+      Attributes: [{ value: '/images/products/21/5803172_3_i1064.jpg' }]
+    },
+    {
+      productID: 18,
+      productName: 'MTS420 120 GB SATA3 (TS120GMTS420)',
+      promotionName: null,
+      promotionDiscount: null,
+      Prices: [{ productID: 18, grossPrice: 109.88 }],
+      Manufacturer: { manufacturerName: 'Transcend' },
+      Attributes: [{ value: '/images/products/18/1137287_0_i1064.jpg' }]
     }
   ],
   mostBoughtCategoryProducts: [
     {
       productID: 13,
       productName: 'Barracuda Pro 1 TB 2.5" SATA III (ST1000LM049)',
+      promotionName: null,
+      promotionDiscount: null,
       productsCount: 2,
       Prices: [{ grossPrice: 264.4 }],
       Manufacturer: { manufacturerName: 'Seagate' },
@@ -55,6 +78,8 @@ export const frontPageProducts = {
     {
       productID: 2,
       productName: 'P300 2 TB 3.5" SATA III (HDWD120UZSVA)',
+      promotionName: null,
+      promotionDiscount: null,
       productsCount: 1,
       Prices: [{ grossPrice: 257.99 }],
       Manufacturer: { manufacturerName: 'Toshiba' },
@@ -63,14 +88,18 @@ export const frontPageProducts = {
     {
       productID: 4,
       productName: 'Blue 500 GB 2.5" SATA III (WD5000LPCX)',
+      promotionName: 'dailyDiscount',
+      promotionDiscount: 6,
       productsCount: 1,
-      Prices: [{ grossPrice: 174.84 }],
+      Prices: [{ grossPrice: 174.84 }, { grossPrice: 164.35 }],
       Manufacturer: { manufacturerName: 'Western Digital' },
       Attributes: [{ value: '/images/products/4/769736_0_i1064.jpeg' }]
     },
     {
       productID: 7,
       productName: '500 GB 2.5" SATA II (MQ01ABD050)',
+      promotionName: null,
+      promotionDiscount: null,
       productsCount: 1,
       Prices: [{ grossPrice: 153.85 }],
       Manufacturer: { manufacturerName: 'Toshiba' },
@@ -79,16 +108,20 @@ export const frontPageProducts = {
     {
       productID: 12,
       productName: 'Barracuda 8 TB 3.5" SATA III (ST8000DM004)',
+      promotionName: null,
+      promotionDiscount: null,
       productsCount: 1,
-      Prices: [{ grossPrice: 846.6 }],
+      Prices: [{ grossPrice: 846.6 }, { grossPrice: 745.01 }],
       Manufacturer: { manufacturerName: 'Seagate' },
       Attributes: [{ value: '/images/products/12/1727818_2_i1064.jpg' }]
     },
     {
       productID: 1,
       productName: 'Barracuda 1 TB 3.5" SATA III (ST1000DM010)',
+      promotionName: null,
+      promotionDiscount: null,
       productsCount: 0,
-      Prices: [{ grossPrice: 161.87 }],
+      Prices: [{ grossPrice: 161.87 }, { grossPrice: 145.68 }],
       Manufacturer: { manufacturerName: 'Seagate' },
       Attributes: [{ value: '/images/products/1/1042371_4_i1064.jpg' }]
     }
@@ -97,6 +130,8 @@ export const frontPageProducts = {
     {
       productID: 13,
       productName: 'Barracuda Pro 1 TB 2.5" SATA III (ST1000LM049)',
+      promotionName: null,
+      promotionDiscount: null,
       productsCount: 2,
       Prices: [{ grossPrice: 264.4 }],
       Manufacturer: { manufacturerName: 'Seagate' },
@@ -105,6 +140,8 @@ export const frontPageProducts = {
     {
       productID: 2,
       productName: 'P300 2 TB 3.5" SATA III (HDWD120UZSVA)',
+      promotionName: null,
+      promotionDiscount: null,
       productsCount: 1,
       Prices: [{ grossPrice: 257.99 }],
       Manufacturer: { manufacturerName: 'Toshiba' },
@@ -113,14 +150,18 @@ export const frontPageProducts = {
     {
       productID: 4,
       productName: 'Blue 500 GB 2.5" SATA III (WD5000LPCX)',
+      promotionName: 'dailyDiscount',
+      promotionDiscount: 6,
       productsCount: 1,
-      Prices: [{ grossPrice: 174.84 }],
+      Prices: [{ grossPrice: 174.84 }, { grossPrice: 164.35 }],
       Manufacturer: { manufacturerName: 'Western Digital' },
       Attributes: [{ value: '/images/products/4/769736_0_i1064.jpeg' }]
     },
     {
       productID: 23,
       productName: 'UV500 240GB SATA3 (SUV500/240G)',
+      promotionName: null,
+      promotionDiscount: null,
       productsCount: 1,
       Prices: [{ grossPrice: 179 }],
       Manufacturer: { manufacturerName: 'Kingston' },
@@ -129,39 +170,192 @@ export const frontPageProducts = {
     {
       productID: 12,
       productName: 'Barracuda 8 TB 3.5" SATA III (ST8000DM004)',
+      promotionName: null,
+      promotionDiscount: null,
       productsCount: 1,
-      Prices: [{ grossPrice: 846.6 }],
+      Prices: [{ grossPrice: 846.6 }, { grossPrice: 745.01 }],
       Manufacturer: { manufacturerName: 'Seagate' },
       Attributes: [{ value: '/images/products/12/1727818_2_i1064.jpg' }]
     },
     {
       productID: 7,
       productName: '500 GB 2.5" SATA II (MQ01ABD050)',
+      promotionName: null,
+      promotionDiscount: null,
       productsCount: 1,
       Prices: [{ grossPrice: 153.85 }],
       Manufacturer: { manufacturerName: 'Toshiba' },
       Attributes: [{ value: '/images/products/7/483906_0_i1064.jpg' }]
     }
   ],
-  promoProducts: {
-    productDataDaily: {
-      Attributes: [{ value: '/images/products/13/1695259_2_i1064.jpg' }],
-      Manufacturer: { manufacturerName: 'Seagate' },
-      Prices: [{ grossPrice: 264.4, promoPrice: 235.2 }],
-      productID: 13,
-      productName: 'Barracuda Pro 1 TB 2.5" SATA III (ST1000LM049)',
-      productsCount: 2
+  discountProducts: [
+    {
+      productID: 4,
+      productName: 'Blue 500 GB 2.5" SATA III (WD5000LPCX)',
+      promotionName: 'dailyDiscount',
+      promotionDiscount: 6,
+      Prices: [
+        { grossPrice: 174.84, fromDate: null, toDate: null },
+        {
+          grossPrice: 164.35,
+          fromDate: '2023-09-17T22:00:00.000Z',
+          toDate: '2023-09-18T22:00:00.000Z'
+        }
+      ],
+      Manufacturer: { manufacturerName: 'Western Digital' },
+      Attributes: [{ value: '/images/products/4/769736_0_i1064.jpeg' }]
     },
-    productDataWeekly: {
-      Attributes: [{ value: '/images/products/13/1695259_2_i1064.jpg' }],
-      Manufacturer: { manufacturerName: 'Seagate' },
-      Prices: [{ grossPrice: 264.4, promoPrice: 235.2 }],
-      productID: 13,
-      productName: 'Barracuda Pro 1 TB 2.5" SATA III (ST1000LM049)',
-      productsCount: 0
+    {
+      productID: 14,
+      productName: 'Digital Black 1 TB 2.5" SATA III (WD10JPLX)',
+      promotionName: 'dailyDiscount',
+      promotionDiscount: 10,
+      Prices: [
+        { grossPrice: 369.59, fromDate: null, toDate: null },
+        {
+          grossPrice: 332.63,
+          fromDate: '2023-09-17T22:00:00.000Z',
+          toDate: '2023-09-18T22:00:00.000Z'
+        }
+      ],
+      Manufacturer: { manufacturerName: 'Western Digital' },
+      Attributes: [{ value: '/images/products/14/883195_1_i1064.jpeg' }]
+    },
+    {
+      productID: 22,
+      productName: 'SU900 256GB SATA3 (ASU900SS-256GM-C)',
+      promotionName: 'dailyDiscount',
+      promotionDiscount: 8,
+      Prices: [
+        { grossPrice: 224.8, fromDate: null, toDate: null },
+        {
+          grossPrice: 206.82,
+          fromDate: '2023-09-17T22:00:00.000Z',
+          toDate: '2023-09-18T22:00:00.000Z'
+        }
+      ],
+      Manufacturer: { manufacturerName: 'ADATA' },
+      Attributes: [{ value: '/images/products/22/976060_0_i1064.jpg' }]
+    },
+    {
+      productID: 37,
+      productName: 'TUF GeForce RTX 3090 Gaming OC 24GB GDDR6X (TUF-RTX3090-O24G-GAMING)',
+      promotionName: 'dailyDiscount',
+      promotionDiscount: 7,
+      Prices: [
+        { grossPrice: 6499, fromDate: null, toDate: null },
+        {
+          grossPrice: 6044.07,
+          fromDate: '2023-09-17T22:00:00.000Z',
+          toDate: '2023-09-18T22:00:00.000Z'
+        }
+      ],
+      Manufacturer: { manufacturerName: 'Gigabyte' },
+      Attributes: [{ value: '/images/products/37/5943753_5_f.jpg' }]
+    },
+    {
+      productID: 45,
+      productName: 'TUF Gaming GT501 RGB (90DC0012-B49000)',
+      promotionName: 'dailyDiscount',
+      promotionDiscount: 5,
+      Prices: [
+        { grossPrice: 929, fromDate: null, toDate: null },
+        {
+          grossPrice: 882.55,
+          fromDate: '2023-09-17T22:00:00.000Z',
+          toDate: '2023-09-18T22:00:00.000Z'
+        }
+      ],
+      Manufacturer: { manufacturerName: 'Gigabyte' },
+      Attributes: [{ value: '/images/products/45/7351418_0_i1064.jpg' }]
+    },
+    {
+      productID: 72,
+      productName: 'Builder CX 750W (CP-9020061-EU)',
+      promotionName: 'dailyDiscount',
+      promotionDiscount: 9,
+      Prices: [
+        { grossPrice: 518.86, fromDate: null, toDate: null },
+        {
+          grossPrice: 472.16,
+          fromDate: '2023-09-17T22:00:00.000Z',
+          toDate: '2023-09-18T22:00:00.000Z'
+        }
+      ],
+      Manufacturer: { manufacturerName: 'Corsair' },
+      Attributes: [{ value: '/images/products/72/541540_4_i1064.jpg' }]
     }
+  ],
+  dailyPromoProduct: {
+    productID: 80,
+    quantity: 14,
+    productName: 'Core i5-12600K, 3.7 GHz, 20 MB, BOX (BX8071512600K)',
+    promotionName: 'dailyPromo',
+    promotionDiscount: 20,
+    Prices: [
+      { grossPrice: 1649, fromDate: null, toDate: null },
+      {
+        grossPrice: 1319.2,
+        fromDate: '2023-09-17T22:00:00.000Z',
+        toDate: '2023-09-18T22:00:00.000Z'
+      }
+    ],
+    Manufacturer: { manufacturerName: 'Intel' },
+    Attributes: [{ value: '/images/products/80/5949746_0_i1064.jpg' }]
+  },
+  weeklyPromoProduct: {
+    productID: 89,
+    quantity: 15,
+    productName: 'Ryzen 5 5600G, 3.9 GHz, 16 MB, BOX (100-100000252BOX)',
+    promotionName: 'weeklyPromo',
+    promotionDiscount: 20,
+    Prices: [
+      { grossPrice: 899, fromDate: null, toDate: null },
+      {
+        grossPrice: 809.1,
+        fromDate: '2023-09-17T22:00:00.000Z',
+        toDate: '2023-09-24T22:00:00.000Z'
+      }
+    ],
+    Manufacturer: { manufacturerName: 'AMD' },
+    Attributes: [{ value: '/images/products/89/8536079_0_i1064.jpg' }]
   }
 };
+
+export const promoItemWeekly = {
+  productID: 89,
+  quantity: 15,
+  productName: 'Ryzen 5 5600G, 3.9 GHz, 16 MB, BOX (100-100000252BOX)',
+  promotionName: 'weeklyPromo',
+  promotionDiscount: 20,
+  Prices: [
+    { grossPrice: 899, fromDate: null, toDate: null },
+    {
+      grossPrice: 809.1,
+      fromDate: '2023-09-17T22:00:00.000Z',
+      toDate: '2023-09-24T22:00:00.000Z'
+    }
+  ],
+  Manufacturer: { manufacturerName: 'AMD' },
+  Attributes: [{ value: '/images/products/89/8536079_0_i1064.jpg' }]
+};
+
+export const promoItemDaily = {
+  productID: 80,
+  quantity: 14,
+  productName: 'Core i5-12600K, 3.7 GHz, 20 MB, BOX (BX8071512600K)',
+  promotionName: 'dailyPromo',
+  promotionDiscount: 20,
+  Prices: [
+    { grossPrice: 1649, fromDate: null, toDate: null },
+    { grossPrice: 1319.2, fromDate: '2023-09-17T22:00:00.000Z', toDate: '2023-09-18T22:00:00.000Z' }
+  ],
+  Manufacturer: { manufacturerName: 'Intel' },
+  Attributes: [{ value: '/images/products/80/5949746_0_i1064.jpg' }]
+};
+
+// /MAIN PAGE
+
 export const profileInvoiceList = [
   {
     VATNumber: null,

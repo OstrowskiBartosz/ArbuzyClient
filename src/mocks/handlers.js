@@ -49,6 +49,7 @@ export const handlers = [
   // MAIN PAGE
   rest.get(`${process.env.REACT_APP_API}/product/frontPageProducts`, (req, res, ctx) => {
     return res(ctx.json({ data: frontPageProducts, message: 'Products retrived.' }));
+    // return res(ctx.status(400));
   }),
 
   // CART

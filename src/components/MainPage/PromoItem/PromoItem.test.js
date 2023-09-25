@@ -3,57 +3,56 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MockProviders } from '../../../setupTests';
 import PromoItem from './PromoItem';
 const resMocks = require('../../../mocks/resMocks.js');
+import { act } from 'react-dom/test-utils';
 
-describe('MainPage component tests', () => {
+describe('PromoItem subcomponent tests', () => {
   it('should show load product data', async () => {
-    const productDataWeekly = resMocks.productDataWeekly;
+    const promoItemWeekly = resMocks.promoItemWeekly;
     render(
       <MockProviders>
-        <PromoItem productData={productDataWeekly} promoType={'Weekly'} />
+        <PromoItem productData={promoItemWeekly} promoType={'Weekly'} />
       </MockProviders>
     );
 
-    const spanElement = await screen.findByText(/Barracuda Pro 1 TB 2.5"/);
+    const spanElement = await screen.findByText(/Ryzen 5 5600G, 3.9 GHz, 16 MB, BOX/);
+    await expect(spanElement).toBeInTheDocument();
+  });
+  it('should show manufacturer name together with product name', async () => {
+    const promoItemWeekly = resMocks.promoItemWeekly;
+    render(
+      <MockProviders>
+        <PromoItem productData={promoItemWeekly} promoType={'Weekly'} />
+      </MockProviders>
+    );
+
+    const spanElement = await screen.findByText('AMD Ryzen 5 5600G, 3.9 GHz, 16 MB, BOX');
     await expect(spanElement).toBeInTheDocument();
   });
   it('should show the button', async () => {
-    const productDataWeekly = resMocks.productDataWeekly;
+    const promoItemWeekly = resMocks.promoItemWeekly;
     render(
       <MockProviders>
-        <PromoItem productData={productDataWeekly} promoType={'Weekly'} />
+        <PromoItem productData={promoItemWeekly} promoType={'Weekly'} />
       </MockProviders>
     );
 
     expect(screen.getByRole('button')).toBeInTheDocument();
   });
   it('should show text on the button', async () => {
-    const productDataWeekly = resMocks.productDataWeekly;
+    const promoItemWeekly = resMocks.promoItemWeekly;
     render(
       <MockProviders>
-        <PromoItem productData={productDataWeekly} promoType={'Weekly'} />
+        <PromoItem productData={promoItemWeekly} promoType={'Weekly'} />
       </MockProviders>
     );
 
     expect(screen.getByRole('button')).toHaveTextContent(/Sprawdź produkt/);
   });
-  it('should show manufacturer name together with product name', async () => {
-    const productDataWeekly = resMocks.productDataWeekly;
-    render(
-      <MockProviders>
-        <PromoItem productData={productDataWeekly} promoType={'Weekly'} />
-      </MockProviders>
-    );
-
-    const spanElement = await screen.findByText(
-      'Seagate Barracuda Pro 1 TB 2.5" SATA III (ST1000LM049)'
-    );
-    await expect(spanElement).toBeInTheDocument();
-  });
   it('should move to product page after clicking product button', async () => {
-    const productDataWeekly = resMocks.productDataWeekly;
+    const promoItemWeekly = resMocks.promoItemWeekly;
     render(
       <MockProviders>
-        <PromoItem productData={productDataWeekly} promoType={'Weekly'} />
+        <PromoItem productData={promoItemWeekly} promoType={'Weekly'} />
       </MockProviders>
     );
 
@@ -63,33 +62,32 @@ describe('MainPage component tests', () => {
 
     await waitFor(() => {
       expect(window.location.pathname + window.location.search).toBe(
-        `/product/${productDataWeekly.productID}`
+        `/product/${promoItemWeekly.productID}`
       );
     });
   });
-  it('should change text color to blue on mouse over', async () => {
-    const productDataWeekly = resMocks.productDataWeekly;
+  it('regular price should not be bold', async () => {
+    const promoItemWeekly = resMocks.promoItemWeekly;
     render(
       <MockProviders>
-        <PromoItem productData={productDataWeekly} promoType={'Weekly'} />
+        <PromoItem productData={promoItemWeekly} promoType={'Weekly'} />
       </MockProviders>
     );
 
-    await waitFor(() => {
-      fireEvent.mouseOver(screen.getByText(/Mega oferta/));
-    });
-    expect(screen.getByText(/Mega oferta/)).toHaveStyle('color: rgb(0, 123, 255, 1)');
+    const spanElement = await screen.findByText('Cena regularna:');
+
+    expect(spanElement.classList.contains('fw-bold')).toBe(false);
   });
-  it('should have black color text as default', async () => {
-    const productDataWeekly = resMocks.productDataWeekly;
+  it('regular price should be bold', async () => {
+    const promoItemWeekly = resMocks.promoItemWeekly;
     render(
       <MockProviders>
-        <PromoItem productData={productDataWeekly} promoType={'Weekly'} />
+        <PromoItem productData={promoItemWeekly} promoType={'Weekly'} />
       </MockProviders>
     );
 
-    const spanElement = await screen.findByText('Cena standardowa:');
+    const spanElement = await screen.findByText('Cena tylko teraz:');
 
-    expect(spanElement).toHaveStyle('color: #343a40!important');
+    expect(spanElement.classList.contains('fw-bold')).toBe(true);
   });
 });

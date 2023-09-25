@@ -31,15 +31,15 @@ const categoryList = [
 const MainPage = ({ setSearchValueToSend }) => {
   const dispatch = useDispatch();
   const products = useSelector((state) => ({
-    mostBoughtCategoryProducts: state.products.mostBoughtCategoryProducts,
-    mostBoughtProducts: state.products.mostBoughtProducts,
-    youMayLikeProducts: state.products.youMayLikeProducts,
-    dailyPromoProduct: state.products.dailyPromoProduct,
-    weeklyPromoProduct: state.products.weeklyPromoProduct,
-    dailyDiscountProducts: state.products.dailyDiscountProducts
+    mostBoughtCategoryProducts: state.products?.mostBoughtCategoryProducts,
+    mostBoughtProducts: state.products?.mostBoughtProducts,
+    youMayLikeProducts: state.products?.youMayLikeProducts,
+    dailyPromoProduct: state.products?.dailyPromoProduct,
+    weeklyPromoProduct: state.products?.weeklyPromoProduct,
+    dailyDiscountProducts: state.products?.dailyDiscountProducts
   }));
 
-  const firstFetch = products?.mostBoughtCategoryProducts?.length === 0 ? true : false;
+  const firstFetch = products && products?.mostBoughtCategoryProducts?.length === 0 ? true : false;
   const [isLoadingData, setIsLoadingData] = useState(firstFetch);
   const [error, setError] = useState(null);
 
@@ -60,12 +60,12 @@ const MainPage = ({ setSearchValueToSend }) => {
     const refreshTimer = new Date().getTime();
     dispatch(
       updateProducts({
-        mostBoughtCategoryProducts: fetchedProducts.mostBoughtCategoryProducts,
-        mostBoughtProducts: fetchedProducts.mostBoughtProducts,
-        youMayLikeProducts: fetchedProducts.youMayLikeProducts,
-        dailyPromoProduct: fetchedProducts.dailyPromoProduct,
-        weeklyPromoProduct: fetchedProducts.weeklyPromoProduct,
-        dailyDiscountProducts: fetchedProducts.discountProducts,
+        mostBoughtCategoryProducts: fetchedProducts?.mostBoughtCategoryProducts,
+        mostBoughtProducts: fetchedProducts?.mostBoughtProducts,
+        youMayLikeProducts: fetchedProducts?.youMayLikeProducts,
+        dailyPromoProduct: fetchedProducts?.dailyPromoProduct,
+        weeklyPromoProduct: fetchedProducts?.weeklyPromoProduct,
+        dailyDiscountProducts: fetchedProducts?.discountProducts,
         lastUpdate: refreshTimer
       })
     );
@@ -116,8 +116,13 @@ const MainPage = ({ setSearchValueToSend }) => {
           ))}
         </div>
       </div>
+      {error && (
+        <div className="d-flex justify-content-center pt-5 pb-5">
+          <span>{error}</span>
+        </div>
+      )}
       <RefreshTimer
-        dataTopCategory={products.mostBoughtCategoryProducts}
+        dataTopCategory={products && products?.mostBoughtCategoryProducts}
         handleFetchData={handleFetchData}
       />
       {isLoadingData ? (

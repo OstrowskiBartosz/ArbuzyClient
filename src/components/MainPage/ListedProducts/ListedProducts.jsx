@@ -32,7 +32,7 @@ const ListedProducts = ({ listedID, products, isLoadingData, topSold, error }) =
                 className="scrollArrowLeft shadow circle d-flex"
                 onClick={() => getScrollValue('left')}>
                 <div className="m-auto">
-                  <i className="fa-solid fa-arrow-left"></i>
+                  <i className="fa-solid fa-arrow-left" title="Horizontal Scroll Left"></i>
                 </div>
               </div>
             ) : null}
@@ -86,7 +86,7 @@ const ListedProducts = ({ listedID, products, isLoadingData, topSold, error }) =
                 className="scrollArrowRight shadow circle d-flex"
                 onClick={() => getScrollValue('right')}>
                 <div className="m-auto">
-                  <i className="fa-solid fa-arrow-right"></i>
+                  <i className="fa-solid fa-arrow-right" title="Horizontal Scroll Right"></i>
                 </div>
               </div>
             ) : null}
