@@ -30,14 +30,13 @@ const categoryList = [
 
 const MainPage = ({ setSearchValueToSend }) => {
   const dispatch = useDispatch();
-  const products = useSelector((state) => ({
-    mostBoughtCategoryProducts: state.products?.mostBoughtCategoryProducts,
-    mostBoughtProducts: state.products?.mostBoughtProducts,
-    youMayLikeProducts: state.products?.youMayLikeProducts,
-    dailyPromoProduct: state.products?.dailyPromoProduct,
-    weeklyPromoProduct: state.products?.weeklyPromoProduct,
-    dailyDiscountProducts: state.products?.dailyDiscountProducts
-  }));
+  let products = {};
+  products.mostBoughtCategoryProducts = useSelector((state) => state.products.mostBoughtCategoryProducts);
+  products.mostBoughtProducts = useSelector((state) => state.products.mostBoughtProducts);
+  products.youMayLikeProducts = useSelector((state) => state.products.youMayLikeProducts);
+  products.dailyPromoProduct = useSelector((state) => state.products.dailyPromoProduct);
+  products.weeklyPromoProduct = useSelector((state) => state.products.weeklyPromoProduct);
+  products.dailyDiscountProducts = useSelector((state) => state.products.dailyDiscountProducts);
 
   const firstFetch = products && products?.mostBoughtCategoryProducts?.length === 0 ? true : false;
   const [isLoadingData, setIsLoadingData] = useState(firstFetch);
@@ -121,10 +120,7 @@ const MainPage = ({ setSearchValueToSend }) => {
           <span>{error}</span>
         </div>
       )}
-      <RefreshTimer
-        dataTopCategory={products && products?.mostBoughtCategoryProducts}
-        handleFetchData={handleFetchData}
-      />
+      <RefreshTimer dataTopCategory={products && products?.mostBoughtCategoryProducts} handleFetchData={handleFetchData} />
       {isLoadingData ? (
         <div className="d-flex justify-content-center pt-5 pb-5">
           <div className="spinner-border" role="status">
@@ -135,10 +131,7 @@ const MainPage = ({ setSearchValueToSend }) => {
         <div className="sub-container">
           <div className="row">
             <PromoItem productData={products && products?.dailyPromoProduct} promoType={'Daily'} />
-            <PromoItem
-              productData={products && products?.weeklyPromoProduct}
-              promoType={'Weekly'}
-            />
+            <PromoItem productData={products && products?.weeklyPromoProduct} promoType={'Weekly'} />
           </div>
         </div>
       )}

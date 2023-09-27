@@ -136,10 +136,3 @@ describe('SortPanel subcomponent tests', () => {
     expect(await screen.findByRole('button', { name: 'cena malejąco' })).toBeInTheDocument();
   });
 });
-
-// isLoading={isLoadingProductsData} // true false
-// NumberOfpages={productsData && productsData.NumberOfpages}
-// activePage={productsData && productsData.activePage}
-// ProductsData={productsData && productsData.products}
-// sortSettings={sortSettings}
-// fetchSearchData={fetchSearchData}

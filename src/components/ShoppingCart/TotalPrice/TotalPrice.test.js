@@ -6,14 +6,15 @@ const resMocks = require('../../../mocks/resMocks.js');
 describe('TotalPrice component tests', () => {
   it('should display total price of products', async () => {
     const { totalPriceOfProducts } = resMocks.cartItems3Items.cartData;
-    const replacedTotalPriceOFProducts = String(totalPriceOfProducts).replace('.', ',');
+    const price = String(parseFloat(String(totalPriceOfProducts)).toFixed(2)).replace('.', ',');
     render(
       <MockProviders>
         <TotalPrice blockUI={() => {}} TotalPrice={totalPriceOfProducts} />
       </MockProviders>
     );
 
-    expect(await screen.findByText(`${replacedTotalPriceOFProducts} zł`)).toBeInTheDocument();
+    console.log;
+    expect(await screen.findByText(`${price} zł`)).toBeInTheDocument();
   });
   it('should display button with cartsummary url', async () => {
     const { totalPriceOfProducts } = resMocks.cartItems3Items.cartData;

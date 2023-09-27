@@ -20,6 +20,7 @@ describe('MainPage component tests', () => {
     const spanElement = await screen.findByText('Kategorie Produktów');
     expect(spanElement).toBeInTheDocument();
   });
+
   it('should have category list', async () => {
     render(
       <MockProviders>
@@ -30,6 +31,7 @@ describe('MainPage component tests', () => {
     const spanElement = await screen.findByText(/Kategorie Produktów/);
     expect(spanElement).toBeInTheDocument();
   });
+
   it('should move to search results after click category name', async () => {
     render(
       <MockProviders>
@@ -46,6 +48,7 @@ describe('MainPage component tests', () => {
       expect(window.location.pathname + window.location.search).toBe('/search?filterCategory=[3]');
     });
   });
+
   it('should refresh and load all new promo and listed products after clicking refresh button', async () => {
     render(
       <MockProviders>
@@ -104,6 +107,7 @@ describe('MainPage component tests', () => {
     const elements = await screen.findByText(/Może Ci się spodobać/);
     expect(elements).toBeInTheDocument();
   });
+
   it('should handle server error', async () => {
     server.use(
       rest.get(`${process.env.REACT_APP_API}/product/frontPageProducts`, (req, res, ctx) => {

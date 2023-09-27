@@ -41,7 +41,7 @@ describe('Invoice component tests', () => {
       </MockProviders>
     );
 
-    const errorElement = await screen.findByText(/Ooops, nie udało się pobrać elementów!/);
+    const errorElement = await screen.findByText(/Ooops, spróbuj ponownie później!/);
 
     expect(errorElement).toBeInTheDocument();
   });

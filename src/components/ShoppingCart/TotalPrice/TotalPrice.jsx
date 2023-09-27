@@ -13,7 +13,7 @@ const TotalPrice = ({ blockUI, TotalPrice }) => {
             </div>
             <div className="col-6">
               <span id="totalPrice" className="fw-bold fs-4 pr-3 text-right">
-                {String(TotalPrice).replace('.', ',')} zł
+                {String(parseFloat(String(TotalPrice)).toFixed(2)).replace('.', ',')} zł
               </span>
             </div>
           </div>

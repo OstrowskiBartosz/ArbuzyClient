@@ -11,22 +11,44 @@ describe('ProductTable subcomponent tests', () => {
         <ProductTable cartData={cartItems} />
       </MockProviders>
     );
-    await screen.findByText(/Gigabyte B660M DS3H DDR4/);
+    await screen.findByText(/Asus DRW-24D5MT\/BLK\/B\/AS/);
     const productElements = await screen.findAllByRole('link');
     expect(productElements.length).toBe(3);
   });
 
-  it('should show move to product url after clicking product', async () => {
+  it('should move to product url after clicking product', async () => {
     const cartItems = resMocks.cartItems3Items;
     render(
       <MockProviders>
         <ProductTable cartData={cartItems} />
       </MockProviders>
     );
-    const productElement = await screen.findByText(/Gigabyte B660M DS3H DDR4/);
+    const productElement = await screen.findByText(/Asus DRW-24D5MT\/BLK\/B\/AS/);
     fireEvent.click(productElement);
     await waitFor(() => {
-      expect(window.location.pathname).toBe('/product/58');
+      expect(window.location.pathname).toBe('/product/52');
     });
+  });
+
+  it('should have original price crossed', async () => {
+    const cartItems = resMocks.cartItems3Items;
+    render(
+      <MockProviders>
+        <ProductTable cartData={cartItems} />
+      </MockProviders>
+    );
+    const productElement = await screen.findByText(/174,84/);
+    expect(productElement.classList.contains('text-decoration-line-through')).toBe(true);
+  });
+
+  it('should have proper total price of products', async () => {
+    const cartItems = resMocks.cartItems3Items;
+    render(
+      <MockProviders>
+        <ProductTable cartData={cartItems} />
+      </MockProviders>
+    );
+    const productElement = await screen.findByText(/Cena całkowita: 1249,68 zł/);
+    expect(productElement).toBeInTheDocument();
   });
 });

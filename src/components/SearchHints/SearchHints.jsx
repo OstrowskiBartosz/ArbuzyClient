@@ -117,106 +117,61 @@ const SearchHints = ({ searchValue, sendHintsSearchValue }) => {
               ? 'hintsTable pl-2 pb-3'
               : 'hidden'
           }>
-          <table className="w-100">
-            {error ? (
+          {error ? (
+            <table className="w-100">
               <tbody className="text-center">
                 <tr className="text-center mb-5">
                   <td id="error">Error: {error}</td>
                 </tr>
               </tbody>
-            ) : null}
+            </table>
+          ) : null}
 
-            {isLoadingHints && searchValue.length > 0 ? (
-              <>
-                <thead>
-                  <tr>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody className="text-center">
-                  <tr className="spinner-border" role="status">
-                    <td className="sr-only">Loading...</td>
-                  </tr>
-                </tbody>
-              </>
-            ) : null}
+          {isLoadingHints && searchValue.length > 0 ? (
+            <table className="w-100 mb-5">
+              <thead>
+                <tr>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody className="text-center">
+                <tr className="spinner-border" role="status">
+                  <td className="sr-only">Loading...</td>
+                </tr>
+              </tbody>
+            </table>
+          ) : null}
 
-            {!isLoadingHints && searchValue.length > 0 ? (
-              <>
-                <thead>
-                  <tr>
-                    <th>Produkty:</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {hintsData.products.length > 0 ? (
-                    <ListHints
-                      data={hintsData.products}
-                      resource={'product'}
-                      hideHints={hideHints}
-                    />
-                  ) : (
-                    <tr>
-                      <td>brak produktów</td>
-                    </tr>
-                  )}
-                </tbody>
-                <thead>
-                  <tr>
-                    <th>Kategorie:</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {hintsData.categories.length > 0 ? (
-                    <ListHints
-                      data={hintsData.categories}
-                      resource={'category'}
-                      hideHints={hideHints}
-                    />
-                  ) : (
-                    <tr>
-                      <td>brak kategorii</td>
-                    </tr>
-                  )}
-                </tbody>
-                <thead>
-                  <tr>
-                    <th>Producenci:</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {hintsData.manufacturers.length > 0 ? (
-                    <ListHints
-                      data={hintsData.manufacturers}
-                      resource={'manufacturer'}
-                      hideHints={hideHints}
-                    />
-                  ) : (
-                    <tr>
-                      <td>brak producentów</td>
-                    </tr>
-                  )}
-                </tbody>
-              </>
-            ) : null}
+          {!isLoadingHints && searchValue.length > 0 ? (
+            <>
+              <ListHints
+                data={hintsData.products}
+                resource={'product'}
+                hideHints={hideHints}
+                searchResource={'Produkty'}
+              />
+              <ListHints
+                data={hintsData.categories}
+                resource={'category'}
+                hideHints={hideHints}
+                searchResource={'Kategorie'}
+              />
+              <ListHints
+                data={hintsData.manufacturers}
+                resource={'manufacturer'}
+                hideHints={hideHints}
+                searchResource={'Producenci'}
+              />
+            </>
+          ) : null}
 
-            {lastSearchedData.length > 0 ? (
-              <>
-                <thead>
-                  <tr>
-                    <th>Ostatnio szukane:</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <ListLastSearched
-                    data={lastSearchedData}
-                    hideHints={hideHints}
-                    removeLastSearched={removeLastSearched}
-                  />
-                </tbody>
-              </>
-            ) : null}
-          </table>
+          {lastSearchedData.length > 0 ? (
+            <ListLastSearched
+              data={lastSearchedData}
+              hideHints={hideHints}
+              removeLastSearched={removeLastSearched}
+            />
+          ) : null}
         </div>
       </div>
     </div>

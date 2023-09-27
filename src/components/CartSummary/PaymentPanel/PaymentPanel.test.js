@@ -39,6 +39,7 @@ describe('PaymentPanel subcomponent tests', () => {
       expect(errorMessage).toBeInTheDocument();
     });
   });
+
   it('should show chosen payment method with proper class', async () => {
     render(
       <MockProviders>
@@ -55,7 +56,7 @@ describe('PaymentPanel subcomponent tests', () => {
     expect(clickedMethod.parentElement.classList.contains('payment-block-active')).toBe(true);
   });
 
-  it('should show not chosen methods as grey', async () => {
+  it('should show not active methods as black', async () => {
     render(
       <MockProviders>
         <PaymentPanel

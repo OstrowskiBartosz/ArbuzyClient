@@ -354,7 +354,7 @@ export const promoItemDaily = {
   Attributes: [{ value: '/images/products/80/5949746_0_i1064.jpg' }]
 };
 
-// /MAIN PAGE
+// PROFILE
 
 export const profileInvoiceList = [
   {
@@ -459,56 +459,64 @@ export const InvoiceItems3Items = {
   streetName: 'Ozimska 215/55'
 };
 
+// CART
+
 export const cartItems3Items = {
   cartData: {
-    cartID: 4,
+    cartID: 2,
+    userID: 3,
     numberOfProducts: 3,
-    totalPriceOfProducts: 8003.99,
-    totalQuantityofProducts: 5
+    totalQuantityofProducts: 6,
+    totalPriceOfProducts: 1249.68
   },
   cartItemsData: [
     {
+      cartItemID: 2,
+      cartID: 2,
+      productID: 20,
+      quantity: 2,
       Product: {
-        Attributes: [{ value: '/images/products/58/9642637_0_i1064.jpg' }],
-        Manufacturer: { manufacturerName: 'Gigabyte' },
-        Prices: [{ grossPrice: 535 }],
-        categoryID: 7,
-        productID: 58,
-        productName: 'B660M DS3H DDR4'
-      },
-      cartID: 4,
-      cartItemID: 12,
-      productID: 58,
-      quantity: 3
+        productID: 20,
+        categoryID: 2,
+        productName: 'BarraCuda 250GB 2.5" SATA3 (ZA250CM1A002)',
+        promotionName: null,
+        promotionDiscount: null,
+        Prices: [{ grossPrice: 179 }],
+        Manufacturer: { manufacturerName: 'Seagate' },
+        Attributes: [{ value: '/images/products/20/5939179_4_i1064.jpg' }]
+      }
     },
     {
+      cartItemID: 3,
+      cartID: 2,
+      productID: 4,
+      quantity: 4,
       Product: {
-        Attributes: [{ value: '/images/products/33/5948207_0_i1064.jpg' }],
-        Manufacturer: { manufacturerName: 'MSI' },
-        Prices: [{ grossPrice: 3399.99 }],
-        categoryID: 3,
-        productID: 33,
-        productName:
-          'GeForce RTX 3060 Ti Gaming Z Trio 8GB GDDR6 (RTX 3060 Ti GAMING Z TRIO 8G LHR)'
-      },
-      cartID: 4,
-      cartItemID: 13,
-      productID: 33,
-      quantity: 1
+        productID: 4,
+        categoryID: 1,
+        productName: 'Blue 500 GB 2.5" SATA III (WD5000LPCX)',
+        promotionName: 'dailyPromo',
+        promotionDiscount: 20,
+        Prices: [{ grossPrice: 174.84 }, { grossPrice: 164.35 }, { grossPrice: 139.87 }],
+        Manufacturer: { manufacturerName: 'Western Digital' },
+        Attributes: [{ value: '/images/products/4/769736_0_i1064.jpeg' }]
+      }
     },
     {
+      cartItemID: 4,
+      cartID: 2,
+      productID: 52,
+      quantity: 4,
       Product: {
-        Attributes: [{ value: '/images/products/76/5949745_0_i1064.jpg' }],
-        Manufacturer: { manufacturerName: 'Intel' },
-        Prices: [{ grossPrice: 2999 }],
-        categoryID: 8,
-        productID: 76,
-        productName: 'Core i9-12900K, 3.2 GHz, 30 MB, BOX (BX8071512900K)'
-      },
-      cartID: 4,
-      cartItemID: 14,
-      productID: 76,
-      quantity: 1
+        productID: 52,
+        categoryID: 4,
+        productName: 'DRW-24D5MT/BLK/B/AS (90DD01Y0-B10010)',
+        promotionName: 'dailyDiscount',
+        promotionDiscount: 12,
+        Prices: [{ grossPrice: 94.38 }, { grossPrice: 83.05 }],
+        Manufacturer: { manufacturerName: 'Asus' },
+        Attributes: [{ value: '/images/products/52/774552_0_i1064.jpeg' }]
+      }
     }
   ]
 };
@@ -518,6 +526,8 @@ export const logInInfo = {
   message: 'Logged out.'
   // message: 'Logged.'
 };
+
+// SEARCHRESULT
 
 export const searchResults_Barracuda = {
   products: [
@@ -750,6 +760,8 @@ export const searchResults_Barracuda = {
   maxPrice: 846.6
 };
 
+// PRODUCT
+
 export const productID_13 = {
   productID: 13,
   categoryID: 1,
@@ -827,6 +839,8 @@ export const productID_4 = {
     }
   ]
 };
+
+// SEARCHHINTS
 
 export const lastSearched = [
   {
@@ -1106,21 +1120,20 @@ export const searchResultProducts = {
   maxPrice: 846.6
 };
 
-export const productDataWeekly = {
-  Attributes: [{ value: '/images/products/13/1695259_2_i1064.jpg' }],
-  Manufacturer: { manufacturerName: 'Seagate' },
-  Prices: [{ grossPrice: 264.4, promoPrice: 235.2 }],
-  productID: 13,
-  productName: 'Barracuda Pro 1 TB 2.5" SATA III (ST1000LM049)',
-  productsCount: 0
+export const sortSettings = {
+  productLimit: 10,
+  productSort: 'domyślne',
+  productPage: 1
 };
-export const productDataDaily = {
-  Attributes: [{ value: '/images/products/13/1695259_2_i1064.jpg' }],
-  Manufacturer: { manufacturerName: 'Seagate' },
-  Prices: [{ grossPrice: 264.4, promoPrice: 235.2 }],
-  productID: 13,
-  productName: 'Barracuda Pro 1 TB 2.5" SATA III (ST1000LM049)',
-  productsCount: 2
+
+export const priceSettings = {
+  priceFrom: 161.87,
+  priceTo: 846.6
+};
+
+export const priceRange = {
+  minPrice: 161.87,
+  maxPrice: 846.6
 };
 
 export const searchResultsWithB = {
@@ -3079,22 +3092,6 @@ export const searchResultsWithBar = {
   numberOfProducts: 7,
   activePage: 1,
   NumberOfpages: 1,
-  minPrice: 161.87,
-  maxPrice: 846.6
-};
-
-export const sortSettings = {
-  productLimit: 10,
-  productSort: 'domyślne',
-  productPage: 1
-};
-
-export const priceSettings = {
-  priceFrom: 161.87,
-  priceTo: 846.6
-};
-
-export const priceRange = {
   minPrice: 161.87,
   maxPrice: 846.6
 };

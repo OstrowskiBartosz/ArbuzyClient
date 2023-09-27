@@ -17,7 +17,7 @@ describe('ShoppingCart component tests', () => {
 
     const plusIcon = await screen.findAllByTitle(/Increase quantity/);
     await fireEvent.click(plusIcon[0]);
-    expect(await screen.findByDisplayValue(/4/)).toBeInTheDocument();
+    expect(await screen.findByDisplayValue(/3/)).toBeInTheDocument();
   });
 
   it('should decrease quantity of the product', async () => {
@@ -80,7 +80,7 @@ describe('ShoppingCart component tests', () => {
     expect(await screen.findByText(/Koszyk jest pusty, dodaj coś do niego/)).toBeInTheDocument();
   });
 
-  it('should remove first product from cart', async () => {
+  it('should remove whole cart', async () => {
     act(() => store.dispatch(sessionChange(true)));
     render(
       <MockProviders>
@@ -89,7 +89,7 @@ describe('ShoppingCart component tests', () => {
     );
 
     const binIcon = await screen.findByTitle(/Delete whole cart/);
-    await fireEvent.click(binIcon);
+    fireEvent.click(binIcon);
     expect(await screen.findByText(/Koszyk jest pusty, dodaj coś do niego/)).toBeInTheDocument();
   });
 
@@ -102,10 +102,10 @@ describe('ShoppingCart component tests', () => {
     );
 
     const binIcon = await screen.findAllByTitle(/Delete product from cart/);
-    await fireEvent.click(binIcon[2]);
+    fireEvent.click(binIcon[2]);
 
     await waitFor(() => {
-      expect(screen.queryByText(/5004,99/)).toBeInTheDocument();
+      expect(screen.queryByText(/872,16/)).toBeInTheDocument();
     });
   });
 });

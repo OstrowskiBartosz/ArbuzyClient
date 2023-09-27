@@ -114,13 +114,14 @@ export const handlers = [
 
   rest.delete(`${process.env.REACT_APP_API}/cart/:cartID`, (req, res, ctx) => {
     const { cartID } = req.params;
-    if (parseInt(cartID) === 4) {
+    if (parseInt(cartID) === 2) {
       const cartItems = JSON.parse(JSON.stringify(cartItems3Items));
       cartItems.cartItemsData = [];
       sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
       cartItems.cartData.totalQuantityofProducts = 0;
       cartItems.cartData.numberOfProducts = 0;
       cartItems.cartData.totalPriceOfProducts = 0;
+
       sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
       return res(ctx.json({ data: cartItems, message: 'Success' }));
     }

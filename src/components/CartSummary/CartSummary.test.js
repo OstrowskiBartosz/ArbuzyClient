@@ -36,20 +36,20 @@ describe('CartSummary component tests', () => {
     const errorMessage = await screen.findByText(/Metoda płatności nie została wybrana/);
     expect(errorMessage).toBeInTheDocument();
   });
-  it('should not show error message without clicking to move to payment', async () => {
+  it('should not show error message without prior clicking move to payment', async () => {
     render(
       <MockProviders>
         <CartSummary />
       </MockProviders>
     );
 
-    await screen.findByText(/Gigabyte B660M DS3H DDR4/);
+    await screen.findByText(/Asus DRW-24D5MT\/BLK\/B\/AS/);
     await waitFor(() => {
       const errorMessage = screen.queryByText(/Metoda płatności nie została wybrana/);
       expect(errorMessage).not.toBeInTheDocument();
     });
   });
-  it('should not show error message after clicking to move to payment', async () => {
+  it('should not show error message after clicking move to payment with payment method active', async () => {
     render(
       <MockProviders>
         <CartSummary />

@@ -10,6 +10,9 @@ import { Provider } from 'react-redux';
 import store from './store/store';
 import { sessionChange } from './store/storeSlices/sessionSlice';
 
+const noop = () => {};
+Object.defineProperty(window, 'scrollTo', { value: noop, writable: true });
+
 beforeAll(() => server.listen());
 afterEach(() => {
   sessionStorage.clear();

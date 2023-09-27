@@ -79,17 +79,9 @@ const SearchResults = ({ searchValue }) => {
       if (key !== 'q' && key !== 'w' && key !== 's' && key !== 'l' && key !== 'p') {
         if (key === 'filterCategory' && JSON.parse(value).length > 0) setShowResetButton(true);
         if (key === 'filterManufacturer' && JSON.parse(value).length > 0) setShowResetButton(true);
-        if (key === 'priceFrom' && Number(value) !== Math.floor(priceRange.minPrice))
-          setShowResetButton(true);
-        if (key === 'priceTo' && Number(value) !== Math.ceil(priceRange.maxPrice))
-          setShowResetButton(true);
-        if (
-          key !== 'filterManufacturer' &&
-          key !== 'filterCategory' &&
-          key !== 'priceFrom' &&
-          key !== 'priceTo'
-        )
-          setShowResetButton(true);
+        if (key === 'priceFrom' && Number(value) !== Math.floor(priceRange.minPrice)) setShowResetButton(true);
+        if (key === 'priceTo' && Number(value) !== Math.ceil(priceRange.maxPrice)) setShowResetButton(true);
+        if (key !== 'filterManufacturer' && key !== 'filterCategory' && key !== 'priceFrom' && key !== 'priceTo') setShowResetButton(true);
       }
     });
   };

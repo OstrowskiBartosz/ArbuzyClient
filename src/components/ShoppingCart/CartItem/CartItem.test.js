@@ -5,7 +5,7 @@ const resMocks = require('../../../mocks/resMocks.js');
 
 describe('CartItem component tests', () => {
   it('should properly display manufacturer together with product name', async () => {
-    const cartItem = resMocks.cartItems3Items.cartItemsData[0];
+    const cartItem = resMocks.cartItems3Items.cartItemsData[2];
     render(
       <MockProviders>
         <CartItem
@@ -18,7 +18,7 @@ describe('CartItem component tests', () => {
       </MockProviders>
     );
 
-    expect(await screen.findByText(/Gigabyte B660M DS3H DDR4/)).toBeInTheDocument();
+    expect(await screen.findByText(/Asus DRW-24D5MT\/BLK\/B\/AS/)).toBeInTheDocument();
   });
   it('should move to proper product name after clicking product name', async () => {
     const cartItem = resMocks.cartItems3Items.cartItemsData[0];
@@ -35,7 +35,7 @@ describe('CartItem component tests', () => {
     );
 
     const productName = screen.getByRole('link');
-    expect(productName).toHaveAttribute('href', '/product/58');
+    expect(productName).toHaveAttribute('href', '/product/20');
   });
   it('should show delete from cart icon', async () => {
     const cartItem = resMocks.cartItems3Items.cartItemsData[0];
@@ -105,11 +105,19 @@ describe('CartItem component tests', () => {
     const quantity = await screen.findByDisplayValue(cartItem.quantity);
     expect(quantity).toBeInTheDocument();
   });
-  it('should show correct total price of product', async () => {
-    const cartItem = resMocks.cartItems3Items.cartItemsData[0];
-    const priceSum = String(
-      (cartItem.Product.Prices[0].grossPrice * cartItem.quantity).toFixed(2)
-    ).replace('.', ',');
+  it('should show correct total price of discounted product', async () => {
+    const cartItem = resMocks.cartItems3Items.cartItemsData[1];
+    let priceSum = 0;
+    if (cartItem.Product.promotionDiscount) {
+      const promoPrice = cartItem.Product.Prices.length - 1;
+      priceSum = String(
+        (cartItem.Product.Prices[promoPrice].grossPrice * cartItem.quantity).toFixed(2)
+      ).replace('.', ',');
+    } else {
+      priceSum = String(
+        (cartItem.Product.Prices[0].grossPrice * cartItem.quantity).toFixed(2)
+      ).replace('.', ',');
+    }
 
     render(
       <MockProviders>
@@ -125,5 +133,52 @@ describe('CartItem component tests', () => {
 
     const totalPrice = await screen.findByText(`${priceSum} zł`);
     expect(totalPrice).toBeInTheDocument();
+  });
+  it('should show correct total price of not discounted product', async () => {
+    const cartItem = resMocks.cartItems3Items.cartItemsData[0];
+    let priceSum = 0;
+    if (cartItem.Product.promotionDiscount) {
+      const promoPrice = cartItem.Product.Prices.length - 1;
+      priceSum = String(
+        (cartItem.Product.Prices[promoPrice].grossPrice * cartItem.quantity).toFixed(2)
+      ).replace('.', ',');
+    } else {
+      priceSum = String(
+        (cartItem.Product.Prices[0].grossPrice * cartItem.quantity).toFixed(2)
+      ).replace('.', ',');
+    }
+
+    render(
+      <MockProviders>
+        <CartItem
+          cartItem={cartItem}
+          blockUI={false}
+          setError={null}
+          fetchCartData={() => {}}
+          setBlockUI={() => {}}
+        />
+      </MockProviders>
+    );
+
+    const totalPrice = await screen.findByText(`${priceSum} zł`);
+    expect(totalPrice).toBeInTheDocument();
+  });
+  it('should show discount tag on a screen', async () => {
+    const cartItem = resMocks.cartItems3Items.cartItemsData[1];
+
+    render(
+      <MockProviders>
+        <CartItem
+          cartItem={cartItem}
+          blockUI={false}
+          setError={null}
+          fetchCartData={() => {}}
+          setBlockUI={() => {}}
+        />
+      </MockProviders>
+    );
+
+    const priceDiscountTag = await screen.findByText(/20%/);
+    expect(priceDiscountTag).toBeInTheDocument();
   });
 });

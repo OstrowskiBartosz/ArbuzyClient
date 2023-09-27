@@ -16,18 +16,9 @@ import './FilterPanel.css';
 
 import { readyToRequest } from './utils';
 
-const FilterPanel = ({
-  searchValue,
-  isLoading,
-  filtersData,
-  ProductsData,
-  priceSettings,
-  priceRange,
-  showResetButton,
-  fetchSearchData
-}) => {
+const FilterPanel = ({ searchValue, isLoading, filtersData, ProductsData, priceSettings, priceRange, showResetButton, fetchSearchData }) => {
   const [toggleFilters, setToggleFilters] = useState(false);
-  const [priceValue, setPriceValue] = useState([]);
+  const [priceValue, setPriceValue] = useState([priceRange.minPrice, priceRange.maxPrice]);
 
   const handleFilterChange = (event) => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -106,28 +97,18 @@ const FilterPanel = ({
     debounceReload();
   };
 
-  const debounceReload = useDebounce(
-    () => readyToRequest(priceValue, priceRange, setPriceValue, fetchSearchData),
-    2000
-  );
+  const debounceReload = useDebounce(() => readyToRequest(priceValue, priceRange, setPriceValue, fetchSearchData), 2000);
 
   const handleCollapse = (collapseID) => {
     const collapseItem = document.getElementById(`collapse-${collapseID}`);
-    collapseItem.classList.contains('collapsed')
-      ? collapseItem.classList.remove('collapsed')
-      : collapseItem.classList.add('collapsed');
+    collapseItem.classList.contains('collapsed') ? collapseItem.classList.remove('collapsed') : collapseItem.classList.add('collapsed');
 
     const rotateArrow = document.getElementById(`rotateArrow-${collapseID}`);
-    rotateArrow.classList.contains('rotated')
-      ? rotateArrow.classList.remove('rotated')
-      : rotateArrow.classList.add('rotated');
+    rotateArrow.classList.contains('rotated') ? rotateArrow.classList.remove('rotated') : rotateArrow.classList.add('rotated');
   };
 
   useEffect(() => {
-    setPriceValue([
-      Math.floor(Number(priceSettings.priceFrom)),
-      Math.ceil(Number(priceSettings.priceTo))
-    ]);
+    setPriceValue([Math.floor(Number(priceSettings.priceFrom)), Math.ceil(Number(priceSettings.priceTo))]);
   }, [priceSettings]);
 
   if (isLoading && filtersData && filtersData.categories === undefined) {
@@ -146,9 +127,7 @@ const FilterPanel = ({
         </div>
         <div>
           {showResetButton ? (
-            <button
-              className="btn btn-danger btn-lg btn-block mt-1 pt-1 resetFilterButton"
-              onClick={() => handleResetFiltersClick()}>
+            <button className="btn btn-danger btn-lg btn-block mt-1 pt-1 resetFilterButton" onClick={() => handleResetFiltersClick()}>
               Reset Filtrów
             </button>
           ) : null}
@@ -168,10 +147,7 @@ const FilterPanel = ({
                 <div className="fs-3 fw-bold mb-4">
                   <span>Kategorie</span>
                   {filtersData?.categories.length > 2 ? (
-                    <div
-                      id="rotateArrow-1"
-                      className="float-right fs-3 expand-arrow"
-                      onClick={() => handleCollapse(1)}>
+                    <div id="rotateArrow-1" className="float-right fs-3 expand-arrow" onClick={() => handleCollapse(1)}>
                       <i className="fa-solid fa-chevron-down"></i>
                     </div>
                   ) : null}
@@ -182,9 +158,7 @@ const FilterPanel = ({
                       <div className=" text-left mb-2" key={'filterCategory' + category.categoryID}>
                         <label className="filterContainer">
                           <span className="ml-2">{category.categoryName}</span>
-                          <span className="text-right fw-bold">
-                            {` (${category.numberOfProducts})`}
-                          </span>
+                          <span className="text-right fw-bold">{` (${category.numberOfProducts})`}</span>
                           <input
                             type="checkbox"
                             id={'filterCategory' + category.categoryID}
@@ -202,9 +176,7 @@ const FilterPanel = ({
                     <div className=" text-left mb-2" key={'filterCategory' + category.categoryID}>
                       <label className="filterContainer">
                         <span className="ml-2">{category.categoryName}</span>
-                        <span className="text-right fw-bold">
-                          {` (${category.numberOfProducts})`}
-                        </span>
+                        <span className="text-right fw-bold">{` (${category.numberOfProducts})`}</span>
                         <input
                           type="checkbox"
                           id={'filterCategory' + category.categoryID}
@@ -223,10 +195,7 @@ const FilterPanel = ({
                 <div className="fs-3 fw-bold mb-4">
                   <span>Producenci</span>
                   {filtersData?.manufacturers.length > 2 ? (
-                    <div
-                      id="rotateArrow-2"
-                      className="float-right fs-3 expand-arrow"
-                      onClick={() => handleCollapse(2)}>
+                    <div id="rotateArrow-2" className="float-right fs-3 expand-arrow" onClick={() => handleCollapse(2)}>
                       <i className="fa-solid fa-chevron-down"></i>
                     </div>
                   ) : null}
@@ -234,14 +203,10 @@ const FilterPanel = ({
                 {filtersData?.manufacturers.length > 2 ? (
                   <div className="attributes-list collapsed" id="collapse-2">
                     {filtersData?.manufacturers.map((manufacturer) => (
-                      <div
-                        className=" text-left mb-2"
-                        key={'filterManufacturer' + manufacturer.ManufacturerID}>
+                      <div className=" text-left mb-2" key={'filterManufacturer' + manufacturer.ManufacturerID}>
                         <label className="filterContainer">
                           <span className="ml-2">{manufacturer.ManufacturerName}</span>
-                          <span className="text-right fw-bold">
-                            {` (${manufacturer.numberOfProducts})`}
-                          </span>
+                          <span className="text-right fw-bold">{` (${manufacturer.numberOfProducts})`}</span>
                           <input
                             type="checkbox"
                             id={`filterManufacturer${manufacturer.ManufacturerID}`}
@@ -256,14 +221,10 @@ const FilterPanel = ({
                   </div>
                 ) : (
                   filtersData?.manufacturers.map((manufacturer) => (
-                    <div
-                      className=" text-left mb-2"
-                      key={'filterManufacturer' + manufacturer.ManufacturerID}>
+                    <div className=" text-left mb-2" key={'filterManufacturer' + manufacturer.ManufacturerID}>
                       <label className="filterContainer">
                         <span className="ml-2">{manufacturer.ManufacturerName}</span>
-                        <span className="text-right fw-bold">
-                          {` (${manufacturer.numberOfProducts})`}
-                        </span>
+                        <span className="text-right fw-bold">{` (${manufacturer.numberOfProducts})`}</span>
                         <input
                           type="checkbox"
                           id={`filterManufacturer${manufacturer.ManufacturerID}`}
@@ -335,14 +296,9 @@ const FilterPanel = ({
                   <div className="text-left mb-4" key={`groupFilter${index}`}>
                     <div className="mb-3">
                       <span className="fw-bold fs-6">{attribute.property}</span>
-                      <span className="text-right fw-bold">
-                        {` (${attribute.numberOfProducts})`}
-                      </span>
+                      <span className="text-right fw-bold">{` (${attribute.numberOfProducts})`}</span>
                       {attribute.values.length > 2 ? (
-                        <div
-                          id={`rotateArrow-${index + 3}`}
-                          className="float-right fs-5 expand-arrow"
-                          onClick={() => handleCollapse(index + 3)}>
+                        <div id={`rotateArrow-${index + 3}`} className="float-right fs-5 expand-arrow" onClick={() => handleCollapse(index + 3)}>
                           <i className="fa-solid fa-chevron-down"></i>
                         </div>
                       ) : null}
@@ -351,14 +307,10 @@ const FilterPanel = ({
                       {attribute.values.length > 2 ? (
                         <div className="attributes-list collapsed" id={`collapse-${index + 3}`}>
                           {attribute.values.map((value) => (
-                            <div
-                              className="mb-2"
-                              key={`group_F${attribute.property}value_F${value.value}`}>
+                            <div className="mb-2" key={`group_F${attribute.property}value_F${value.value}`}>
                               <label className="filterContainer">
                                 <span className="ml-2 fs-6">{value.value}</span>
-                                <span className="text-right fw-bold fs-6">
-                                  {` (${value.numberOfProducts})`}
-                                </span>
+                                <span className="text-right fw-bold fs-6">{` (${value.numberOfProducts})`}</span>
                                 <input
                                   type="checkbox"
                                   id={`group_F${attribute.property}value_F${value.value}`}
@@ -373,14 +325,10 @@ const FilterPanel = ({
                         </div>
                       ) : (
                         attribute.values.map((value) => (
-                          <div
-                            className="mb-2"
-                            key={`group_F${attribute.property}value_F${value.value}`}>
+                          <div className="mb-2" key={`group_F${attribute.property}value_F${value.value}`}>
                             <label className="filterContainer">
                               <span className="ml-2 fs-6">{value.value}</span>
-                              <span className="text-right fw-bold fs-6">
-                                {` (${value.numberOfProducts})`}
-                              </span>
+                              <span className="text-right fw-bold fs-6">{` (${value.numberOfProducts})`}</span>
                               <input
                                 type="checkbox"
                                 id={`group_F${attribute.property}value_F${value.value}`}
@@ -400,16 +348,12 @@ const FilterPanel = ({
               </div>
             </div>
             {showResetButton ? (
-              <button
-                className="btn btn-danger btn-lg btn-block mt-1 pt-1 resetFilterButton"
-                onClick={() => handleResetFiltersClick()}>
+              <button className="btn btn-danger btn-lg btn-block mt-1 pt-1 resetFilterButton" onClick={() => handleResetFiltersClick()}>
                 Reset Filtrów
               </button>
             ) : null}
             <HashLink smooth to={window.location.search + '#results'}>
-              <button
-                className="btn btn-primary btn-lg btn-block mt-1 pt-1 HideFiltersButton"
-                onClick={() => setToggleFilters(!toggleFilters)}>
+              <button className="btn btn-primary btn-lg btn-block mt-1 pt-1 HideFiltersButton" onClick={() => setToggleFilters(!toggleFilters)}>
                 Zwiń filtry
               </button>
             </HashLink>
@@ -418,16 +362,12 @@ const FilterPanel = ({
         <div className={toggleFilters ? 'filtersSwitch f2' : 'filtersSwitch f1'}>
           <h3 className="pb-3">Filtry</h3>
           {showResetButton ? (
-            <button
-              className="btn btn-danger btn-lg btn-block mt-1 pt-1 resetFilterButton"
-              onClick={() => handleResetFiltersClick()}>
+            <button className="btn btn-danger btn-lg btn-block mt-1 pt-1 resetFilterButton" onClick={() => handleResetFiltersClick()}>
               Reset Filtrów
             </button>
           ) : null}
           <HashLink smooth to={window.location.search + '#filters'}>
-            <button
-              className="btn btn-primary btn-lg btn-block mt-1 pt-1 HideFiltersButton"
-              onClick={() => setToggleFilters(!toggleFilters)}>
+            <button className="btn btn-primary btn-lg btn-block mt-1 pt-1 HideFiltersButton" onClick={() => setToggleFilters(!toggleFilters)}>
               Rozwiń filtry
             </button>
           </HashLink>
