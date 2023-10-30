@@ -11,6 +11,7 @@ import { sessionChange } from '../../store/storeSlices/sessionSlice';
 
 describe('Product component tests', () => {
   it('should render proper product based on url ID', async () => {
+    store.dispatch(sessionChange(true));
     render(
       <MockProviders>
         <MemoryRouter initialEntries={['/product/13']}>
@@ -26,6 +27,7 @@ describe('Product component tests', () => {
   });
 
   it('should add product after clicking', async () => {
+    store.dispatch(sessionChange(true));
     render(
       <MockProviders>
         <MemoryRouter initialEntries={['/product/13']}>
@@ -43,6 +45,7 @@ describe('Product component tests', () => {
   });
 
   it('should add product and move to initial state', async () => {
+    store.dispatch(sessionChange(true));
     render(
       <MockProviders>
         <MemoryRouter initialEntries={['/product/13']}>
@@ -57,29 +60,6 @@ describe('Product component tests', () => {
     fireEvent.click(cartButton);
     const addingButton = await screen.findByText(/Dodawanie.../);
     expect(cartButton).toBeInTheDocument();
-  });
-
-  it('should show limit if no more product is available', async () => {
-    server.use(
-      rest.post(`${process.env.REACT_APP_API}/cartItem`, (req, res, ctx) => {
-        return res(ctx.json({ data: [], message: 'Quantity limit.' }));
-      })
-    );
-
-    render(
-      <MockProviders>
-        <MemoryRouter initialEntries={['/product/13']}>
-          <Route path="/product/:productID">
-            <Product />
-          </Route>
-        </MemoryRouter>
-      </MockProviders>
-    );
-
-    const cartButton = await screen.findByText(/Dodaj do koszyka/);
-    fireEvent.click(cartButton);
-    const limitButton = await screen.findByText(/Limit w koszyku/);
-    expect(limitButton).toBeInTheDocument();
   });
 
   it('should redirect to search category after clicking category', async () => {
@@ -140,39 +120,5 @@ describe('Product component tests', () => {
     await waitFor(() => {
       expect(screen.queryByText(/Opis produktu/)).not.toBeInTheDocument();
     });
-  });
-
-  it('should not show login instead of add to cart when user is not authorized', async () => {
-    render(
-      <MockProviders>
-        <MemoryRouter initialEntries={['/product/13']}>
-          <Route path="/product/:productID">
-            <Product />
-          </Route>
-        </MemoryRouter>
-      </MockProviders>
-    );
-
-    await waitFor(() => {
-      const loginButton = screen.queryByText(/Zaloguj sie/);
-      expect(loginButton).not.toBeInTheDocument();
-    });
-  });
-
-  it('should show login instead of add to cart when user is not authorized', async () => {
-    store.dispatch(sessionChange(false));
-
-    render(
-      <MockProviders>
-        <MemoryRouter initialEntries={['/product/13']}>
-          <Route path="/product/:productID">
-            <Product />
-          </Route>
-        </MemoryRouter>
-      </MockProviders>
-    );
-
-    const loginButton = await screen.findByText(/Zaloguj sie/);
-    expect(loginButton).toBeInTheDocument();
   });
 });

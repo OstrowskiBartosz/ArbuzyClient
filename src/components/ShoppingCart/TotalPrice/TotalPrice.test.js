@@ -13,7 +13,6 @@ describe('TotalPrice component tests', () => {
       </MockProviders>
     );
 
-    console.log;
     expect(await screen.findByText(`${price} zł`)).toBeInTheDocument();
   });
   it('should display button with cartsummary url', async () => {
