@@ -106,8 +106,7 @@ const PromoItem = ({ productData, promoType }) => {
               <div className="border-bottom border border-primary mb-3"></div>
               <div className="imageLink pointer mx-3 pb-3">
                 <span className="fs-5 pointer fw-bold promoTitle">
-                  {productData.Manufacturer.manufacturerName}{' '}
-                  {productData.productName.replace(/ *\([^)]*\) */g, '')}
+                  {productData.Manufacturer.manufacturerName} {productData.productName.replace(/ *\([^)]*\) */g, '')}
                 </span>
               </div>
             </div>
@@ -115,19 +114,13 @@ const PromoItem = ({ productData, promoType }) => {
             <div className="row pb-3">
               <div className="col-xl-5">
                 <div className="promoImageContainer position-relative">
-                  <img
-                    className="promoImage"
-                    src={`${process.env.REACT_APP_API}${productData.Attributes[0].value}`}
-                    alt="Zdjęcie produktu"
-                  />
+                  <img className="promoImage" src={`${process.env.REACT_APP_API}${productData.Attributes[0].value}`} alt="Zdjęcie produktu" />
                   <div className="discountBadgeGroup">
                     <div className="discountBadge1"></div>
                     <div className="discountBadge2"></div>
                     <div className="discountBadge3"></div>
                     <div className="discountBadgeText">
-                      <span className="discountText fs-5 fw-bold">
-                        -{productData.promotionDiscount}%
-                      </span>
+                      <span className="discountText fs-5 fw-bold">-{productData.promotionDiscount}%</span>
                     </div>
                   </div>
                 </div>
@@ -141,7 +134,7 @@ const PromoItem = ({ productData, promoType }) => {
                     </div>
                     <div className="d-inline-block float-right">
                       <span className="fs-5 text-dark">
-                        {productData.Prices[0].grossPrice.toLocaleString('pl-PL', {
+                        {productData.Prices[0]?.grossPrice.toLocaleString('pl-PL', {
                           minimumFractionDigits: 2
                         })}{' '}
                         zł
@@ -155,7 +148,7 @@ const PromoItem = ({ productData, promoType }) => {
                     </div>
                     <div className="d-inline-block float-right">
                       <span className=" fs-5 fw-bold text-decoration-underline">
-                        {productData.Prices[1].grossPrice.toLocaleString('pl-PL', {
+                        {productData.Prices[1]?.grossPrice.toLocaleString('pl-PL', {
                           minimumFractionDigits: 2
                         })}{' '}
                         zł
@@ -185,12 +178,7 @@ const PromoItem = ({ productData, promoType }) => {
                     <div>
                       <span className="fs-5 fw-bold"> Produkt wyprzedany</span>
                       <div className="progress">
-                        <div
-                          className="progress-bar w-0"
-                          role="progressbar"
-                          aria-valuenow="2"
-                          aria-valuemin="0"
-                          aria-valuemax="10"></div>
+                        <div className="progress-bar w-0" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="10"></div>
                       </div>
                     </div>
                   )}

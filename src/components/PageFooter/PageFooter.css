@@ -34,3 +34,30 @@ footer {
 .footer-element-copyright {
   width: 100%;
 }
+
+.footerColor {
+  background-color: black;
+}
+
+.grad2 {
+  background-image: -webkit-linear-gradient(30deg, rgb(210, 210, 210) 25%, rgb(0, 123, 255) 250%);
+  height: 100%;
+  width: 100%;
+  position: relative;
+  z-index: 15;
+}
+
+.waterMelon {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  background-image: url(../../images/watermelon.svg);
+  width: 90%;
+  height: 90%;
+  z-index: -1;
+  filter: invert(41%) sepia(70%) saturate(5844%) hue-rotate(200deg) brightness(103%) contrast(106%);
+  opacity: 15%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}

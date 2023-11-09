@@ -77,9 +77,10 @@
 }
 
 .discountBadge1 {
+  top: 0px;
   position: absolute;
   right: 0px;
-  top: 0px;
+  top: 5px;
   width: 50px;
   height: 50px;
   background-color: orangered;
@@ -89,7 +90,7 @@
 .discountBadge2 {
   position: absolute;
   right: 0px;
-  top: 0px;
+  top: 5px;
   width: 50px;
   height: 50px;
   background-color: orangered;
@@ -99,7 +100,7 @@
 .discountBadge3 {
   position: absolute;
   right: 0px;
-  top: 0px;
+  top: 5px;
   width: 50px;
   height: 50px;
   background-color: orangered;
@@ -109,7 +110,7 @@
 .discountBadgeText {
   position: absolute;
   right: 0px;
-  top: 0px;
+  top: 5px;
   width: 50px;
   height: 50px;
 }
@@ -134,12 +135,7 @@
 }
 
 .iconBiColor {
-  background: linear-gradient(
-    to right,
-    rgba(0, 123, 255, 1) 0%,
-    rgba(0, 123, 255, 1) 50%,
-    rgba(100, 100, 100, 1) 50%
-  );
+  background: linear-gradient(to right, rgba(0, 123, 255, 1) 0%, rgba(0, 123, 255, 1) 50%, rgba(100, 100, 100, 1) 50%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -184,7 +180,7 @@
 
 .inlineScroll {
   width: 100%;
-  height: 295px;
+  height: 265px;
   white-space: nowrap;
   position: relative;
   overflow-x: hidden;
@@ -194,7 +190,7 @@
 
 .inlineScrollTopSold {
   width: 100%;
-  height: 375px;
+  height: 345px;
   white-space: nowrap;
   position: relative;
   overflow-x: hidden;

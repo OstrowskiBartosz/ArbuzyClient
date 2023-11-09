@@ -25,7 +25,6 @@
   cursor: pointer;
 }
 .NavbarLogoPart3 {
-  background-image: url(./images/watermelon.svg) no-repeat fixed center;
   background-color: linear-gradient(
     90deg,
     rgba(0, 123, 255, 1) 0%,
@@ -38,6 +37,14 @@
   cursor: pointer;
 }
 
+.watermelonLogo {
+  height: 35px;
+  width: 35px;
+  position: relative;
+  top: -10px;
+  left: 0px;
+}
+/* <img className="watermelonLogo" src={watermelon} alt="Watermelon logo" /> */
 .navbarCartStyle {
   font-size: 10px;
   z-index: 5;
